@@ -1,1 +1,7 @@
-TODO make an unordered list that contains only an apple
+<?php
+	include '../header.php';
+?>
+<ul class="navlist">
+	<li>Apple</li>
+	<li>Orange</li>
+</ul>
