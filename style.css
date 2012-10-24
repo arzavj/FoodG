@@ -1,7 +1,11 @@
-.navlist li {
-    display: inline-block;
-    zoom: 1;
-    *display: inline;
+.navlist{
     list-style-type: none;
-    vertical-align: middle;
+}
+
+.together{
+	display:inline;
+}
+
+.food_image{
+	float: right;	
 }
