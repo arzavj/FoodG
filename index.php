@@ -38,8 +38,8 @@
 <div data-role="page" id="fridgeview" data-add-back-btn="true">
 
 	<div data-role="header">
-		<h1>MyFridge</h1>
 		<a href="#Home" data-icon="back">Back</a>
+		<h1>MyFridge</h1>
 	</div><!-- /header -->
 
 	<div data-role="content">	
@@ -61,7 +61,7 @@
 <div data-role="page" id="freezerview" data-add-back-btn="true">
 
 	<div data-role="header">
-	<a href="#Home" data-icon="back">Back</a>
+		<a href="#Home" data-icon="back">Back</a>
 		<h1>MyFreezer</h1>
 	</div><!-- /header -->
 
