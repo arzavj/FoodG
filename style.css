@@ -1,7 +1,12 @@
-.navlist li {
-    display: inline-block;
-    zoom: 1;
-    *display: inline;
-    list-style-type: none;
-    vertical-align: middle;
+.category{
+	width: 100px;
+	height: 100px;
+}	
+
+img.displayView {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		width: 240px;
+		height: auto;
 }
