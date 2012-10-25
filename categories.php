@@ -17,7 +17,7 @@
 		<ul data-role="listview">
 			<li><a href="#">Meats</a></li>
 			<li><a href="#">Vegetables</a></li>
-			<li><a href="#">Fruits</a></li>
+			<li><a href="list.php" rel="external">Fruits</a></li>
 			<li><a href="#">Dairy</a></li>
 			<li><a href="#">Fish & Seafood</a></li>
 			<li><a href="#">Beverages</a></li>
