@@ -23,7 +23,7 @@
 	</div><!-- /content -->
 	<?php
 		include("footer.php");
-		?>
+	?>
 </div><!-- /page one -->
 
 
@@ -47,17 +47,12 @@
 	</div><!-- /content -->
 	<?php
 		include("footer.php");
-		?>
+	?>
 
 </div><!-- /page two -->
 
 
-
-
-
-
-
-<!-- Start of second page: #freezerview -->
+<!-- Start of third page: #freezerview -->
 <div data-role="page" id="freezerview" data-add-back-btn="true">
 
 	<div data-role="header">
@@ -67,6 +62,9 @@
 
 	<div data-role="content">	
 		<img src="images/fridgeView.png" class="displayView" />
+		<?
+			echo $_POST["name"];
+		?>
 	</div><!-- /content -->
 	<?php
 		include("footer.php");

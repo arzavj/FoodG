@@ -5,7 +5,7 @@
 </head>
 <body>
         <div data-role="header">
-                <a href="#Home" data-icon="back">Back</a>
+                <a href="categories.php" data-icon="back">Back</a>
                         <h1>Categories</h1>
         </div><!-- /header -->
 	

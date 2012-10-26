@@ -12,7 +12,7 @@
 		<div class="ui-grid-a">
 			<div class="ui-block-a"><img src="images/apple.jpg" /></div>
 			<div class="ui-block-b">
-				<form action="submit.php" method="post">
+				<form action="index.php" method="post" data-ajax="false">
 				 	<input type="hidden" name="name" value="Apple" />
 					<div data-role="fieldcontain">
 							<label for="quantity" class="ui-input-text">Quantity: </label>
