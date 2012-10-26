@@ -45,7 +45,7 @@
 	<div data-role="content">	
 		<img src="images/fridgeView.png" class="displayView" />	
 		<?
-			if($_POST["name"] == "Apple"){
+			if($_GET["name"] == "Apple"){
 		?>
 
 		<img src="images/apple.jpg" style="width: 25px; height: 25px; position: absolute; top: 55%; left: 50%;" />
