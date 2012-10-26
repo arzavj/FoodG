@@ -9,9 +9,9 @@
 }	
 
 img.displayView {
+		position: relative;
 		display: block;
-		margin-left: auto;
-		margin-right: auto;
+		left:-120;
 		width: 240px;
 		height: auto;
 }

@@ -42,17 +42,19 @@
 		<h1>MyFridge</h1>
 	</div><!-- /header -->
 
-	<div data-role="content">	
-		<img src="images/fridgeView.png" class="displayView" />	
-		<?
-			if($_GET["name"] == "Apple"){
-		?>
+	<div data-role="content">
+		<div style="position: relative; left: 50%; top: 0;">	
+			<img src="images/fridgeView.png" class="displayView" />	
+			<?
+				if($_POST["name"] == "Apple"){
+			?>
 
-		<img src="images/apple.jpg" style="width: 25px; height: 25px; position: absolute; top: 55%; left: 50%;" />
+			<img src="images/apple.jpg" style="width: 25px; height: 25px; position: absolute; top: 240px; left: 0;" />
 
-		<?php
-		}
-		?>
+			<?php
+			}
+			?>
+		</div>
 	</div><!-- /content -->
 	<?php
 		include("footer.php");
