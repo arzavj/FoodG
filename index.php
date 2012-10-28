@@ -14,7 +14,7 @@
 		<h1>Food Gatherer</h1>
 	</div><!-- /header -->
 	<div data-role="content">
-		<img src="images/fridgeHome.png" class="displayView" usemap ="#fridgeMap" />
+		<img  src="images/fridgeHome.png" class="displayView" usemap ="#fridgeMap" />
 		<map id ="fridgeMap"name="fridgeMap">
 			<area shape="rect" coords="0,0,103,452" href="#freezerview" alt="" title=""    />
 			<area shape="rect" coords="104,0,237,452" href="#fridgeview" alt="" title=""    />
