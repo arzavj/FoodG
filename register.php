@@ -9,10 +9,8 @@
 
 		if ($_POST['password'] == $_POST['passwordConfirm']){
 			if (is_null($error)){	
-				$insert = sprintf('INSERT INTO users(username, password) VALUES ("%s", "%s")', $_POST['username'], $_POST['password']);
-				mysql_query($insert);
-				header( 'Location: index.html' );
-			
+				$insert = sprintf("INSERT INTO users (username, password) VALUES (\"%s\", \"%s\");", $_POST['username'], $_POST['password']);
+				mysql_query($insert);	
 			}
 		} else {
 			$error = $error +  "Passwords do not match.\n";
@@ -37,6 +35,11 @@
 	</div><!-- /header -->
 
 	<div data-role="content">
+
+	<?php
+		echo $insert;
+	?>
+
 	<form action="register.php" method="POST">
 		<label for="user">Username:</label>
 		<input type="text" name="username" id="user">
