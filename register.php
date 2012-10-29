@@ -9,6 +9,7 @@
 
 		if ($_POST['password'] == $_POST['passwordConfirm']){
 			if (is_null($error)){	
+				include "config.php";
 				$insert = sprintf("INSERT INTO users (username, password) VALUES (\"%s\", \"%s\");", $_POST['username'], $_POST['password']);
 				mysql_query($insert);
 				header( 'Location: index.html' );	
