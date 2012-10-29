@@ -1,4 +1,5 @@
 <?php
+	include "config.php";
 	$error = NULL;
 	if(!is_null($_POST['username'])){
 		$query = sprintf('Select * from users WHERE username = %s', $_POST['username']);
@@ -9,7 +10,6 @@
 
 		if ($_POST['password'] == $_POST['passwordConfirm']){
 			if (is_null($error)){	
-				include "config.php";
 				$insert = sprintf("INSERT INTO users (username, password) VALUES (\"%s\", \"%s\");", $_POST['username'], $_POST['password']);
 				mysql_query($insert);
 				header( 'Location: index.html' );	
@@ -37,10 +37,6 @@
 	</div><!-- /header -->
 
 	<div data-role="content">
-
-	<?php
-		echo $insert;
-	?>
 
 	<form action="register.php" method="POST">
 		<label for="user">Username:</label>
