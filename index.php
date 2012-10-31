@@ -5,6 +5,26 @@
 		?>
 	</head>
 	<body>
+
+
+<!-- Handles the Resizing of the fridgeview -->	
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script type="text/javascript" src="/js/jquery.dimensions.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() { 
+		var $winheight = $(window).height();
+		$("img.source-image").attr({
+			height: $winheight
+		});
+		$(window).bind("resize", function(){ 
+			var $winheight = $(window).height();
+			$("img.source-image").attr({
+				height: $winheight
+			});
+		 });
+	}); 
+</script>
+	
 	
 	
 	<!-- Start of first page: #one -->
@@ -14,7 +34,7 @@
 		<h1>Food Gatherer</h1>
 	</div><!-- /header -->
 	<div data-role="content">
-		<img  src="images/fridgeHome.png" class="displayView" usemap ="#fridgeMap" />
+		<img  src="images/fridgeHome.png" class="source-image" usemap ="#fridgeMap" />
 		<map id ="fridgeMap"name="fridgeMap">
 			<area shape="rect" coords="0,0,103,452" href="#freezerview" alt="" title=""    />
 			<area shape="rect" coords="104,0,237,452" href="#fridgeview" alt="" title=""    />
@@ -29,7 +49,7 @@
 
 
 	
-	
+
 	
 
 		
@@ -43,8 +63,8 @@
 	</div><!-- /header -->
 
 	<div data-role="content">
-		<div style="position: relative; left: 50%; top: 0;">	
-			<img src="images/fridgeView.png" class="displayView" />	
+		<!-- <div style="position: relative; left: 50%; top: 0;"> -->	
+			<img src="images/fridgeView.png" class="source-image" />	
 			<?
 				if($_POST["name"] == "Apple"){
 			?>
@@ -72,7 +92,7 @@
 	</div><!-- /header -->
 
 	<div data-role="content">	
-		<img src="images/fridgeView.png" class="displayView" />
+		<img src="images/fridgeView.png" class="source-image" />
 	</div><!-- /content -->
 	<?php
 		include("footer.php");
