@@ -8,6 +8,12 @@
 	height: 100px;
 }	
 
+#mainFridge{
+	margin-left: auto;
+	margin-right: auto;
+	height: 75%;
+}
+
 img.displayView {
 		position: relative;
 		display: block;

@@ -14,7 +14,9 @@
 		<h1>Food Gatherer</h1>
 	</div><!-- /header -->
 	<div data-role="content">
-		<img  src="images/fridgeHome.png" class="displayView" usemap ="#fridgeMap" />
+		<div style="position: absolute; text-align: center; width: 100%;">
+			<img src="images/fridgeHome.png" usemap ="#fridgeMap" id="mainFridge"/>
+		</div>
 		<map id ="fridgeMap"name="fridgeMap">
 			<area shape="rect" coords="0,0,103,452" href="#freezerview" alt="" title=""    />
 			<area shape="rect" coords="104,0,237,452" href="#fridgeview" alt="" title=""    />
@@ -71,8 +73,10 @@
 		<h1>MyFreezer</h1>
 	</div><!-- /header -->
 
-	<div data-role="content">	
-		<img src="images/fridgeView.png" class="displayView" />
+	<div data-role="content">
+		<div style="position: relative; left: 50%; top: 0;">		
+			<img src="images/fridgeView.png" class="displayView" />
+		</div>
 	</div><!-- /content -->
 	<?php
 		include("footer.php");
