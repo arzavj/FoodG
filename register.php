@@ -6,7 +6,7 @@
 		$error = "";
 		$test = 0;
 		if(!is_null($_POST['username'])){
-			$query = sprintf('Select * from users WHERE username = "%s"', $_POST['username']);
+			$query = sprintf('SELECT * from users WHERE username = "%s"', $_POST['username']);
 			$result = mysql_query($query);
 			if (mysql_num_rows($result) > 0){
 				$error = "Username already taken. \n";
@@ -16,6 +16,13 @@
 				if ($error == ""){	
 					$insert = sprintf("INSERT INTO users (username, password) VALUES (\"%s\", \"%s\");", $_POST['username'], $_POST['password']);
 					mysql_query($insert);
+					$uID = mysql_fetch_array(mysql_query("Select MAX(id) AS curr from users;"));
+					$result2 = mysql_query("SELECT id from storages");
+					while($row = mysql_fetch_array($result2)){
+						$insert = sprintf("INSERT INTO user_storages (user_id, storage_id, volume) VALUES (\"%s\", \"%s\", \"%s\");", $uID["curr"], $row["id"], $_POST['size']);
+						mysql_query($insert);
+					}
+					
 					$test = 1;	
 				}
 			} else {
@@ -39,7 +46,6 @@
 	<div data-role="content">
 
 	<?php
-		echo $test;
 		echo $error;
 	?>
 
