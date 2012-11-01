@@ -1,33 +1,33 @@
-<?php
-	include "config.php";
-	$error = NULL;
-	if(!is_null($_POST['username'])){
-		$query = sprintf('Select * from users WHERE username = %s', $_POST['username']);
-		$result = mysql_query($query);
-		if (mysql_num_rows($result) > 0){
-			$error = "Username already taken. \n";
-		}
-
-		if ($_POST['password'] == $_POST['passwordConfirm']){
-			if (is_null($error)){	
-				$insert = sprintf("INSERT INTO users (username, password) VALUES (\"%s\", \"%s\");", $_POST['username'], $_POST['password']);
-				mysql_query($insert);
-				header( 'Location: index.html' );	
-			}
-		} else {
-			$error = $error +  "Passwords do not match.\n";
-		}
-	}
-?>
 <!DOCTYPE html> 
 <html>
+	<head>
+	<?php
+		include "head.php";
+		$error = "";
+		$test = 0;
+		if(!is_null($_POST['username'])){
+			$query = sprintf('Select * from users WHERE username = "%s"', $_POST['username']);
+			$result = mysql_query($query);
+			if (mysql_num_rows($result) > 0){
+				$error = "Username already taken. \n";
+			}
 
-<head>
-<?php 
-	include "head.php";
-?>
+			if ($_POST['password'] == $_POST['passwordConfirm']){
+				if ($error == ""){	
+					$insert = sprintf("INSERT INTO users (username, password) VALUES (\"%s\", \"%s\");", $_POST['username'], $_POST['password']);
+					mysql_query($insert);
+					$test = 1;	
+				}
+			} else {
+				$error = $error."Passwords do not match.\n";
+			}
+		}
+	?>
+
 </head>  
 <body> 
+
+
 
 <div data-role="page">
 
@@ -38,6 +38,21 @@
 
 	<div data-role="content">
 
+	<?php
+		echo $test;
+		echo $error;
+	?>
+
+	<?php 
+		if ($test):
+	?>
+		<script>
+			window.location="index.php";
+		</script>
+	<?php
+	endif
+?>
+
 	<form action="register.php" method="POST">
 		<label for="user">Username:</label>
 		<input type="text" name="username" id="user">
@@ -45,7 +60,12 @@
 		<input type="password" name="password" id="pass">
 		<label for="passConfirm">Password Confirmation:</label>
 		<input type="password" name="passwordConfirm" id="passConfirm">
-        	<input type="submit" value="Register">
+		<select name="size">
+			<option value="10">Small</option>
+			<option value="20">Medium</option>
+			<option value="30">Large</option>
+		</select>
+        <input type="submit" value="Register">
 	</form>
 		
 	</div><!-- /content -->
