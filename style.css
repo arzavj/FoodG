@@ -17,11 +17,12 @@
 img.displayView {
 		position: relative;
 		display: block;
-		margin-left: auto;
-		margin -
+		left:-120;
 		width: 240px;
 		height: auto;
 }
+
+
 
 img.source-image {
 	height: 80%;
