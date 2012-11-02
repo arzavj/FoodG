@@ -3,6 +3,11 @@
 		<?php
 		include("head.php");
 		?>
+		<script>
+		$(function() {
+			$( "#accordion" ).accordion();
+		});
+		</script>
 	</head>
 	<body>
 	
@@ -78,27 +83,46 @@
 	<div data-role="content">
 	
 	<!-- METHOD TO EXTRACT CATEGORIES USER "OWNS" IN FRIDGE -->
-	<!-- <script type="text/javascript">
-		//var usr;
-		//usr = localStorage.getItem('username'); -->
+	<?php
+		function filterFridgeView($storeID, $cat){
+			$storequest = sprintf('SELECT food_id FROM user_foods WHERE user_storage_id = %s', $storeID);
+			$storesult = mysql_query($storequest);	
+			$foodset = array();
+			while($row = mysql_fetch_assoc($storesult)){
+				$foodrequest = sprintf('SELECT * FROM foods WHERE category_id = %s && id = %s', $cat, $row['food_id']);
+				$foodresult = mysql_query($foodrequest);
+				if(mysql_num_rows($foodresult)>0){
+					$foodset[] = mysql_fetch_assoc($foodresult);
+				}
+			}
+			return $foodset;
+		}
+	?>
+		
+		
+		
+		
 		<?php
 		include "config.php";
-		$userId = 1; //"SELECT id FROM users WHERE username - usr";
-		$trans = sprintf('SELECT storage_id FROM user_storages WHERE user_id = %s', $userId);
-		$storeLoc = mysql_query($trans);
+		$userName = $_COOKIE['username'];
+		echo "Hello, <b>".$userName."</b>. <br>";
+		$usrrequest = sprintf('SELECT id FROM users WHERE username = \'%s\'', $userName);
+		$userresult = mysql_query($usrrequest);
+		$userId = mysql_fetch_assoc($userresult);
+		$storequest= sprintf('SELECT storage_id FROM user_storages WHERE user_id = %s', $userId['id']);
+		$storeLoc = mysql_query($storequest);
 		$storageId = mysql_fetch_array($storeLoc);
 		$query = sprintf('SELECT food_id FROM user_foods WHERE user_storage_id = %s', $storageId['storage_id']);
 		$result = mysql_query($query);
 		$set = array();
 		while ($row = mysql_fetch_assoc($result)){
-			foreach($row as $value){
-				$catrequest = sprintf('SELECT category_id FROM foods Where id = %s', $value);
+				$catrequest = sprintf('SELECT category_id FROM foods Where id = %s', $row['food_id']);
 				$catresult = mysql_query($catrequest);
 				$catID = mysql_fetch_assoc($catresult);
-				if(!array_search($catId['category_id'], $set)){
+				$element = $catID['category_id'];
+				if(! in_array($element, $set) ){
 					$set[] = $catID['category_id'];
 				}
-			}
 		}
 		$displayUsrsCat = array();
 		foreach($set as $catNum){
@@ -107,10 +131,68 @@
 			$catName = mysql_fetch_assoc($catresult);
 			$displayUsrsCat[] = $catName['category'];
 		}
+
+		$accordion = sprintf('<div id=%s >', "accordion");
+		echo $accordion;
 		foreach($displayUsrsCat as $cat){
-			$button = sprintf('<input type=%s id=%s value= %s>', 'button' ,'php_button' , $cat);
-			echo $button;
+			echo "<h2>".$cat."</h2>\n";
+			$numRequest = sprintf('SELECT id FROM categories WHERE category= \'%s\'', $cat);
+			$numResult = mysql_query($numRequest);
+			$catNum = mysql_fetch_assoc($numResult);
+			$itemArray = filterFridgeView($storageId['storage_id'], $catNum['id']);
+			foreach($itemArray as $item){
+				
+				echo "<div>\n";
+				echo "<p>".$item['food'];
+				$image = sprintf("<img src= %s class = %s />", $item['image_url'],'thumb' );
+				echo $image."</p>\n";
+				echo "</div>\n";
+			}
 		}
+		?>
+		
+		<div style="position: relative; left: 50%; top: 0;">	
+			<img src="images/fridgeView.png" class="displayView" />	
+			<?
+				if($_POST["name"] == "Apple"){
+			?>
+
+			<img src="images/apple.jpg" style="width: 25px; height: 25px; position: absolute; top: 240px; left: 0;" />
+
+			<?php
+			}
+			?>
+		</div>
+		
+		
+	</div><!-- /content -->
+	<?php
+		include("footer.php");
+	?>
+
+</div><!-- /page two -->
+
+
+
+
+
+
+
+
+
+
+
+<div data-role="page" id="fridgeFiltered" data-add-back-btn="true">
+	<div data-role="header">
+		<a href="#Home" data-icon="back">Back</a>
+		<h1>MyFridge</h1>
+		<a href="#" data-icon="gear">Settings</a>
+		<a href="#" id="logout">Logout</a>
+	</div><!-- /header -->
+
+	<div data-role="content">
+		<?php
+			print_r($_GET);
 		?>
 		
 		
@@ -127,12 +209,24 @@
 			}
 			?>
 		</div>
-	</div><!-- /content -->
+
+
+	</div>
 	<?php
 		include("footer.php");
 	?>
+</div>
 
-</div><!-- /page two -->
+
+
+
+
+
+
+
+
+
+
 
 
 <!-- Start of third page: #freezerview -->
