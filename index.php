@@ -47,6 +47,7 @@
 
 	<div data-role="content">
 	
+	<!-- METHOD TO EXTRACT CATEGORIES USER "OWNS" IN FRIDGE -->
 	<!-- <script type="text/javascript">
 		//var usr;
 		//usr = localStorage.getItem('username'); -->
@@ -65,7 +66,7 @@
 				$catresult = mysql_query($catrequest);
 				$catID = mysql_fetch_assoc($catresult);
 				if(!array_search($catId['category_id'], $set)){
-					$set[] = $catID['category_id']
+					$set[] = $catID['category_id'];
 				}
 			}
 		}
@@ -73,12 +74,17 @@
 		foreach($set as $catNum){
 			$catrequest = sprintf('SELECT category FROM categories WHERE id = %s', $catNum);
 			$catresult = mysql_query($catrequest);
-			$ccatName = mysql_fetch_assoc($catresult);
+			$catName = mysql_fetch_assoc($catresult);
 			$displayUsrsCat[] = $catName['category'];
 		}
-		print_r($displayUsrsCat);
-		echo "<br />"
+		foreach($displayUsrsCat as $cat){
+			$button = sprintf('<input type=%s id=%s value= %s>', 'button' ,'php_button' , $cat);
+			echo $button;
+		}
 		?>
+		
+		
+		
 		<div style="position: relative; left: 50%; top: 0;">	
 			<img src="images/fridgeView.png" class="displayView" />	
 			<?
