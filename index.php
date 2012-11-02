@@ -42,6 +42,7 @@
 	<div data-role="header">
 		<a href="#Home" data-icon="back">Back</a>
 		<h1>MyFridge</h1>
+		<a href="#" data-role="button" >Logout</a>
 	</div><!-- /header -->
 
 	<div data-role="content">
@@ -71,6 +72,8 @@
 	<div data-role="header">
 		<a href="#Home" data-icon="back">Back</a>
 		<h1>MyFreezer</h1>
+		<a href="#" data-icon="gear">Settings</a>
+		<a href="#">Logout</a>
 	</div><!-- /header -->
 
 	<div data-role="content">
