@@ -12,16 +12,15 @@ if (mysql_num_rows($result) != 0)
 	if ($password == $row["password"]) 
 	{
 		setcookie("username",$user,time() + (86400 * 2)); // 86400 = 1 day
-		header("Location: index.php");
 		//echo "<p>".$_COOKIE["username"]."</p>";
 		?>
+		<html>
+		<body>
 		<script type="text/javascript">
-			// Save the username in local storage. That way you
-			// can access it later even if the user closes the app.
-			//localStorage.setItem('username', '<?=$_POST["username"]?>');
-			//console.log("User is now logged in.");
-			//window.location = "index.php";
+			window.location = "index.php";
 		</script>
+		</body>
+		</html>
 		<?php
 	} 
 	else 
