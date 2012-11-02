@@ -14,28 +14,29 @@
 			<h1>Categories</h1>
 	</div><!-- /header -->
 	<div data-role="content">
-		<ul data-role="listview">
+		<div class="ui-grid-a">
 			<?php
+				$count = 0;
 				$result = mysql_query("SELECT * from categories");
 				while($row = mysql_fetch_array($result)){
+					if ($count == 0){
+						echo '<div class="ui-block-a">';
+					} else {
+						echo '<div class="ui-block-b">';
+					}		
 			?>
-				<li><a href="list.php?cat_id=<?php echo $row["id"] ?>" rel="external"><?php echo $row["category"] ?></a></li>
+				<div class="dashboard-icon">
+					<a href="list.php?cat_id=<?php echo $row["id"] ?>" rel="external">
+						<div><img src="<?php echo $row["image_url"]?>" /></div>
+						<div class="category-name"><?php echo $row["category"] ?></div>
+					</a>
+				</div>
 			<?php
+				echo "</div>";
+				$count = ($count + 1) % 2;  
 				}
 			?>
-	<!--
-			<li><a href="#">Meats</a></li>
-			<li><a href="#">Vegetables</a></li> -->
-			<li><a href="list.php" rel="external">Fruits</a></li>
-<!--
-			<li><a href="#">Dairy</a></li>
-			<li><a href="#">Fish & Seafood</a></li>
-			<li><a href="#">Beverages</a></li>
-			<li><a href="#">Leftovers</a></li>
-			<li><a href="#">Other Foods</a></li>
-
--->
-		</ul>
+		</div>
 	</div><!-- /content -->
 </div><!-- /End of Categories List Page -->
 
