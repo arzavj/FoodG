@@ -14,7 +14,7 @@
 
 			if ($_POST['password'] == $_POST['passwordConfirm']){
 				if ($error == ""){	
-					$insert = sprintf("INSERT INTO users (username, password) VALUES (\"%s\", \"%s\");", $_POST['username'], $_POST['password']);
+					$insert = sprintf("INSERT INTO users (username, password) VALUES (\"%s\", \"%s\");", $_POST['username'], crypt($_POST['password'], $_POST['username']));
 					mysql_query($insert);
 					$uID = mysql_fetch_array(mysql_query("Select MAX(id) AS curr from users;"));
 					$result2 = mysql_query("SELECT id from storages");
