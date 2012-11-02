@@ -73,7 +73,7 @@
 		</select>
         <input type="submit" value="Register">
 	</form>
-		
+	<a href="index.php">Already Registered - Login</a>		
 	</div><!-- /content -->
 </div><!-- /page -->
 
