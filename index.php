@@ -76,6 +76,45 @@
 	</div><!-- /header -->
 
 	<div data-role="content">
+	
+	<!-- METHOD TO EXTRACT CATEGORIES USER "OWNS" IN FRIDGE -->
+	<!-- <script type="text/javascript">
+		//var usr;
+		//usr = localStorage.getItem('username'); -->
+		<?php
+		include "config.php";
+		$userId = 1; //"SELECT id FROM users WHERE username - usr";
+		$trans = sprintf('SELECT storage_id FROM user_storages WHERE user_id = %s', $userId);
+		$storeLoc = mysql_query($trans);
+		$storageId = mysql_fetch_array($storeLoc);
+		$query = sprintf('SELECT food_id FROM user_foods WHERE user_storage_id = %s', $storageId['storage_id']);
+		$result = mysql_query($query);
+		$set = array();
+		while ($row = mysql_fetch_assoc($result)){
+			foreach($row as $value){
+				$catrequest = sprintf('SELECT category_id FROM foods Where id = %s', $value);
+				$catresult = mysql_query($catrequest);
+				$catID = mysql_fetch_assoc($catresult);
+				if(!array_search($catId['category_id'], $set)){
+					$set[] = $catID['category_id'];
+				}
+			}
+		}
+		$displayUsrsCat = array();
+		foreach($set as $catNum){
+			$catrequest = sprintf('SELECT category FROM categories WHERE id = %s', $catNum);
+			$catresult = mysql_query($catrequest);
+			$catName = mysql_fetch_assoc($catresult);
+			$displayUsrsCat[] = $catName['category'];
+		}
+		foreach($displayUsrsCat as $cat){
+			$button = sprintf('<input type=%s id=%s value= %s>', 'button' ,'php_button' , $cat);
+			echo $button;
+		}
+		?>
+		
+		
+		
 		<div style="position: relative; left: 50%; top: 0;">	
 			<img src="images/fridgeView.png" class="displayView" />	
 			<?
