@@ -48,7 +48,7 @@
 	<div data-role="page" id="Home">
 		<div data-role="header">
 			<h1>Food Gatherer</h1>
-			<a href="#" id="logout" data-icon="check" data-role="button" >Logout</a>
+			<a href="logout.php" id="logout" data-icon="check" data-role="button" class="ui-btn-right">Logout</a>
 		</div><!-- /header -->
 		<div data-role="content">
 			<div style="position: absolute; text-align: center; width: 100%;">
@@ -142,7 +142,7 @@
 		<a href="#Home" data-icon="back">Back</a>
 		<h1>MyFreezer</h1>
 		<a href="#" data-icon="gear">Settings</a>
-		<a href="#">Logout</a>
+		<a href="#" id="logout">Logout</a>
 	</div><!-- /header -->
 
 	<div data-role="content">
@@ -155,7 +155,6 @@
 		?>
 
 </div><!-- /page three -->
-
 
 		
 	</body>
