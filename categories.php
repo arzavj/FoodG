@@ -15,6 +15,14 @@
 	</div><!-- /header -->
 	<div data-role="content">
 		<ul data-role="listview">
+			<?php
+				$result = mysql_query("SELECT * from categories");
+				while($row = mysql_fetch_array($result)){
+			?>
+				<li><a href="list.php?cat_id=<?php echo $row["id"] ?>" rel="external"><?php echo $row["category"] ?></a></li>
+			<?php
+				}
+			?>
 	<!--
 			<li><a href="#">Meats</a></li>
 			<li><a href="#">Vegetables</a></li> -->
