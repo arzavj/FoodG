@@ -49,12 +49,12 @@
 	</div><!-- /login page -->
 
 
-	<!-- Start of first page: #one -->
+	<!-- Start of first page: #one 
 	<div data-role="page" id="Home">
 		<div data-role="header">
 			<h1>Food Gatherer</h1>
 			<a href="logout.php" id="logout" data-icon="check" data-role="button" class="ui-btn-right">Logout</a>
-		</div><!-- /header -->
+		</div><!-- /header
 		<div data-role="content">
 			<div style="position: absolute; text-align: center; width: 100%;">
 				<img src="images/fridgeHome.png" usemap ="#fridgeMap" id="mainFridge"/>
@@ -64,18 +64,18 @@
 				<area shape="rect" coords="104,0,237,452" href="#fridgeview" alt="" title=""    />
 
 			</map>
-		</div><!-- /content -->
+		</div><<!-- /content
 		<?php
 			include("footer.php");
 		?>
-	</div><!-- /page one -->
+	</div> /page one -->
 
 		
 		<!-- Start of second page: #fridgeview -->
-<div data-role="page" id="fridgeview" data-add-back-btn="true">
+<div data-role="page" id="Home" data-add-back-btn="true">
 
 	<div data-role="header">
-		<a href="#Home" data-icon="back">Back</a>
+		<!-- <a href="#Home" data-icon="back">Back</a> -->
 		<h1>MyFridge</h1>
 		<a href="#" data-role="button" >Logout</a>
 	</div><!-- /header -->
@@ -143,26 +143,14 @@
 			foreach($itemArray as $item){
 				
 				echo "<div>\n";
+				echo "<a href='description.php'>";
 				echo "<p>".$item['food'];
 				$image = sprintf("<img src= %s class = %s />", $item['image_url'],'thumb' );
-				echo $image."</p>\n";
+				echo $image."</a></p>\n";
 				echo "</div>\n";
 			}
 		}
 		?>
-		
-		<div style="position: relative; left: 50%; top: 0;">	
-			<img src="images/fridgeView.png" class="displayView" />	
-			<?
-				if($_POST["name"] == "Apple"){
-			?>
-
-			<img src="images/apple.jpg" style="width: 25px; height: 25px; position: absolute; top: 240px; left: 0;" />
-
-			<?php
-			}
-			?>
-		</div>
 		
 		
 	</div><!-- /content -->
