@@ -16,68 +16,68 @@
 	<div data-role="content">
 		<div class="ui-grid-a">
 			<div class="ui-block-a">
-				<a href="list.php" rel="external">
 				<div class="dashboard-icon">
+					<a href="list.php" rel="external">
 					<div><img src="images/fruit-icon.svg" /></div>
 					<div class="category-name">Fruits</div>
+					</a>
 				</div>
-				</a>
 			</div>
 			<div class="ui-block-b">
-				<a href="list.php" rel="external">
 				<div class="dashboard-icon">
+					<a href="list.php" rel="external">
 					<div><img src="images/meat-icon.svg" /></div>
 					<div class="category-name">Meats</div>
+					</a>
 				</div>
-				</a>
 			</div>
 			<div class="ui-block-a">
-				<a href="list.php" rel="external">
 				<div class="dashboard-icon">
+					<a href="list.php" rel="external">
 					<div><img src="images/vegetable-icon.svg" /></div>
 					<div class="category-name">Vegetables</div>
+					</a>
 				</div>
-				</a>
 			</div>	
 			<div class="ui-block-b">
-				<a href="list.php" rel="external">
 				<div class="dashboard-icon">
+					<a href="list.php" rel="external">
 					<div><img src="images/dairy-icon.svg" /></div>
 					<div class="category-name">Dairy</div>
+					</a>
 				</div>
-				</a>
 			</div>	
 			<div class="ui-block-a">
-				<a href="list.php" rel="external">
 				<div class="dashboard-icon">
+					<a href="list.php" rel="external">
 					<div><img src="images/fish-icon.svg" /></div>
 					<div class="category-name">Fish & Seafood</div>
+					</a>
 				</div>
-				</a>
 			</div>	
 			<div class="ui-block-b">
-				<a href="list.php" rel="external">
 				<div class="dashboard-icon">
+					<a href="list.php" rel="external">
 					<div><img src="images/liquid-icon.svg" /></div>
 					<div class="category-name">Liquids</div>
+					</a>
 				</div>
-				</a>
 			</div>	
 			<div class="ui-block-a">
-				<a href="list.php" rel="external">
 				<div class="dashboard-icon">
+					<a href="list.php" rel="external">
 					<div><img src="images/grain-icon.svg" /></div>
 					<div class="category-name">Grains & Cereals</div>
+					</a>
 				</div>
-				</a>
 			</div>	
 			<div class="ui-block-b">
-				<a href="list.php" rel="external">
 				<div class="dashboard-icon">
+					<a href="list.php" rel="external">
 					<div><img src="images/other-icon.svg" /></div>
 					<div class="category-name">Other</div>
+					</a>
 				</div>
-				</a>
 			</div>	
 			
 		</div>

@@ -42,19 +42,18 @@ img.source-image {
 	border: 1px solid black;
 	border-radius:15px;
 	background-color: #DADADA;
-	cursor:pointer;
 }
 
 a
 {
 	text-decoration: none;
 }
-.ui-grid-a .dashboard-icon > .category-name
+.ui-grid-a .dashboard-icon .category-name
 {
 	color: black;
 }
 
-.dashboard-icon > div > img
+.dashboard-icon img
 {
 	width:50%;
 	height:7%;
