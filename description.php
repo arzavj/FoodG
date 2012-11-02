@@ -6,7 +6,7 @@
 	</head>
 	<body>
 		<div data-role="header">
-            <a href="list.php" data-icon="back">Back</a>
+            <a data-rel="back" data-icon="back">Back</a>
 			<h1>Apple</h1>
 	    </div><!-- /header -->
 		<div class="ui-grid-a">

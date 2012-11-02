@@ -10,7 +10,7 @@
 
 <div data-role="page" id="fridgeview" data-add-back-btn="true">
 	<div data-role="header">
-		<a href="index.php" data-icon="back">Back</a>
+		<a data-rel="back" data-icon="back">Back</a>
 			<h1>Categories</h1>
 	</div><!-- /header -->
 	<div data-role="content">
