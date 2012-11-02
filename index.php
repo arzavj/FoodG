@@ -77,7 +77,7 @@
 	<div data-role="header">
 		<!-- <a href="#Home" data-icon="back">Back</a> -->
 		<h1>MyFridge</h1>
-		<a href="#" data-role="button" >Logout</a>
+		<a href="logout.php" data-role="button" >Logout</a>
 	</div><!-- /header -->
 
 	<div data-role="content">
@@ -109,10 +109,10 @@
 		$usrrequest = sprintf('SELECT id FROM users WHERE username = \'%s\'', $userName);
 		$userresult = mysql_query($usrrequest);
 		$userId = mysql_fetch_assoc($userresult);
-		$storequest= sprintf('SELECT storage_id FROM user_storages WHERE user_id = %s', $userId['id']);
+		$storequest= sprintf('SELECT id FROM user_storages WHERE user_id = %s', $userId['id']);
 		$storeLoc = mysql_query($storequest);
 		$storageId = mysql_fetch_array($storeLoc);
-		$query = sprintf('SELECT food_id FROM user_foods WHERE user_storage_id = %s', $storageId['storage_id']);
+		$query = sprintf('SELECT food_id FROM user_foods WHERE user_storage_id = %s', $storageId['id']);
 		$result = mysql_query($query);
 		$set = array();
 		while ($row = mysql_fetch_assoc($result)){
@@ -139,11 +139,12 @@
 			$numRequest = sprintf('SELECT id FROM categories WHERE category= \'%s\'', $cat);
 			$numResult = mysql_query($numRequest);
 			$catNum = mysql_fetch_assoc($numResult);
-			$itemArray = filterFridgeView($storageId['storage_id'], $catNum['id']);
+			$itemArray = filterFridgeView($storageId['id'], $catNum['id']);
 			foreach($itemArray as $item){
 				
 				echo "<div>\n";
-				echo "<a href='description.php'>";
+				$link = sprintf("<a href='description.php?food=%s'>", $item['id']);
+				echo $link;
 				echo "<p>".$item['food'];
 				$image = sprintf("<img src= %s class = %s />", $item['image_url'],'thumb' );
 				echo $image."</a></p>\n";
@@ -152,6 +153,9 @@
 		}
 		?>
 		
+		<div style="position: relative; left: 50%; top: 0;">	
+			<img src="images/fridgeView.png" class="displayView" />	
+		</div>
 		
 	</div><!-- /content -->
 	<?php

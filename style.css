@@ -8,6 +8,13 @@
 	height: 100px;
 }	
 
+.image_description{
+	margin-left: auto;
+	margin-right: auto;
+	width: 10em;
+	height: 10em;
+}
+
 #mainFridge{
 	margin-left: auto;
 	margin-right: auto;
