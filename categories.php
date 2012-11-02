@@ -26,7 +26,7 @@
 					}		
 			?>
 				<div class="dashboard-icon">
-					<a href="list.php?cat_id=<?php echo $row["id"] ?>" rel="external">
+					<a href="list.php?cat_id=<?php echo $row["id"] ?>">
 						<div><img src="<?php echo $row["image_url"]?>" /></div>
 						<div class="category-name"><?php echo $row["category"] ?></div>
 					</a>
