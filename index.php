@@ -83,7 +83,7 @@
 			foreach($itemArray as $item){
 				
 				echo "<div>\n";
-				$link = sprintf("<a href='description.php?food=%s'>", $item['id']);
+				$link = sprintf("<a href='description.php?food=%s&update=1'>", $item['id']);
 				echo $link;
 				echo "<p>".$item['food'];
 				$image = sprintf("<img src= %s class = %s />", $item['image_url'],'thumb' );
