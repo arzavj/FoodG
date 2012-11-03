@@ -3,7 +3,6 @@ include("config.php");
 $user = $_POST["username"];
 $query = "SELECT password FROM users where username='$user'";
 $result = mysql_query($query);
-$error = "<p>Either your username or password is incorrect.</p>";
 
 // This section is partly based on http://stackoverflow.com/questions/5285388/mysql-check-if-username-and-password-matches-in-database
 if (!is_null($user)){
@@ -26,14 +25,13 @@ if (!is_null($user)){
 		} 
 		else 
 		{
-
-			echo $error;
+			$error = "<p>Either your username or password is incorrect.</p>";
 			include "loginForm.php";
 		}
 	} 
 	else 
 	{
-		echo $error;
+		$error = "<p>Either your username or password is incorrect.</p>";
 		include "loginForm.php";
 	}
 } else{

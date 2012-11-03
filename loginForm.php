@@ -8,6 +8,9 @@
 	</div><!-- /header -->
 
 	<div data-role="content">
+		<?php
+			echo $error;
+		?>
 		<form action="login.php" method="post">
 			<label for="username">Username:</label>
 			<input type="text" name="username">
