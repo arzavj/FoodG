@@ -9,3 +9,14 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="viewport" content="width=device-width, user-scalable=no" />
 <title>FoodG</title>
+
+<?php
+	if($_COOKIE["username"] == "" && is_null($loggingIn))
+	{
+?>
+		<script type="text/javascript">
+			window.location="login.php";
+		</script>
+<?php
+	}
+?>
