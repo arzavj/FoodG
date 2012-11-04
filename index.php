@@ -46,42 +46,20 @@
 		include "config.php";
 		$userName = $_COOKIE['username'];
 		echo "Hello, <b>".$userName."</b>. <br>";
-		$usrrequest = sprintf('SELECT id FROM users WHERE username = \'%s\'', $userName);
-		$userresult = mysql_query($usrrequest);
-		$userId = mysql_fetch_assoc($userresult);
-		$storequest= sprintf('SELECT id FROM user_storages WHERE user_id = %s', $userId['id']);
+		$storequest= sprintf('SELECT user_storages.id FROM user_storages inner join users ON users.id = user_storages.user_id  WHERE users.username = \'%s\'', $userName);
 		$storeLoc = mysql_query($storequest);
 		$storageId = mysql_fetch_array($storeLoc);
 		$query = sprintf('SELECT food_id FROM user_foods WHERE user_storage_id = %s', $storageId['id']);
-		$result = mysql_query($query);
-		$set = array();
-		while ($row = mysql_fetch_assoc($result)){
-				$catrequest = sprintf('SELECT category_id FROM foods Where id = %s', $row['food_id']);
-				$catresult = mysql_query($catrequest);
-				$catID = mysql_fetch_assoc($catresult);
-				$element = $catID['category_id'];
-				if(! in_array($element, $set) ){
-					$set[] = $catID['category_id'];
-				}
-		}
-		$displayUsrsCat = array();
-		foreach($set as $catNum){
-			$catrequest = sprintf('SELECT category FROM categories WHERE id = %s', $catNum);
-			$catresult = mysql_query($catrequest);
-			$catName = mysql_fetch_assoc($catresult);
-			$displayUsrsCat[] = $catName['category'];
-		}
 
-		$accordion = sprintf('<div id=%s >', "accordion");
-		echo $accordion;
-		foreach($displayUsrsCat as $cat){
-			echo "<h2>".$cat."</h2>\n";
-			$numRequest = sprintf('SELECT id FROM categories WHERE category= \'%s\'', $cat);
-			$numResult = mysql_query($numRequest);
-			$catNum = mysql_fetch_assoc($numResult);
-			$itemArray = filterFridgeView($storageId['id'], $catNum['id']);
-			foreach($itemArray as $item){
-				
+		$catrequest = sprintf('SELECT DISTINCT categories.id AS id, category FROM foods inner join categories ON categories.id = foods.category_id WHERE foods.id IN (%s)', $query);
+		$catresult = mysql_query($catrequest);
+
+		echo '<div id="accordion">';
+		while ($row = mysql_fetch_assoc($catresult)){
+			echo "<h2>".$row["category"]."</h2>\n";
+			$itemsQuery = sprintf("SELECT foods.* from user_foods inner join foods ON foods.id = user_foods.food_id WHERE user_storage_id = %s AND foods.category_id = %s", $storageId['id'], $row['id']);
+			$itemsresult = mysql_query($itemsQuery);
+			while ($item = mysql_fetch_assoc($itemsresult)){
 				echo "<div>\n";
 				$link = sprintf("<a href='description.php?food=%s&update=1'>", $item['id']);
 				echo $link;
@@ -91,6 +69,7 @@
 				echo "</div>\n";
 			}
 		}
+		echo '</div>';
 		?>
 		
 		<div style="position: relative; left: 50%; top: 0;">	
