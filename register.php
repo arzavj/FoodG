@@ -60,12 +60,9 @@
 ?>
 
 	<form action="register.php" method="POST">
-		<label for="user">Username:</label>
-		<input type="text" name="username" id="user">
-		<label for="pass">Password:</label>
-		<input type="password" name="password" id="pass">
-		<label for="passConfirm">Password Confirmation:</label>
-		<input type="password" name="passwordConfirm" id="passConfirm">
+		<input type="text" name="username" id="user" placeholder="Username" >
+		<input type="password" name="password" id="pass" placeholder="Password">
+		<input type="password" name="passwordConfirm" id="passConfirm" placeholder="Password Confirmation">
 		<select name="size">
 			<option value="10">Small</option>
 			<option value="20">Medium</option>
