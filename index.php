@@ -11,8 +11,8 @@
 	</head>
 	<body>
 		
-<!-- Start of first page: #fridgeview -->
-<div data-role="page" id="Home" data-add-back-btn="true">
+<!-- Main view -->
+<div data-role="page" data-add-back-btn="true">
 
 	<div data-role="header">
 		<!-- <a href="#Home" data-icon="back">Back</a> -->
@@ -21,26 +21,6 @@
 	</div><!-- /header -->
 
 	<div data-role="content">
-	
-	<!-- METHOD TO EXTRACT CATEGORIES USER "OWNS" IN FRIDGE -->
-	<?php
-		function filterFridgeView($storeID, $cat){
-			$storequest = sprintf('SELECT food_id FROM user_foods WHERE user_storage_id = %s', $storeID);
-			$storesult = mysql_query($storequest);	
-			$foodset = array();
-			while($row = mysql_fetch_assoc($storesult)){
-				$foodrequest = sprintf('SELECT * FROM foods WHERE category_id = %s && id = %s', $cat, $row['food_id']);
-				$foodresult = mysql_query($foodrequest);
-				if(mysql_num_rows($foodresult)>0){
-					$foodset[] = mysql_fetch_assoc($foodresult);
-				}
-			}
-			return $foodset;
-		}
-	?>
-		
-		
-		
 		
 		<?php
 		include "config.php";
@@ -72,16 +52,18 @@
 		echo '</div>';
 		?>
 		
+		<!--
 		<div style="position: relative; left: 50%; top: 0;">	
 			<img src="images/fridgeView.png" class="displayView" />	
 		</div>
+		-->
 		
 	</div><!-- /content -->
 	<?php
 		include("footer.php");
 	?>
 
-</div><!-- /page two -->
+</div>
 
 
 

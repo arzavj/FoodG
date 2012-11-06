@@ -39,7 +39,8 @@
 <div data-role="page">
 
 	<div data-role="header">
-	<h1>Register</h1>
+		<a data-rel="back" data-icon="back">Back</a>
+		<h1>Register</h1>
 
 	</div><!-- /header -->
 
@@ -69,8 +70,7 @@
 			<option value="30">Large</option>
 		</select>
         <input type="submit" value="Register">
-	</form>
-	<a href="index.php">Already Registered - Login</a>		
+	</form>	
 	</div><!-- /content -->
 </div><!-- /page -->
 
