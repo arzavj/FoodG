@@ -57,6 +57,8 @@
 			<img src="images/fridgeView.png" class="displayView" />	
 		</div>
 		-->
+		<br />
+		<a href="search.php"><i>Search</i></a>
 		
 	</div><!-- /content -->
 	<?php
