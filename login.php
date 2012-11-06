@@ -1,7 +1,7 @@
 <?php
 include("config.php");
 $user = $_POST["username"];
-$query = "SELECT password FROM users where username='$user'";
+$query = "SELECT id, password FROM users where username='$user'";
 $result = mysql_query($query);
 
 // This section is partly based on http://stackoverflow.com/questions/5285388/mysql-check-if-username-and-password-matches-in-database
@@ -12,7 +12,7 @@ if (!is_null($user)){
 		$password = crypt($_POST["password"], $user);
 		if ($password == $row["password"]) 
 		{
-			setcookie("username",$user,time() + (86400 * 2)); // 86400 = 1 day
+			setcookie("user-id",$row["id"],time() + (86400 * 2)); // 86400 = 1 day
 			?>
 			<html>
 			<body>

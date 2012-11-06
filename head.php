@@ -11,7 +11,7 @@
 <title>FoodG</title>
 
 <?php
-	if($_COOKIE["username"] == "" && is_null($loggingIn))
+	if($_COOKIE["user-id"] == "" && is_null($loggingIn))
 	{
 ?>
 		<script type="text/javascript">
