@@ -33,7 +33,19 @@
 	 			<input type="hidden" name="food_id" value="<?php  echo $_GET['food']; ?>" />
 				<div data-role="fieldcontain">
 					<label for="quantity" class="ui-input-text" style="display :inline;">Quantity: </label>
-					<input type="number" name="quantity" value= "<?php echo $row["quantity"]?>" style="display :inline; width: 50%;"/><span style="display :inline"> units</span>
+					<input type="number" name="quantity" value= "<?php echo $row["quantity"]?>" style="display :inline; width: 50%;"/>
+					<select data-inline="true" data-native-menu="false" name="quantity_type" id="quantity">
+						<?php
+							$result = mysql_query("SELECT * from quantity_types");
+							while($row = mysql_fetch_array($result))
+							{
+	
+						?>
+								<option value="<?php echo $row["id"] ?>"><?php echo $row["quantity_type"]?></option>
+						<?php
+							}
+						?>
+					</select>
 				</div>
 				<!-- <div data-role="fieldcontain">
 					<label for="expiry" class="ui-input-text">Expiry Date: </label>
