@@ -17,7 +17,7 @@
 	<div data-role="header">
 		<!-- <a href="#Home" data-icon="back">Back</a> -->
 		<h1>My Fridge</h1>
-		<a href="logout.php" data-role="button" >Logout</a>
+		<a href="logout.php" data-role="button" class="ui-btn-right">Logout</a>
 	</div><!-- /header -->
 
 	<div data-role="content">

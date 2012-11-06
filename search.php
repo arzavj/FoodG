@@ -11,7 +11,7 @@
 
 	<div data-role="header">
 		<h1>My Fridge</h1>
-		<a href="logout.php" data-role="button" >Logout</a>
+		<a href="logout.php" data-role="button" class="ui-btn-right">Logout</a>
 	</div><!-- /header -->
 
 	<div data-role="content">
@@ -38,7 +38,7 @@
     	$.post("ajaxSearch.php", {search:$("#searchField").val()}, function(data) {
     		var sugList = $("#suggestions");
 			sugList.html(data);
-			sugList.listview("refresh");
+			sugList.listview("refresh").trigger("create");
 		});
     }
 </script>

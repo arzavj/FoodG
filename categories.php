@@ -10,8 +10,9 @@
 
 <div data-role="page" id="fridgeview" data-add-back-btn="true">
 	<div data-role="header">
-		<a data-rel="back" data-icon="back">Back</a>
-			<h1>Categories</h1>
+		<!-- <a data-rel="back" data-icon="back">Back</a> -->
+		<h1>Categories</h1>
+		<a href="logout.php" data-role="button" class="ui-btn-right">Logout</a>
 	</div><!-- /header -->
 	<div data-role="content">
 		<div class="ui-grid-a">
