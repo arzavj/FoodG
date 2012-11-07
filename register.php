@@ -19,7 +19,8 @@
 					$uID = mysql_fetch_array(mysql_query("Select MAX(id) AS curr from users;"));
 					$result2 = mysql_query("SELECT id from storages");
 					while($row = mysql_fetch_array($result2)){
-						$insert = sprintf("INSERT INTO user_storages (user_id, storage_id, volume) VALUES (\"%s\", \"%s\", \"%s\");", $uID["curr"], $row["id"], $_POST['size']);
+						$volume = intval($_POST['length']) * intval($_POST['width']) * intval($_POST['breadth']);
+						$insert = sprintf("INSERT INTO user_storages (user_id, storage_id, volume) VALUES (%s, %s, %s);", $uID["curr"], $row["id"], $volume);
 						mysql_query($insert);
 					}
 					
@@ -33,8 +34,6 @@
 
 </head>  
 <body> 
-
-
 
 <div data-role="page">
 
@@ -51,28 +50,68 @@
 	?>
 
 	<?php 
-		if ($test):
+		if ($test){	
+			setcookie("user-id",$uID["curr"],time() + (86400 * 2)); // 86400 = 1 day
 	?>
 		<script>
 			window.location="index.php";
 		</script>
 	<?php
-	endif
-?>
+		}
+	?>
 
 	<form action="register.php" method="POST">
 		<input type="text" name="username" id="user" placeholder="Username" >
 		<input type="password" name="password" id="pass" placeholder="Password">
 		<input type="password" name="passwordConfirm" id="passConfirm" placeholder="Password Confirmation">
-		<select name="size">
-			<option value="10">Small</option>
-			<option value="20">Medium</option>
-			<option value="30">Large</option>
-		</select>
+		<label for="Space Dimensions" style="font-weight:bold;">Fridge Dimensions: </label>
+		<div id="known">
+			<center>
+				<input type="number" name="width" id ="width" placeholder="L:" style="margin-left:10%;width:20%;display:inline;"/>
+				<input type="number" name="height" id ="height" placeholder="W:" style="margin-left:10%;width:20%;display:inline;"/>
+				<input type="number" name="breadth" id ="breadth" placeholder="B:" style="margin-left:10%;width:20%;display:inline;"/>
+			</center>
+			<a href="#" onclick="showSelect();">Don't know. Click here.</a>
+		</div>
+		<div id="unknown" style="display: none;">
+			<select id="simple" onchange="updateVolume(this);">
+				<option value="1">Small</option>
+				<option value="2">Medium</option>
+				<option value="3">Large</option>
+			</select>
+		</div>
+		<br />
         <input type="submit" value="Register">
 	</form>	
 	</div><!-- /content -->
 </div><!-- /page -->
+
+	<script>
+		function showSelect(){
+			$("#known").hide();
+			$("#unknown").show();
+			updateVolume(document.getElementById("simple"));
+		}
+
+		function updateVolume(selectObj){
+			var idx = selectObj.selectedIndex; 
+			var which = selectObj.options[idx].value;
+
+			if(which == 1){
+				$("#width").val(1.2);
+				$("#height").val(1.2);
+				$("#breadth").val(1.2);
+			}else if (which == 2){
+				$("#width").val(2.4);
+				$("#height").val(2.4);
+				$("#breadth").val(2.4);
+			}else if (which == 3){
+				$("#width").val(3.6);
+				$("#height").val(3.6);
+				$("#breadth").val(3.6);
+			}
+		}
+	</script>
 
 </body>
 </html>
