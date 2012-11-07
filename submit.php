@@ -1,7 +1,7 @@
 <?php
 	include "config.php";
 	
-	$user_storage_query = sprintf("SELECT user_storages.id AS id from user_storages inner join users ON (users.id = user_storages.user_id) WHERE users.username = \"%s\"", $_COOKIE["username"]);
+	$user_storage_query = sprintf("SELECT id from user_storages WHERE user_id = %s", $_COOKIE["user-id"]);
 	$user_storage = mysql_fetch_array(mysql_query($user_storage_query));
 
 	

@@ -9,7 +9,7 @@
 		<div data-role="header">
             <!-- <a data-rel="back" data-icon="back">Back</a> -->
             <?php
-            	$query = sprintf("SELECT foods.*, user_foods.quantity from ((users inner join user_storages ON (users.id = user_storages.user_id)) inner join user_foods ON (user_storages.id = user_foods.user_storage_id)) inner join foods ON (user_foods.food_id = foods.id) WHERE users.username = \"%s\" AND foods.id = %s LIMIT 1", $_COOKIE['username'], $_GET['food']);
+            	$query = sprintf("SELECT foods.*, user_foods.quantity from (user_storages inner join user_foods ON (user_storages.id = user_foods.user_storage_id)) inner join foods ON (user_foods.food_id = foods.id) WHERE user_storages.user_id = %s AND foods.id = %s LIMIT 1", $_COOKIE['user-id'], $_GET['food']);
             	$user_result = mysql_query($query);
             	$row = NULL;
             	$update = $_GET['update'] ? "1" : "0";
