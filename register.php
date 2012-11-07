@@ -35,64 +35,64 @@
 
 	</head>  
 	<body> 
-		<script>
-			$(document).ready(function(){
-				$("#reg").submit(checkDimensions);
-			});
-
-			function checkDimensions(){
-				var error = "";
-				if (!$("#width").val()){
-					error = error + "Please enter a width \n";
-				}
-				
-				if (!$("#height").val()){
-					error = error + "Please enter a height \n";
-				}
-
-				if (!$("#breadth").val()){
-					error = error + "Please enter a breadth \n";
-				}
-
-				if (error != ""){
-					alert(error);
-					return false;
-				}
-
-				return true;
-			}
-
-			function unhide(){
-				$("#known").show();
-			}
-
-			function showSelect(){
-				$("#known").hide();
-				$("#unknown").show();
-				updateVolume(document.getElementById("simple"));
-			}
-
-			function updateVolume(selectObj){
-				var idx = selectObj.selectedIndex; 
-				var which = selectObj.options[idx].value;
-
-				if(which == 1){
-					$("#width").val(1.2);
-					$("#height").val(1.2);
-					$("#breadth").val(1.2);
-				}else if (which == 2){
-					$("#width").val(2.4);
-					$("#height").val(2.4);
-					$("#breadth").val(2.4);
-				}else if (which == 3){
-					$("#width").val(3.6);
-					$("#height").val(3.6);
-					$("#breadth").val(3.6	);
-				}
-			}
-		</script>
-
 		<div data-role="page">
+
+			<script>
+				$(document).ready(function(){
+					$("#reg").submit(checkDimensions);
+				});
+
+				function checkDimensions(){
+					var error = "";
+					if (!$("#width").val()){
+						error = error + "Please enter a width \n";
+					}
+				
+					if (!$("#height").val()){
+						error = error + "Please enter a height \n";
+					}
+
+					if (!$("#breadth").val()){
+						error = error + "Please enter a breadth \n";
+					}
+
+					if (error != ""){
+						alert(error);
+						return false;
+					}
+
+					return true;
+				}
+
+				function unhide(){
+					$("#known").show();
+				}
+
+				function showSelect(){
+					$("#known").hide();
+					$("#unknown").show();
+					updateVolume(document.getElementById("simple"));
+				}
+
+				function updateVolume(selectObj){
+					var idx = selectObj.selectedIndex; 
+					var which = selectObj.options[idx].value;
+
+					if(which == 1){
+						$("#width").val(1.2);
+						$("#height").val(1.2);
+						$("#breadth").val(1.2);
+					}else if (which == 2){
+						$("#width").val(2.4);
+						$("#height").val(2.4);
+						$("#breadth").val(2.4);
+					}else if (which == 3){
+						$("#width").val(3.6);
+						$("#height").val(3.6);
+						$("#breadth").val(3.6	);
+					}
+				}
+			</script>
 
 			<div data-role="header">
 				<a data-rel="back" data-icon="back">Back</a>
