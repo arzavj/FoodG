@@ -18,6 +18,6 @@
 			<input type="password" name="password">
 			<input type="submit" value="Login">
 		</form>
-		<a href="register.php">Click here to register</a>
+		<a href="register.php" rel="external">Click here to register</a>
 	</div><!-- /content -->
 </div><!-- /login page -->
