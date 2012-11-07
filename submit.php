@@ -11,7 +11,7 @@
 		if (mysql_num_rows($test_result) == 0){
 			$query = sprintf("INSERT INTO user_foods(user_storage_id, food_id, quantity, quantity_type_id) VALUES (%s, %s, %s, %s)", $user_storage["id"], $_POST["food_id"], $_POST["quantity"], $_POST["quantity_type_id"]);
 			mysql_query($query);
-			updateFridgeVolume($user_storage["id"], calculateAddedVolume($_POST["quantity"], $_POST["quantity_type_id"]));
+			updateFridgeVolume($user_storage["id"], calculateAddedVolume($_POST["food_id"], $_POST["quantity"], $_POST["quantity_type_id"]));
 		} else{
 			//TODO make the alert and update points
 		}
@@ -26,18 +26,28 @@
 	}
 	
 	//returns added volume
-	function calculateAddedVolume(quantity, quantity_type_id)
+	function calculateAddedVolume($food_id, $quantity, $quantity_type_id)
 	{
-		
+		$query = sprintf("SELECT * from quantity_types WHERE id = %s", $quantity_type_id);
+		$quantityRow = mysql_fetch_array(mysql_query($query));
+		$query = sprintf("SELECT * from foods WHERE id = %s", $food_id);
+		$foodRow = mysql_fetch_array(mysql_query($query));
+		if($quantityRow["kg_equivalent"]==0)
+		{
+			//take care of things like apples
+		}
+		else
+			return ($quantity*$quantityRow["kg_equivalent"])/$foodRow["density"]; //volume = mass (kg) / density (kg/m3)
 	}
 	
 	//gets current volume and updates it
-	function updateFridgeVolume(user_storage_id, addedVolume)
+	//addedVolume is a double
+	function updateFridgeVolume($user_storage_id, $addedVolume)
 	{
-		$query = sprintf("SELECT user_storages.curr_volume from user_storages WHERE id = %s", user_storage_id);
+		$query = sprintf("SELECT user_storages.curr_volume from user_storages WHERE id = %s", $user_storage_id);
 		$storage = mysql_fetch_array(mysql_query($query));
-		$newVolume = intval($storage["curr_volume"]) + addedVolume;
-		$updateQuery = sprintf("UPDATE user_storages SET curr_volume = %s WHERE id = %s", $newVolume, user_storage_id);
+		$newVolume = $storage["curr_volume"] + $addedVolume;
+		$updateQuery = sprintf("UPDATE user_storages SET curr_volume = %f WHERE id = %s", $newVolume, $user_storage_id);
 		mysql_query($updateQuery);
 	}
 

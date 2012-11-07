@@ -24,9 +24,12 @@
 		
 		<?php
 		include "config.php";
-		// $userName = $_COOKIE['username'];
-		// echo "Hello, <b>".$userName."</b>. <br>";
-		$storequest= sprintf('SELECT user_storages.id FROM user_storages inner join users ON users.id = user_storages.user_id  WHERE users.username = \'%s\'', $userName);
+
+		$userName = sprintf("SELECT username from users WHERE id = %s", $_COOKIE['user-id']);
+		$userName = mysql_fetch_array(mysql_query($userName));
+		echo "Hello, <b>".$userName["username"]."</b>. <br>";
+		$storequest= sprintf('SELECT user_storages.id FROM user_storages WHERE user_id = %s', $_COOKIE['user-id']);
+
 		$storeLoc = mysql_query($storequest);
 		$storageId = mysql_fetch_array($storeLoc);
 		$query = sprintf('SELECT food_id FROM user_foods WHERE user_storage_id = %s', $storageId['id']);
