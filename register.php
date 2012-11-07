@@ -36,9 +36,38 @@
 	</head>  
 	<body> 
 		<script>
+			$(document).ready(function(){
+				$("#reg").submit(checkDimensions);
+			});
+
+			function checkDimensions(){
+				var error = "";
+				if (!$("#width").val()){
+					error = error + "Please enter a width \n";
+				}
+				
+				if (!$("#height").val()){
+					error = error + "Please enter a height \n";
+				}
+
+				if (!$("#breadth").val()){
+					error = error + "Please enter a breadth \n";
+				}
+
+				if (error != ""){
+					alert(error);
+					return false;
+				}
+
+				return true;
+			}
+
+			function unhide(){
+				$("#known").show();
+			}
 
 			function showSelect(){
-				$("#known").fadeTo("fast",0);
+				$("#known").hide();
 				$("#unknown").show();
 				updateVolume(document.getElementById("simple"));
 			}
@@ -48,17 +77,17 @@
 				var which = selectObj.options[idx].value;
 
 				if(which == 1){
-					$("#width").val(1);
-					$("#height").val(1);
-					$("#breadth").val(1);
+					$("#width").val(1.2);
+					$("#height").val(1.2);
+					$("#breadth").val(1.2);
 				}else if (which == 2){
-					$("#width").val(2);
-					$("#height").val(2);
-					$("#breadth").val(2);
+					$("#width").val(2.4);
+					$("#height").val(2.4);
+					$("#breadth").val(2.4);
 				}else if (which == 3){
-					$("#width").val(3);
-					$("#height").val(3);
-					$("#breadth").val(3);
+					$("#width").val(3.6);
+					$("#height").val(3.6);
+					$("#breadth").val(3.6);
 				}
 			}
 		</script>
@@ -94,9 +123,9 @@
 					<label for="Space Dimensions" style="font-weight:bold;">Fridge Dimensions: </label>
 					<div id="known">
 						<center>
-							<input type="number" name="width" id ="width" placeholder="L:" style="margin-left:10%;width:20%;display:inline;"/>
-							<input type="number" name="height" id ="height" placeholder="W:" style="margin-left:10%;width:20%;display:inline;"/>
-							<input type="number" name="breadth" id ="breadth" placeholder="B:" style="margin-left:10%;width:20%;display:inline;"/>
+							<input type="number" name="width" id ="width" placeholder="L:" style="margin-left:10%;width:20%;display:inline;" step="any"/>
+							<input type="number" name="height" id ="height" placeholder="W:" style="margin-left:10%;width:20%;display:inline;" step="any"/>
+							<input type="number" name="breadth" id ="breadth" placeholder="B:" style="margin-left:10%;width:20%;display:inline;" step="any"/>
 						</center>
 						<a href="#" onclick="showSelect();">Don't know. Click here.</a>
 					</div>
@@ -108,7 +137,7 @@
 						</select>
 					</div>
 					<br />
-        			<input type="submit" value="Register">
+        			<input type="submit" value="Register" onclick="unhide();">
 				</form>	
 			</div><!-- /content -->
 		</div><!-- /page -->
