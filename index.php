@@ -24,8 +24,8 @@
 		
 		<?php
 		include "config.php";
-		$userName = $_COOKIE['username'];
-		echo "Hello, <b>".$userName."</b>. <br>";
+		// $userName = $_COOKIE['username'];
+		// echo "Hello, <b>".$userName."</b>. <br>";
 		$storequest= sprintf('SELECT user_storages.id FROM user_storages inner join users ON users.id = user_storages.user_id  WHERE users.username = \'%s\'', $userName);
 		$storeLoc = mysql_query($storequest);
 		$storageId = mysql_fetch_array($storeLoc);
