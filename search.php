@@ -7,10 +7,23 @@
 	<body>
 		
 <!-- Main view -->
-<div data-role="page">
+<div data-role="page" data-add-back-btn="true">
+	<script type="text/javascript">
+		fill();
+  		$("#searchField").on("input", function(e) {
+    		fill();
+    	});
+
+    	function fill(){
+    		$.post("ajaxSearch.php", {search:$("#searchField").val()}, function(data) {
+    			var sugList = $("#suggestions");
+				sugList.html(data);
+				sugList.listview("refresh").trigger("create");
+			});
+    	}
+	</script>
 
 	<div data-role="header">
-		<a data-rel="back" data-icon="back">Back</a>
 		<h1>My Fridge</h1>
 		<a href="logout.php" data-role="button" class="ui-btn-right">Logout</a>
 	</div><!-- /header -->
@@ -28,21 +41,6 @@
 	?>
 
 </div>
-
-<script type="text/javascript">
-	fill();
-  	$("#searchField").on("input", function(e) {
-    	fill();
-    });
-
-    function fill(){
-    	$.post("ajaxSearch.php", {search:$("#searchField").val()}, function(data) {
-    		var sugList = $("#suggestions");
-			sugList.html(data);
-			sugList.listview("refresh").trigger("create");
-		});
-    }
-</script>
 
 		
 	</body>
