@@ -87,7 +87,7 @@
 				}else if (which == 3){
 					$("#width").val(3.6);
 					$("#height").val(3.6);
-					$("#breadth").val(3.6);
+					$("#breadth").val(3.6	);
 				}
 			}
 		</script>
@@ -123,9 +123,9 @@
 					<label for="Space Dimensions" style="font-weight:bold;">Fridge Dimensions: </label>
 					<div id="known">
 						<center>
-							<input type="number" name="width" id ="width" placeholder="L:" style="margin-left:10%;width:20%;display:inline;" step="any"/>
-							<input type="number" name="height" id ="height" placeholder="W:" style="margin-left:10%;width:20%;display:inline;" step="any"/>
-							<input type="number" name="breadth" id ="breadth" placeholder="B:" style="margin-left:10%;width:20%;display:inline;" step="any"/>
+							<input type="number" name="width" id ="width" placeholder="L:" style="margin-left:10%;width:20%;display:inline;" step="any" min="0"/>
+							<input type="number" name="height" id ="height" placeholder="W:" style="margin-left:10%;width:20%;display:inline;" step="any" min="0"/>
+							<input type="number" name="breadth" id ="breadth" placeholder="B:" style="margin-left:10%;width:20%;display:inline;" step="any" min="0"/>
 						</center>
 						<a href="#" onclick="showSelect();">Don't know. Click here.</a>
 					</div>
