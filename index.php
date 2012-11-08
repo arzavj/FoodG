@@ -34,6 +34,7 @@
 		$storageId = mysql_fetch_array($storeLoc);
 		$percentUsed = ($storageId["curr_volume"]/$storageId["max_volume"])*100;
 		echo '<div id="fullness-bar">'.'Your fridge is '.$percentUsed.'% full'.'</div>';
+		echo '<a href="search.php" data-role="button" data-icon="search">Search Your Fridge</a>';
 		$query = sprintf('SELECT food_id FROM user_foods WHERE user_storage_id = %s', $storageId['id']);
 
 		$catrequest = sprintf('SELECT DISTINCT categories.id AS id, category FROM foods inner join categories ON categories.id = foods.category_id WHERE foods.id IN (%s)', $query);
@@ -62,8 +63,7 @@
 			<img src="images/fridgeView.png" class="displayView" />	
 		</div>
 		-->
-		<br />
-		<a href="search.php" data-role="button" data-icon="search">Search Your Fridge</a>
+		
 		
 	</div><!-- /content -->
 	<?php
