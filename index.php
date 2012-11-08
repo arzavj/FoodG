@@ -61,7 +61,7 @@
 		</div>
 		-->
 		<br />
-		<a href="search.php"><i>Search</i></a>
+		<a href="search.php" data-role="button" data-icon="search">Search Your Fridge</a>
 		
 	</div><!-- /content -->
 	<?php

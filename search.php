@@ -8,6 +8,20 @@
 		
 <!-- Main view -->
 <div data-role="page" data-add-back-btn="true">
+	<script type="text/javascript">
+		fill();
+  		$("#searchField").on("input", function(e) {
+    		fill();
+    	});
+
+    	function fill(){
+    		$.post("ajaxSearch.php", {search:$("#searchField").val()}, function(data) {
+    			var sugList = $("#suggestions");
+				sugList.html(data);
+				sugList.listview("refresh").trigger("create");
+			});
+    	}
+	</script>
 
 	<div data-role="header">
 		<h1>My Fridge</h1>
@@ -27,21 +41,6 @@
 	?>
 
 </div>
-
-<script type="text/javascript">
-	fill();
-  	$("#searchField").on("input", function(e) {
-    	fill();
-    });
-
-    function fill(){
-    	$.post("ajaxSearch.php", {search:$("#searchField").val()}, function(data) {
-    		var sugList = $("#suggestions");
-			sugList.html(data);
-			sugList.listview("refresh").trigger("create");
-		});
-    }
-</script>
 
 		
 	</body>
