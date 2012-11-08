@@ -28,10 +28,12 @@
 		$userName = sprintf("SELECT username from users WHERE id = %s", $_COOKIE['user-id']);
 		$userName = mysql_fetch_array(mysql_query($userName));
 		echo "Hello, <b>".$userName["username"]."</b>. <br>";
-		$storequest= sprintf('SELECT user_storages.id FROM user_storages WHERE user_id = %s', $_COOKIE['user-id']);
+		$storequest= sprintf('SELECT id,max_volume,curr_volume FROM user_storages WHERE user_id = %s', $_COOKIE['user-id']);
 
 		$storeLoc = mysql_query($storequest);
 		$storageId = mysql_fetch_array($storeLoc);
+		$percentUsed = ($storageId["curr_volume"]/$storageId["max_volume"])*100;
+		echo '<div id="fullness-bar">'.'Your fridge is '.$percentUsed.'% full'.'</div>';
 		$query = sprintf('SELECT food_id FROM user_foods WHERE user_storage_id = %s', $storageId['id']);
 
 		$catrequest = sprintf('SELECT DISTINCT categories.id AS id, category FROM foods inner join categories ON categories.id = foods.category_id WHERE foods.id IN (%s)', $query);

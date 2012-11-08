@@ -65,3 +65,8 @@ a
 	width:50%;
 	height:7%;
 }
+
+#fullness-bar
+{
+	font-weight: bold;
+}

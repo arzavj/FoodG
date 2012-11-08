@@ -34,7 +34,7 @@
 				<div data-role="fieldcontain">
 					<label for="quantity" class="ui-input-text" style="display :inline;">Quantity: </label>
 					<input type="number" name="quantity" value= "<?php echo $row["quantity"]?>" style="display: inline; width: 50%;"/>
-					<select data-inline="true" data-native-menu="false" name="quantity_type_id">
+					<select data-inline="true" data-native-menu="false" name="quantity_type_id" style="display: inline;">
 						<?php
 							$result = mysql_query("SELECT * from quantity_types");
 							while($row = mysql_fetch_array($result))
