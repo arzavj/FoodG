@@ -76,12 +76,15 @@
 			{
 				if($map["food_id"]==$_POST["food_id"])
 				{
-					$cartArray = array_diff($cartArray, array($map));
+					//$cartArray = array_diff($cartArray, array($map));
+					echo print_r($map);
+					unset($map);
 					break;
 				}
 			}
 			if($_POST["btnS"] == "Update" && intval($_POST["quantity"]) > 0)
 			{
+				echo "inside update";
 				$item = array("food_id"=>$_POST["food_id"], "quantity" => $_POST["quantity"], "quantity_type_id" => $_POST["quantity_type_id"]);
 				array_push($cartArray, $item);
 			}
@@ -142,7 +145,7 @@
 			if($_COOKIE["shop-cart-mode"]=="true")
 			{
 		?>
-				window.location = "myCart.php";
+				//window.location = "myCart.php";
 		<?php
 			}
 			else

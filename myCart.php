@@ -13,7 +13,7 @@
 			</div>
 			<div data-role="content">
 				<form action="addToFridge.php" id="addToFridge" method="post">
-					<input type="Add All To Fridge" data-theme="b" name="btnS" value="Submit" />
+					<input type="submit" data-theme="b" name="btnS" value="Add All To Fridge" />
 				</form>
 				<?php
 					if (get_magic_quotes_gpc() == true) {
@@ -24,16 +24,21 @@
 
 					$cartArray = $_COOKIE["cart"];
 					$cartArray = unserialize($cartArray);
-					if(!is_null($_COOKIE["cart"]) && $_COOKIE["shop-cart-mode"]=="true"){
-						foreach ($cartArray as $map){
-							$item = mysql_fetch_assoc(mysql_query(sprintf("SELECT * from foods WHERE id = %s", $map["food_id"])));
-							echo "<div>\n";
-							$link = sprintf("<a href='description.php?food=%s&update=1'>", $item['id']);
-							echo $link;
-							echo "<p>".$item['food'];
-							$image = sprintf("<img src= %s class = %s />", $item['image_url'],'thumb' );
-							echo $image."</a></p>\n";
-							echo "</div>\n";
+					if(!is_null($_COOKIE["cart"]) && $_COOKIE["shop-cart-mode"]=="true")
+					{
+						foreach ($cartArray as $map)
+						{
+							if(isset($map))
+							{
+								$item = mysql_fetch_assoc(mysql_query(sprintf("SELECT * from foods WHERE id = %s", $map["food_id"])));
+								echo "<div>\n";
+								$link = sprintf("<a href='description.php?food=%s&update=1'>", $item['id']);
+								echo $link;
+								echo "<p>".$item['food'];
+								$image = sprintf("<img src= %s class = %s />", $item['image_url'],'thumb' );
+								echo $image."</a></p>\n";
+								echo "</div>\n";
+							}
 						}
 					}
 				?>
