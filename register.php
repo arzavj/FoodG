@@ -20,7 +20,7 @@
 					$uID = mysql_fetch_array(mysql_query("Select MAX(id) AS curr from users;"));
 					$result2 = mysql_query("SELECT id from storages");
 					while($row = mysql_fetch_array($result2)){
-						$volume = intval($_POST['length']) * intval($_POST['width']) * intval($_POST['breadth']);
+						$volume = floatval($_POST['height']) * floatval($_POST['width']) * floatval($_POST['breadth']);
 						$insert = sprintf("INSERT INTO user_storages (user_id, storage_id, max_volume) VALUES (%s, %s, %s);", $uID["curr"], $row["id"], $volume);
 						mysql_query($insert);
 					}
@@ -62,16 +62,6 @@
 					}
 
 					return true;
-				}
-
-				function unhide(){
-					$("#known").show();
-				}
-
-				function showSelect(){
-					$("#known").hide();
-					$("#unknown").show();
-					updateVolume(document.getElementById("simple"));
 				}
 
 				function updateVolume(selectObj){
@@ -120,23 +110,22 @@
 					<input type="text" name="username" id="user" placeholder="Username" >
 					<input type="password" name="password" id="pass" placeholder="Password">
 					<input type="password" name="passwordConfirm" id="passConfirm" placeholder="Password Confirmation">
-					<label for="Space Dimensions" style="font-weight:bold;">Fridge Dimensions: </label>
+					<label for="Space Dimensions" style="font-weight:bold;">Fridge Dimensions (meters): </label>
 					<div id="known">
 						<center>
 							<input type="number" name="width" id ="width" placeholder="L:" style="margin-left:10%;width:20%;display:inline;" step="any" min="0"/>
 							<input type="number" name="height" id ="height" placeholder="W:" style="margin-left:10%;width:20%;display:inline;" step="any" min="0"/>
 							<input type="number" name="breadth" id ="breadth" placeholder="B:" style="margin-left:10%;width:20%;display:inline;" step="any" min="0"/>
 						</center>
-						<a href="#" onclick="showSelect();">Don't know. Click here.</a>
 					</div>
-					<div id="unknown" style="display: none;">
+					<div id="unknown">
 						<select id="simple" onchange="updateVolume(this);">
+							<option disabled="disabled" selected="selected">Choose a size...</option>
 							<option value="1">Small</option>
 							<option value="2">Medium</option>
 							<option value="3">Large</option>
 						</select>
 					</div>
-					<br />
         			<input type="submit" value="Register" onclick="unhide();">
 				</form>	
 			</div><!-- /content -->
