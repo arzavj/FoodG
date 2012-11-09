@@ -134,7 +134,7 @@
 			{
 				var quant_element = document.getElementById('quantField');
 				var quantToBeAdded = quant_element.value;
-				var addedflag = <?php echo $alreadyInFridge; ?>;
+				var addedflag = <?php echo $alreadyInFridge; ?> < quantToBeAdded;
 				var fullflag = <?php echo ($fullFridge ? "true" : "false"); ?>;
 
 				if (<?php echo (is_null($_COOKIE["shop-cart-mode"]) ? "false" : $_COOKIE["shop-cart-mode"]); ?>){
@@ -148,7 +148,7 @@
 					return false;
 
 				}			
-				else if(fullflag)
+				else if(fullflag && $(btn).val() != "Remove All")
 				{
 					$( "#popupDialogFull" ).popup();
 					$("#popupDialogFull").popup("open");	
