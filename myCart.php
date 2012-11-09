@@ -7,14 +7,25 @@
 	<body>
 		<div data-role="page" id="mycart" data-add-back-btn="true">
 			<div data-role="header">
+				<a href="index.php" data-icon="home">Home</a>
 				<h1>My Cart</h1>
+				<a href="logout.php" data-role="button" class="ui-btn-right">Logout</a>
 			</div>
 			<div data-role="content">
+				<form action="addToFridge.php" id="addToFridge" method="post">
+					<input type="Add All To Fridge" data-theme="b" name="btnS" value="Submit" />
+				</form>
 				<?php
-					$array = json_decode($_COOKIE["cart"], true);
-					if(!is_null($array) && $_COOKIE["shop-cart-mode"]==true){
-						foreach ($array as $hash){
-							$map = json_decode($hash, true);
+					if (get_magic_quotes_gpc() == true) {
+			 			foreach($_COOKIE as $key => $value) {
+			   				$_COOKIE[$key] = stripslashes($value);
+			  			}
+					}
+
+					$cartArray = $_COOKIE["cart"];
+					$cartArray = unserialize($cartArray);
+					if(!is_null($_COOKIE["cart"]) && $_COOKIE["shop-cart-mode"]=="true"){
+						foreach ($cartArray as $map){
 							$item = mysql_fetch_assoc(mysql_query(sprintf("SELECT * from foods WHERE id = %s", $map["food_id"])));
 							echo "<div>\n";
 							$link = sprintf("<a href='description.php?food=%s&update=1'>", $item['id']);
@@ -27,5 +38,8 @@
 					}
 				?>
 			</div>
+			<?php
+				include("footer.php");
+			?>
 	</body>
 </html>

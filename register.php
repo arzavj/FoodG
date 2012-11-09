@@ -69,17 +69,17 @@
 					var which = selectObj.options[idx].value;
 
 					if(which == 1){
-						$("#width").val(1.2);
-						$("#height").val(1.2);
-						$("#breadth").val(1.2);
+						$("#width").val(0.57);
+						$("#height").val(0.57);
+						$("#breadth").val(0.57);
 					}else if (which == 2){
-						$("#width").val(2.4);
-						$("#height").val(2.4);
-						$("#breadth").val(2.4);
+						$("#width").val(1.03);
+						$("#height").val(1.03);
+						$("#breadth").val(1.03);
 					}else if (which == 3){
-						$("#width").val(3.6);
-						$("#height").val(3.6);
-						$("#breadth").val(3.6	);
+						$("#width").val(4.5);
+						$("#height").val(4.5);
+						$("#breadth").val(4.5);
 					}
 				}
 			</script>
@@ -121,8 +121,8 @@
 					<div id="unknown">
 						<select id="simple" onchange="updateVolume(this);">
 							<option disabled="disabled" selected="selected">Choose a size...</option>
-							<option value="1">Small</option>
-							<option value="2">Medium</option>
+							<option value="1">Mini</option>
+							<option value="2">Mid-Size</option>
 							<option value="3">Large</option>
 						</select>
 					</div>
