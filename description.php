@@ -123,8 +123,8 @@
 			<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
 				<h3 class="ui-title">You already have <?php echo $currentQuantity." ".$foodName;?>.</h3>
 				<p>Are you sure you want to add more?</p>
-				<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Add to MyFood</a>    
-				<a href= "index.php" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b">Stop Adding </a> 
+				<a href="#" data-role="button" data-inline="true" data-theme="c" onclick="document.getElementById('foodForm').submit();">Add to MyFood</a>    
+				<a href= "index.php" data-role="button" data-inline="true" data-transition="flow" data-theme="b">Stop Adding </a> 
 			</div>
 		</div>
 
@@ -135,8 +135,8 @@
 			<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
 				<h3 class="ui-title">Your storage is almost full!</h3>
 				<p>Are you sure you want to add more?</p>
-				<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Add to MyFood</a>    
-				<a href= "index.php" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b">Stop Adding </a> 
+				<a href="#" data-role="button" data-inline="true" data-theme="c" onclick="document.getElementById('foodForm').submit();">Add to MyFood</a>    
+				<a href= "index.php" data-role="button" data-inline="true" data-transition="flow" data-theme="b">Stop Adding </a> 
 			</div>
 		</div>
 
@@ -151,12 +151,14 @@
 			{
 				$( "#popupDialog" ).popup();
 				$("#popupDialog").popup("open");
+				return false;
 
 			}			
 			else if(fullflag)
 			{
 				$( "#popupDialogFull" ).popup();
-				$("#popupDialogFull").popup("open");
+				$("#popupDialogFull").popup("open");	
+				return false;
 			}			
 			else
 			{
@@ -168,7 +170,7 @@
 
 	    	<center>
 				<img src="<?php echo $row["image_url"]?>" class="image_description"/>
-			<form action="submit.php" method="post" data-ajax="false">
+			<form action="submit.php" id="foodForm" method="post" data-ajax="false" onsubmit="return crossCheckFridge();">
 				<input type="hidden" name="update" value="<?php  echo $update; ?>" />
 	 			<input type="hidden" name="food_id" value="<?php  echo $_GET['food']; ?>" />
 				<div data-role="fieldcontain">
@@ -199,7 +201,7 @@
 				<?php 
 					else:
 				?>
-					<input type="submit" data-theme="b" name="btnS" value="Submit" onclick="return crossCheckFridge();" />
+					<input type="submit" data-theme="b" name="btnS" value="Submit" />
 				<?php
 					endif;
 				?>

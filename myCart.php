@@ -11,10 +11,10 @@
 			</div>
 			<div data-role="content">
 				<?php
-					$array = json_decode($_COOKIE["cart"], true);
+					$array = unserialize($_COOKIE["cart"], true);
 					if(!is_null($array) && $_COOKIE["shop-cart-mode"]==true){
 						foreach ($array as $hash){
-							$map = json_decode($hash, true);
+							$map = unserialize($hash, true);
 							$item = mysql_fetch_assoc(mysql_query(sprintf("SELECT * from foods WHERE id = %s", $map["food_id"])));
 							echo "<div>\n";
 							$link = sprintf("<a href='description.php?food=%s&update=1'>", $item['id']);
