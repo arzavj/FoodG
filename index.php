@@ -51,6 +51,7 @@
 		echo "Hello, <b>".$userName["username"]." (".$userName["saved_points"].")</b>. <br>";
 		?>
 		
+		<!--
 		<div data-role="fieldcontain">
 			<label for="shop-cart">Shopping Cart Mode:</label>
 			<select data-inline="true" name="shop-cart" id="shop-cart" data-role="slider">
@@ -58,8 +59,10 @@
 				<option value="on">On</option>
 			</select>
 		</div>
+
 		
 		<a href="myCart.php" id="my-cart-link" data-icon="arrow-r" data-iconpos="right" data-role="button">My Cart</a>
+		-->
 		
 		<?php
 		$storequest= sprintf('SELECT id,max_volume,curr_volume FROM user_storages WHERE user_id = %s', $_COOKIE['user-id']);
