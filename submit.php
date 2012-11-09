@@ -14,13 +14,16 @@
 			$item = array("food_id"=>$_POST["food_id"], "quantity" => $_POST["quantity"], "quantity_type_id" => $_POST["quantity_type_id"]);
 			$cartArray = $_COOKIE["cart"];
 			if(is_null($cartArray))
-				$cartArray = array($item);
+			{
+				$cartArray = json_encode($item);
+				$cartArray = array($cartArray);
+			}
 			else
 			{
-				$cartArray = unserialize($cartArray);
-				array_push($cartArray, $item);
+				$cartArray = json_decode($cartArray,true);
+				array_push($cartArray, json_encode($item));
 			}	
-			setcookie("cart",serialize($cartArray), time() + (86400 * 1));
+			setcookie("cart",json_encode($cartArray), time() + (86400 * 1));
 			//echo "After: ".print_r($_COOKIE["cart"]);
 		}
 		else
