@@ -16,11 +16,7 @@
 			$foodName = getFoodName($_GET["food"]);
 			$currentQuantity = retrieveCurrQuantity($user_storage["id"], $_GET["food"]);
 			$alreadyInFridge = isInFridge($user_storage["id"], $_GET["food"]);
-
-		 	echo $foodName;
-		 	echo "<br />";
-		 	echo $currentQuantity;
-
+			$fullFridge = checkIfFull($_COOKIE["user-id"]);
 			//returns name of the food
 			function getFoodName($food_id)
 			{
@@ -66,6 +62,18 @@
 					return $user["saved_points"];
 				}
 
+			function checkIfFull($user_id)
+			{
+				$query = sprintf("SELECT * FROM user_storages WHERE user_id = %s", $user_id);
+				$result = mysql_query($query);
+				$storage = mysql_fetch_assoc($result);
+				$fullness = $storage["max_volume"] / $storage["curr_volume"];
+				if($fullness > 0.95)
+				{
+					return true;
+				}
+				return false;
+			}
 		?>
 
 		<script type="text/javascript">
@@ -116,7 +124,19 @@
 				<h3 class="ui-title">You already have <?php echo $currentQuantity." ".$foodName;?>.</h3>
 				<p>Are you sure you want to add more?</p>
 				<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Add to MyFood</a>    
-				<a href="index.php" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b" onclick="updatePoints();">Stop Adding</a>  
+				<a href= "index.php" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b">Stop Adding </a> 
+			</div>
+		</div>
+
+		<div data-role="popup" id="popupDialogFull" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all">
+			<div data-role="header" data-theme="a" class="ui-corner-top">
+				<h1>Fridge Check</h1>
+			</div>
+			<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+				<h3 class="ui-title">Your storage is almost full!</h3>
+				<p>Are you sure you want to add more?</p>
+				<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Add to MyFood</a>    
+				<a href= "index.php" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b">Stop Adding </a> 
 			</div>
 		</div>
 
@@ -125,23 +145,24 @@
 		{
 			var quant_element = document.getElementById('quantField');
 			var quantToBeAdded = quant_element.value;
-			var flag = <?php echo $alreadyInFridge?>;
-			if(flag)
+			var addedflag = <?php echo $alreadyInFridge; ?>;
+			var fullflag = <?php echo $fullFridge; ?>;
+			if(addedflag)
 			{
 				$( "#popupDialog" ).popup();
 				$("#popupDialog").popup("open");
 
-			}
+			}			
+			else if(fullflag)
+			{
+				$( "#popupDialogFull" ).popup();
+				$("#popupDialogFull").popup("open");
+			}			
 			else
 			{
 				return true;
 			}
 			
-		}
-
-		function continueAdding()
-		{
-			var flag = false;
 		}
 		</script>	
 

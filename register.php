@@ -121,9 +121,9 @@
 					<div id="unknown">
 						<select id="simple" onchange="updateVolume(this);">
 							<option disabled="disabled" selected="selected">Choose a size...</option>
-							<option value="1">Small</option>
-							<option value="2">Medium</option>
-							<option value="3">Large</option>
+							<option value="1.7">Mini</option>
+							<option value="3.1">Mid-Size</option>
+							<option value="13.5">Large</option>
 						</select>
 					</div>
         			<input type="submit" value="Register" onclick="unhide();">

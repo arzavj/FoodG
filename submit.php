@@ -103,7 +103,7 @@
 	</head>
 	<body>
 		<script>
-			//window.location = "index.php";
+			window.location = "index.php";
 		</script>
 	</body>
 </html>
