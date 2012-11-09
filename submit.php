@@ -10,20 +10,26 @@
 	{
 		if($_COOKIE["shop-cart-mode"])
 		{
+			if (get_magic_quotes_gpc() == true) {
+			 foreach($_COOKIE as $key => $value) {
+			   $_COOKIE[$key] = stripslashes($value);
+			  }
+			}
 			//echo "Before: ".print_r($_COOKIE["cart"]);
-			$item = array("food_id"=>$_POST["food_id"], "quantity" => $_POST["quantity"], "quantity_type_id" => $_POST["quantity_type_id"]);
+			$itemEncoded = json_encode(array("food_id"=>$_POST["food_id"], "quantity" => $_POST["quantity"], "quantity_type_id" => $_POST["quantity_type_id"]));
 			$cartArray = $_COOKIE["cart"];
+			echo "Encoded: ".$cartArray;
 			if(is_null($cartArray))
 			{
-				$cartArray = json_encode($item);
-				$cartArray = array($cartArray);
+				$cartArray = array(itemEncoded);
 			}
 			else
 			{
 				$cartArray = json_decode($cartArray,true);
-				array_push($cartArray, json_encode($item));
+				echo "Decoded: ".$cartArray;
+				array_push($cartArray, itemEncoded);
 			}	
-			setcookie("cart",json_encode($cartArray), time() + (86400 * 1));
+			//setcookie("cart",json_encode($cartArray), time() + (86400 * 1));
 			//echo "After: ".print_r($_COOKIE["cart"]);
 		}
 		else
