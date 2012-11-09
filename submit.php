@@ -10,7 +10,18 @@
 	{
 		if($_COOKIE["shop-cart-mode"])
 		{
-			echo "in shop cart mode";
+			//echo "Before: ".print_r($_COOKIE["cart"]);
+			$item = array("food_id"=>$_POST["food_id"], "quantity" => $_POST["quantity"], "quantity_type_id" => $_POST["quantity_type_id"]);
+			$cartArray = $_COOKIE["cart"];
+			if(is_null($cartArray))
+				$cartArray = array($item);
+			else
+			{
+				$cartArray = unserialize($cartArray);
+				array_push($cartArray, $item);
+			}	
+			setcookie("cart",serialize($cartArray), time() + (86400 * 1));
+			//echo "After: ".print_r($_COOKIE["cart"]);
 		}
 		else
 		{

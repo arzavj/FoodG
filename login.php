@@ -14,7 +14,7 @@ if (!is_null($user)){
 		{
 			setcookie("user-id",$row["id"],time() + (86400 * 2)); // 86400 = 1 day
 			setcookie("shop-cart-mode",false,time() + (86400 * 1));
-			
+			setcookie("cart",array(), time() + (86400 * 1));
 			?>
 			<html>
 			<body>
