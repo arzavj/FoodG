@@ -8,38 +8,38 @@
 		
 <!-- Main view -->
 <div data-role="page" id="home" data-add-back-btn="true">
-	
-	<script>
-	$(function(){
-		<?php
-			if($_COOKIE["shop-cart-mode"]==true)
-			{
-			?>
-				$('#shop-cart').val('on').trigger('keyup');
-				alert("boo");
-			<?php
-			}	
-			else
-			{
-			?>
-				$("#my-cart-link").hide();
-			<?php
-			}
-		?>
-		//$( "#accordion" ).accordion();
-		$('#shop-cart').change(function() {
-		    var myswitch = $(this);
-		    var show     = myswitch[0].selectedIndex == 1 ? true:false;
-		    $('#my-cart-link').toggle(show);
-			$.post("shop-cart-mode.php", {"shop-cart-mode":show}, function(data) {});
-		});
-	});
-	</script>
+
 	<div data-role="header">
 		<!-- <a href="#Home" data-icon="back">Back</a> -->
 		<h1>My Fridge</h1>
 		<a href="logout.php" data-role="button" class="ui-btn-right">Logout</a>
-
+		<script>
+		$(document).ready(function(){
+			<?php
+				if($_COOKIE["shop-cart-mode"]==true)
+				{
+				?>
+					$('#shop-cart').val('on').trigger('keyup');
+					//alert("boo");
+				<?php
+				}	
+				else
+				{
+				?>
+					$("#my-cart-link").hide();
+				<?php
+				}
+			?>
+			//$( "#accordion" ).accordion();
+			$('#shop-cart').change(function() {
+			    var myswitch = $(this);
+			    var show     = myswitch[0].selectedIndex == 1 ? true:false;
+			    $('#my-cart-link').toggle(show);
+				$.post("shop-cart-mode.php", {"shop-cart-mode":show}, function(data) {});
+			});
+		});
+		
+		</script>
 	</div><!-- /header -->
 
 	<div data-role="content">
