@@ -136,6 +136,11 @@
 				var quantToBeAdded = quant_element.value;
 				var addedflag = <?php echo $alreadyInFridge; ?>;
 				var fullflag = <?php echo ($fullFridge ? "true" : "false"); ?>;
+
+				if (<?php echo (is_null($_COOKIE["shop-cart-mode"]) ? "false" : $_COOKIE["shop-cart-mode"]); ?>){
+					return true;
+				}
+
 				if(addedflag && $(btn).val() != "Remove All")
 				{
 					$( "#popupDialog" ).popup();
