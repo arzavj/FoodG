@@ -16,19 +16,27 @@
 			  }
 			}
 			//echo "Before: ".print_r($_COOKIE["cart"]);
-			$itemEncoded = json_encode(array("food_id"=>$_POST["food_id"], "quantity" => $_POST["quantity"], "quantity_type_id" => $_POST["quantity_type_id"]));
+			echo "<p>"."Item array: ".print_r(array("food_id"=>$_POST["food_id"], "quantity" => $_POST["quantity"], "quantity_type_id" => $_POST["quantity_type_id"]))."</p>";
+			//$itemEncoded = json_encode(array("food_id"=>$_POST["food_id"], "quantity" => $_POST["quantity"], "quantity_type_id" => $_POST["quantity_type_id"]));
+			$itemEncoded = serialize(array("food_id"=>$_POST["food_id"], "quantity" => $_POST["quantity"], "quantity_type_id" => $_POST["quantity_type_id"]));
+			echo "<p>"."Item encoded: ".$itemEncoded."</p>";
 			$cartArray = $_COOKIE["cart"];
-			echo "Encoded: ".$cartArray;
+			echo "<p>"."Encoded cartArray: ".$cartArray."</p>";
 			if(is_null($cartArray))
 			{
 				$cartArray = array(itemEncoded);
 			}
 			else
 			{
-				$cartArray = json_decode($cartArray,true);
-				echo "Decoded: ".$cartArray;
-				array_push($cartArray, itemEncoded);
-			}	
+				echo print_r(unserialize($cartArray));
+				//$cartArray = json_decode($cartArray,true);
+				$cartArray = unserialize($cartArray);
+				if(is_null($cartArry))
+					echo "<p> NULL </p>";
+				echo "<p>"."Decoded: ".$cartArray."</p>";
+				array_push($cartArray, $itemEncoded);
+			}
+			echo serialize($cartArray);
 			//setcookie("cart",json_encode($cartArray), time() + (86400 * 1));
 			//echo "After: ".print_r($_COOKIE["cart"]);
 		}
