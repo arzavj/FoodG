@@ -17,21 +17,18 @@
 			  }
 			}
 			//echo "Before: ".print_r($_COOKIE["cart"]);
-			$itemEncoded = json_encode(array("food_id"=>$_POST["food_id"], "quantity" => $_POST["quantity"], "quantity_type_id" => $_POST["quantity_type_id"]));
+			$itemEncoded = (array("food_id"=>$_POST["food_id"], "quantity" => $_POST["quantity"], "quantity_type_id" => $_POST["quantity_type_id"]));
 			$cartArray = $_COOKIE["cart"];
-			echo "Encoded: ".$cartArray;
 			if(is_null($cartArray))
 			{
-				$cartArray = array(itemEncoded);
+				$cartArray = array($itemEncoded);
 			}
 			else
 			{
-				$cartArray = json_decode($cartArray,true);
-				echo "Decoded: ".$cartArray;
-				array_push($cartArray, itemEncoded);
+				$cartArray = unserialize($cartArray);
+				array_push($cartArray, $itemEncoded);
 			}	
-			//setcookie("cart",json_encode($cartArray), time() + (86400 * 1));
-			//echo "After: ".print_r($_COOKIE["cart"]);
+			setcookie("cart",serialize($cartArray), time() + (86400 * 1));
 		}
 		else
 		{
@@ -100,7 +97,7 @@
 	</head>
 	<body>
 		<script>
-			window.location = "index.php";
+			//window.location = "index.php";
 		</script>
 	</body>
 </html>

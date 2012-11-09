@@ -16,11 +16,10 @@
 		<script>
 		$(document).ready(function(){
 			<?php
-				if($_COOKIE["shop-cart-mode"]==true)
+				if($_COOKIE["shop-cart-mode"]=="true")
 				{
 				?>
 					$('#shop-cart').val('on').trigger('keyup');
-					//alert("boo");
 				<?php
 				}	
 				else
