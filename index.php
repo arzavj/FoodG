@@ -46,9 +46,9 @@
 		<?php
 		include "config.php";
 
-		$userName = sprintf("SELECT username from users WHERE id = %s", $_COOKIE['user-id']);
+		$userName = sprintf("SELECT username, saved_points from users WHERE id = %s", $_COOKIE['user-id']);
 		$userName = mysql_fetch_array(mysql_query($userName));
-		echo "Hello, <b>".$userName["username"]."</b>. <br>";
+		echo "Hello, <b>".$userName["username"]." (".$userName["saved_points"].")</b>. <br>";
 		?>
 		
 		<div data-role="fieldcontain">
