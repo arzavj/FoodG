@@ -3,8 +3,89 @@
 	        <?php
 	                include 'head.php';
 	        ?>
+
+   
+
+
+
 	</head>
 	<body>
+		<?php 
+			$user_storage_query = sprintf("SELECT id from user_storages WHERE user_id = %s", $_COOKIE["user-id"]);
+			$user_storage = mysql_fetch_array(mysql_query($user_storage_query));
+			$foodName = getFoodName($_GET["food"]);
+			$currentQuantity = retrieveCurrQuantity($user_storage["id"], $_GET["food"]);
+			$alreadyInFridge = isInFridge($user_storage["id"], $_GET["food"]);
+
+		 	echo $foodName;
+		 	echo "<br />";
+		 	echo $currentQuantity;
+
+			//returns name of the food
+			function getFoodName($food_id)
+			{
+				$query = sprintf("SELECT food FROM foods WHERE id = %s", $food_id);
+				$result = mysql_query($query);
+				if(mysql_num_rows($result) > 0)
+				{
+					$name = mysql_fetch_assoc($result);
+					return $name["food"];
+				}
+				return "NULL_FOOD_NAME";
+			}
+			//returns boolean if it is in the fridge
+			function isInFridge($user_storage_id, $food_id)
+			{
+				$query = sprintf("SELECT quantity FROM user_foods WHERE user_storage_id = %s AND food_id = %s", $user_storage_id, $food_id);
+				$result = mysql_query($query);
+				if(mysql_num_rows($result) > 0)
+				{
+					return true;
+				}
+				return false;
+			}
+
+			//returns food quantity
+			function retrieveCurrQuantity($user_storage_id, $food_id)
+			{
+				$query = sprintf("SELECT quantity FROM user_foods WHERE user_storage_id = %s AND food_id = %s", $user_storage_id, $food_id);
+				$result = mysql_query($query);
+				if(mysql_num_rows($result) > 0)
+				{
+					$currQuantity = mysql_fetch_assoc($result);
+					return $currQuantity["quantity"];
+				}
+				return -1;
+			}
+
+				function getCurrPoints($user_id)
+				{
+					$query = sprintf("SELECT saved_points FROM users WHERE id = %s", $user_id);
+					$result = mysql_query($query);
+					$user = mysql_fetch_assoc($result);
+					return $user["saved_points"];
+				}
+
+		?>
+
+		<script type="text/javascript">
+			function updatePoints()
+			{
+				var quant_element = document.getElementById('quantField');
+				var quantToBeAdded = quant_element.value;
+				<?php
+					$oldpoints = getCurrPoints($_COOKIE["user_id"]);
+					$total =  + $oldpoints;
+					$query = sprintf("UPDATE users SET saved_points = %s WHERE id = %s", $total, $$user_id);
+					$result = mysql_query($query);
+				?>
+			}
+
+		</script>
+
+
+
+
 		<div data-role="page" data-add-back-btn="true">
 		<div data-role="header">
             <!-- <a data-rel="back" data-icon="back">Back</a> -->
@@ -26,6 +107,44 @@
 	    </div><!-- /header -->
 
 	    <div data-role="content">
+	    <!-- Pop Up Goes Here -->
+		<div data-role="popup" id="popupDialog" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all">
+			<div data-role="header" data-theme="a" class="ui-corner-top">
+				<h1>Fridge Check</h1>
+			</div>
+			<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+				<h3 class="ui-title">You already have <?php echo $currentQuantity." ".$foodName;?>.</h3>
+				<p>Are you sure you want to add more?</p>
+				<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Add to MyFood</a>    
+				<a href="index.php" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b" onclick="updatePoints();">Stop Adding</a>  
+			</div>
+		</div>
+
+		<script type="text/javascript">
+		function crossCheckFridge()
+		{
+			var quant_element = document.getElementById('quantField');
+			var quantToBeAdded = quant_element.value;
+			var flag = <?php echo $alreadyInFridge?>;
+			if(flag)
+			{
+				$( "#popupDialog" ).popup();
+				$("#popupDialog").popup("open");
+
+			}
+			else
+			{
+				return true;
+			}
+			
+		}
+
+		function continueAdding()
+		{
+			var flag = false;
+		}
+		</script>	
+
 	    	<center>
 				<img src="<?php echo $row["image_url"]?>" class="image_description"/>
 			<form action="submit.php" method="post" data-ajax="false">
@@ -33,8 +152,8 @@
 	 			<input type="hidden" name="food_id" value="<?php  echo $_GET['food']; ?>" />
 				<div data-role="fieldcontain">
 					<label for="quantity" class="ui-input-text" style="display :inline;">Quantity: </label>
-					<input type="number" name="quantity" value= "<?php echo $row["quantity"]?>" style="display: inline; width: 50%;"/>
-					<select data-inline="true" data-native-menu="false" name="quantity_type_id" style="display: inline;">
+					<input type="number" id= "quantField" name="quantity" value= "<?php echo $row["quantity"]?>" style="display: inline; width: 50%;"/>
+					<select data-inline="true" data-native-menu="false" name="quantity_type_id">
 						<?php
 							$result = mysql_query("SELECT * from quantity_types");
 							while($row = mysql_fetch_array($result))
@@ -59,14 +178,21 @@
 				<?php 
 					else:
 				?>
-					<input type="submit" data-theme="b" name="btnS" value="Submit" />
+					<input type="submit" data-theme="b" name="btnS" value="Submit" onclick="return crossCheckFridge();" />
 				<?php
 					endif;
 				?>
 			</form>
 			</center>
+
+
+			
 		</div>
 		</div>
+
+
+	 
+		
 	</body>
 </html>
 
