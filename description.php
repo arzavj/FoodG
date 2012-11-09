@@ -134,10 +134,10 @@
 			{
 				var quant_element = document.getElementById('quantField');
 				var quantToBeAdded = quant_element.value;
-				var addedflag = <?php echo $alreadyInFridge; ?> < quantToBeAdded;
+				var addedflag = (<?php echo $alreadyInFridge; ?> < quantToBeAdded);
 				var fullflag = <?php echo ($fullFridge ? "true" : "false"); ?>;
 
-				if (<?php echo (is_null($_COOKIE["shop-cart-mode"]) ? "false" : $_COOKIE["shop-cart-mode"]); ?>){
+				if (<?php echo (is_null($_COOKIE["shop-cart-mode"]) ? "false" : $_COOKIE["shop-cart-mode"]); ?> || (<?php echo $alreadyInFridge; ?> != -1)){
 					return true;
 				}
 
