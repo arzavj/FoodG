@@ -8,6 +8,7 @@
 	$test_result = mysql_query($test);
 	if ($_POST["update"] == "0") //if new item is added through add item button
 	{
+		
 		if($_COOKIE["shop-cart-mode"])
 		{
 			if (get_magic_quotes_gpc() == true) {
@@ -40,10 +41,6 @@
 				mysql_query($query);
 				updateFridgeVolume($user_storage["id"], calculateVolume($_POST["food_id"], $_POST["quantity"], $_POST["quantity_type_id"])); //this line updates the curr_volume column in the database appropriately
 			} 
-			else //if item already exists in the fridge
-			{
-				//TODO make the alert and update points
-			}
 		}
 	} 
 	else //if food item is clicked on through home page and is updated or removed all

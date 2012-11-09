@@ -36,9 +36,10 @@
 				$result = mysql_query($query);
 				if(mysql_num_rows($result) > 0)
 				{
-					return true;
+					$temp = mysql_fetch_assoc($result);
+					return $temp["quantity"];
 				}
-				return false;
+				return 0;
 			}
 
 			//returns food quantity
@@ -54,45 +55,19 @@
 				return -1;
 			}
 
-				function getCurrPoints($user_id)
-				{
-					$query = sprintf("SELECT saved_points FROM users WHERE id = %s", $user_id);
-					$result = mysql_query($query);
-					$user = mysql_fetch_assoc($result);
-					return $user["saved_points"];
-				}
-
 			function checkIfFull($user_id)
 			{
 				$query = sprintf("SELECT * FROM user_storages WHERE user_id = %s", $user_id);
 				$result = mysql_query($query);
 				$storage = mysql_fetch_assoc($result);
-				$fullness = $storage["max_volume"] / $storage["curr_volume"];
+				$fullness = floatval($storage["curr_volume"]) / floatval($storage["max_volume"])	;
 				if($fullness > 0.95)
 				{
-					return true;
+					return $fullness;
 				}
 				return false;
 			}
 		?>
-
-		<script type="text/javascript">
-			function updatePoints()
-			{
-				var quant_element = document.getElementById('quantField');
-				var quantToBeAdded = quant_element.value;
-				<?php
-					$oldpoints = getCurrPoints($_COOKIE["user_id"]);
-					$total =  + $oldpoints;
-					$query = sprintf("UPDATE users SET saved_points = %s WHERE id = %s", $total, $$user_id);
-					$result = mysql_query($query);
-				?>
-			}
-
-		</script>
-
-
-
 
 		<div data-role="page" data-add-back-btn="true">
 		<div data-role="header">
@@ -123,8 +98,8 @@
 			<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
 				<h3 class="ui-title">You already have <?php echo $currentQuantity." ".$foodName;?>.</h3>
 				<p>Are you sure you want to add more?</p>
-				<a href="#" data-role="button" data-inline="true" data-theme="c" onclick="document.getElementById('foodForm').submit();">Add to MyFood</a>    
-				<a href= "index.php" data-role="button" data-inline="true" data-transition="flow" data-theme="b">Stop Adding </a> 
+				<a href="#" data-role="button" data-inline="true" data-theme="c" onclick="manualSubmit();">Add to MyFood</a>    
+				<a href= "#" data-role="button" data-inline="true" data-transition="flow" data-theme="b" onclick="manualSubmit2();">Stop Adding </a> 
 			</div>
 		</div>
 
@@ -135,37 +110,56 @@
 			<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
 				<h3 class="ui-title">Your storage is almost full!</h3>
 				<p>Are you sure you want to add more?</p>
-				<a href="#" data-role="button" data-inline="true" data-theme="c" onclick="document.getElementById('foodForm').submit();">Add to MyFood</a>    
-				<a href= "index.php" data-role="button" data-inline="true" data-transition="flow" data-theme="b">Stop Adding </a> 
+				<a href="#" data-role="button" data-inline="true" data-theme="c" onclick="manualSubmit();">Add to MyFood</a>    
+				<a href= "#" data-role="button" data-inline="true" data-transition="flow" data-theme="b" onclick="manualSubmit2();">Stop Adding </a> 
 			</div>
 		</div>
 
 		<script type="text/javascript">
-		function crossCheckFridge()
-		{
-			var quant_element = document.getElementById('quantField');
-			var quantToBeAdded = quant_element.value;
-			var addedflag = <?php echo $alreadyInFridge; ?>;
-			var fullflag = <?php echo $fullFridge; ?>;
-			if(addedflag)
-			{
-				$( "#popupDialog" ).popup();
-				$("#popupDialog").popup("open");
-				return false;
-
-			}			
-			else if(fullflag)
-			{
-				$( "#popupDialogFull" ).popup();
-				$("#popupDialogFull").popup("open");	
-				return false;
-			}			
-			else
-			{
-				return true;
+			var btn = null;
+			function capture(button){
+				btn = button;
 			}
-			
-		}
+
+			function manualSubmit(){
+				var form = document.getElementById("foodForm");
+				if (btn != null){
+					$("#btnClick").val(btn.value);
+				}
+				form.submit();
+			}
+
+			function manualSubmit2(){
+				var form = document.getElementById("foodForm");
+				form.action = "updatePoints.php";
+				form.submit();
+			}
+
+			function crossCheckFridge()
+			{
+				var quant_element = document.getElementById('quantField');
+				var quantToBeAdded = quant_element.value;
+				var addedflag = <?php echo $alreadyInFridge; ?>;
+				var fullflag = <?php echo ($fullFridge ? "true" : "false"); ?>;
+				if(addedflag && $(btn).val() != "Remove All")
+				{
+					$( "#popupDialog" ).popup();
+					$("#popupDialog").popup("open");
+					return false;
+
+				}			
+				else if(fullflag)
+				{
+					$( "#popupDialogFull" ).popup();
+					$("#popupDialogFull").popup("open");	
+					return false;
+				}			
+				else
+				{
+					return true;
+				}
+				
+			}
 		</script>	
 
 	    	<center>
@@ -196,8 +190,9 @@
 				<?php 
 					if ($update) :
 				?>
-					<input type="submit" data-theme="b" name="btnS" value="Update" />
-					<input type="submit" data-theme="b" name="btnS" value="Remove All" />
+					<input type="hidden" name="btnS" id="btnClick"/>
+					<input type="submit" data-theme="b" name="btnS" value="Update" onclick="capture(this);"/>
+					<input type="submit" data-theme="b" name="btnS" value="Remove All" onclick="capture(this);"/>
 				<?php 
 					else:
 				?>
