@@ -60,25 +60,18 @@
 			}
 		
 			$cartArray = unserialize($_COOKIE["cart"]);
-			//echo "<p> Just unserialized cookie</p>";
 			foreach ($cartArray as $key=>$map) //remove old food item's array in both update and remove all case
-			//for($i = 0; $i<count($cartArray); $i++)
 			{
 				if($map["food_id"]==$_POST["food_id"])
 				{
-					//$cartArray = array_diff($cartArray, array($map));
-					//echo "<p>Map found: ".print_r($map)."</p>";
 					unset($cartArray[$key]);
-					//echo "<p>Resulting cartArray: ".print_r($cartArray)."</p>";
 					break;
 				}
 			}
 			if($_POST["btnS"] == "Update" && intval($_POST["quantity"]) > 0)
 			{
-				//echo "inside update";
 				$item = array("food_id"=>$_POST["food_id"], "quantity" => $_POST["quantity"], "quantity_type_id" => $_POST["quantity_type_id"]);
 				array_push($cartArray, $item);
-				//echo print_r($cartArray);
 			}
 			setcookie("cart",serialize($cartArray), time() + (86400 * 1));
 		}
@@ -112,7 +105,6 @@
 		<?php
 			if($_COOKIE["shop-cart-mode"]=="true")
 			{
-				//echo "<p> Updated cart: ".print_r(unserialize($_COOKIE["cart"]))."</p>";
 				if($alreadyInCart)
 				{
 		?>
