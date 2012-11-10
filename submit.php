@@ -1,14 +1,13 @@
 <?php
 	include "config.php";
-	
+	include "helperFunctions.php";
 	$user_storage_query = sprintf("SELECT id from user_storages WHERE user_id = %s", $_COOKIE["user-id"]);
 	$user_storage = mysql_fetch_array(mysql_query($user_storage_query));
 
 	$test = sprintf("SELECT * from user_foods WHERE user_storage_id = %s AND food_id = %s", $user_storage["id"], $_POST["food_id"]);
 	$test_result = mysql_query($test);
-	if ($_POST["update"] == "0") //if new item is added through add item button
+	if($_POST["btnS"] == "Submit")//if ($_POST["update"] == "0") //if new item is added through add item button
 	{
-		
 		if($_COOKIE["shop-cart-mode"]=="true")
 		{
 			if (get_magic_quotes_gpc() == true) {
@@ -16,37 +15,24 @@
 			   $_COOKIE[$key] = stripslashes($value);
 			  }
 			}
-			//echo "Before: ".print_r($_COOKIE["cart"]);
-
-			// echo "<p>"."Item array: ".print_r(array("food_id"=>$_POST["food_id"], "quantity" => $_POST["quantity"], "quantity_type_id" => $_POST["quantity_type_id"]))."</p>";
-			// //$itemEncoded = json_encode(array("food_id"=>$_POST["food_id"], "quantity" => $_POST["quantity"], "quantity_type_id" => $_POST["quantity_type_id"]));
-			// $itemEncoded = serialize(array("food_id"=>$_POST["food_id"], "quantity" => $_POST["quantity"], "quantity_type_id" => $_POST["quantity_type_id"]));
-			// echo "<p>"."Item encoded: ".$itemEncoded."</p>";
-			// $cartArray = $_COOKIE["cart"];
-			// echo "<p>"."Encoded cartArray: ".$cartArray."</p>";
-
 			$item = array("food_id"=>$_POST["food_id"], "quantity" => $_POST["quantity"], "quantity_type_id" => $_POST["quantity_type_id"]);
 			$cartArray = $_COOKIE["cart"];
-
+			$alreadyInCart = false;
 			if(is_null($cartArray))
 				$cartArray = array($item);
 			else
 			{
-
-			// 	echo print_r(unserialize($cartArray));
-			// 	//$cartArray = json_decode($cartArray,true);
-			// 	$cartArray = unserialize($cartArray);
-			// 	if(is_null($cartArry))
-			// 		echo "<p> NULL </p>";
-			// 	echo "<p>"."Decoded: ".$cartArray."</p>";
-			// 	array_push($cartArray, $itemEncoded);
-			// }
-			// echo serialize($cartArray);
-			// //setcookie("cart",json_encode($cartArray), time() + (86400 * 1));
-			// //echo "After: ".print_r($_COOKIE["cart"]);
-
 				$cartArray = unserialize($cartArray);
-				array_push($cartArray, $item);
+				foreach ($cartArray as $key=>$map) //if added item is already in shopping cart
+				{
+					if($map["food_id"]==$_POST["food_id"])
+					{
+						$alreadyInCart = true;
+						break;
+					}
+				}
+				if(!$alreadyInCart)
+					array_push($cartArray, $item);
 			}	
 			setcookie("cart",serialize($cartArray), time() + (86400 * 1));
 
@@ -63,7 +49,7 @@
 	} 
 	else //if food item is clicked on through home page and is updated or removed all
 	{
-		if($_COOKIE["shop-cart-mode"])
+		if($_COOKIE["shop-cart-mode"]=="true")
 		{
 			if (get_magic_quotes_gpc() == true) 
 			{
@@ -74,25 +60,27 @@
 			}
 		
 			$cartArray = unserialize($_COOKIE["cart"]);
+			//echo "<p> Just unserialized cookie</p>";
 			foreach ($cartArray as $key=>$map) //remove old food item's array in both update and remove all case
 			//for($i = 0; $i<count($cartArray); $i++)
 			{
 				if($map["food_id"]==$_POST["food_id"])
 				{
 					//$cartArray = array_diff($cartArray, array($map));
-					echo "<p>Map found: ".print_r($map)."</p>";
+					//echo "<p>Map found: ".print_r($map)."</p>";
 					unset($cartArray[$key]);
-					echo "<p>Resulting cartArray: ".print_r($cartArray)."</p>";
+					//echo "<p>Resulting cartArray: ".print_r($cartArray)."</p>";
 					break;
 				}
 			}
 			if($_POST["btnS"] == "Update" && intval($_POST["quantity"]) > 0)
 			{
-				echo "inside update";
+				//echo "inside update";
 				$item = array("food_id"=>$_POST["food_id"], "quantity" => $_POST["quantity"], "quantity_type_id" => $_POST["quantity_type_id"]);
 				array_push($cartArray, $item);
+				//echo print_r($cartArray);
 			}
-			//setcookie("cart",serialize($cartArray), time() + (86400 * 1));
+			setcookie("cart",serialize($cartArray), time() + (86400 * 1));
 		}
 		else
 		{
@@ -113,7 +101,6 @@
 			updateFridgeVolume($user_storage["id"], $foodsNewVolume - $foodsOldVolume);
 		}
 	}
-	include("helperFunctions.php");
 
 ?>
 
@@ -125,8 +112,15 @@
 		<?php
 			if($_COOKIE["shop-cart-mode"]=="true")
 			{
+				//echo "<p> Updated cart: ".print_r(unserialize($_COOKIE["cart"]))."</p>";
+				if($alreadyInCart)
+				{
 		?>
-				//window.location = "myCart.php";
+					alert("You already have that item in your cart!");
+		<?php
+				}
+		?>
+				window.location = "myCart.php";
 		<?php
 			}
 			else

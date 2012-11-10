@@ -191,7 +191,7 @@
 					<input type="date" name="expiry"></input>			
 				</div> -->
 				<?php 
-					if ($update) :
+					if ($update || intval($_GET["update"])==1) :
 				?>
 					<input type="hidden" name="btnS" id="btnClick"/>
 					<input type="submit" data-theme="b" name="btnS" value="Update" onclick="capture(this);"/>
