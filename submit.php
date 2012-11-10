@@ -65,20 +65,24 @@
 	{
 		if($_COOKIE["shop-cart-mode"])
 		{
-			if (get_magic_quotes_gpc() == true) {
-			 foreach($_COOKIE as $key => $value) {
-			   $_COOKIE[$key] = stripslashes($value);
-			  }
+			if (get_magic_quotes_gpc() == true) 
+			{
+			 	foreach($_COOKIE as $key => $value) 
+				{
+			   		$_COOKIE[$key] = stripslashes($value);
+			  	}
 			}
-			
+		
 			$cartArray = unserialize($_COOKIE["cart"]);
-			foreach ($cartArray as $map) //remove old food item's array in both update and remove all case
+			foreach ($cartArray as $key=>$map) //remove old food item's array in both update and remove all case
+			//for($i = 0; $i<count($cartArray); $i++)
 			{
 				if($map["food_id"]==$_POST["food_id"])
 				{
 					//$cartArray = array_diff($cartArray, array($map));
-					echo print_r($map);
-					unset($map);
+					echo "<p>Map found: ".print_r($map)."</p>";
+					unset($cartArray[$key]);
+					echo "<p>Resulting cartArray: ".print_r($cartArray)."</p>";
 					break;
 				}
 			}
@@ -88,7 +92,7 @@
 				$item = array("food_id"=>$_POST["food_id"], "quantity" => $_POST["quantity"], "quantity_type_id" => $_POST["quantity_type_id"]);
 				array_push($cartArray, $item);
 			}
-			setcookie("cart",serialize($cartArray), time() + (86400 * 1));
+			//setcookie("cart",serialize($cartArray), time() + (86400 * 1));
 		}
 		else
 		{
@@ -109,30 +113,7 @@
 			updateFridgeVolume($user_storage["id"], $foodsNewVolume - $foodsOldVolume);
 		}
 	}
-	
-	//returns added volume
-	function calculateVolume($food_id, $quantity, $quantity_type_id)
-	{
-		$query = sprintf("SELECT quantity_types.kg_equivalent from quantity_types WHERE id = %s", $quantity_type_id);
-		$quantityRow = mysql_fetch_array(mysql_query($query));
-		$query = sprintf("SELECT * from foods WHERE id = %s", $food_id);
-		$foodRow = mysql_fetch_array(mysql_query($query));
-		if($quantityRow["kg_equivalent"]==0) //in the case of units where we need the weight of 1 unit from the foods table
-			return ($quantity*$foodRow["weight_per_unit"])/$foodRow["density"];
-		else
-			return ($quantity*$quantityRow["kg_equivalent"])/$foodRow["density"]; //volume = mass (kg) / density (kg/m3)
-	}
-	
-	//gets current volume and updates it
-	//addedVolume is a double. addedVolume is change in volume
-	function updateFridgeVolume($user_storage_id, $addedVolume)
-	{
-		$query = sprintf("SELECT user_storages.curr_volume from user_storages WHERE id = %s", $user_storage_id);
-		$storage = mysql_fetch_array(mysql_query($query));
-		$newVolume = $storage["curr_volume"] + $addedVolume;
-		$updateQuery = sprintf("UPDATE user_storages SET curr_volume = %f WHERE id = %s", $newVolume, $user_storage_id);
-		mysql_query($updateQuery);
-	}
+	include("helperFunctions.php");
 
 ?>
 

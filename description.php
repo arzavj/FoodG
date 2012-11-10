@@ -72,9 +72,12 @@
             	$user_result = mysql_query($query);
             	$row = NULL;
             	$update = $_GET['update'] ? "1" : "0";
-            	if (mysql_num_rows($user_result) > 0){
+            	if (mysql_num_rows($user_result) > 0)
+				{
             		$row = mysql_fetch_array($user_result);
-            	} else{
+            	} 
+				else
+				{
             		$query = sprintf("SELECT foods.*, 0 AS quantity from foods WHERE id = %s", $_GET['food']);
             		$row = mysql_fetch_array(mysql_query($query));
             		$update = "0";
@@ -188,7 +191,7 @@
 					<input type="date" name="expiry"></input>			
 				</div> -->
 				<?php 
-					if ($update || $_COOKIE["shop-cart-mode"]=="true") :
+					if ($update) :
 				?>
 					<input type="hidden" name="btnS" id="btnClick"/>
 					<input type="submit" data-theme="b" name="btnS" value="Update" onclick="capture(this);"/>
