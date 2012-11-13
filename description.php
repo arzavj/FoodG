@@ -201,7 +201,8 @@
 				<?php 
 					else:
 				?>
-					<input type="submit" data-theme="b" name="btnS" value="Submit" />
+					<input type="hidden" name="btnS" value="Submit"/>
+					<input type="submit" data-theme="b" value="Submit" />
 				<?php
 					endif;
 				?>
