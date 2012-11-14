@@ -25,17 +25,18 @@
 				{
 					$insertFood = sprintf("INSERT INTO user_foods(user_storage_id, food_id, quantity, quantity_type_id) VALUES (%s, %s, %s, %s)", $user_storage["id"], $map["food_id"], $map["quantity"], $map["quantity_type_id"]);
 					mysql_query($insertFood);
-					updateFridgeVolume($user_storage["id"], calculateVolume($map["food_id"], $map["quantity"], $map["quantity_type_id"])); //this line updates the curr_volume column in the database appropriately
+					 //this line updates the curr_volume column in the database appropriately
 				}
 				else //if exists in the fridge
 				{
+					//this assumes that the quantity_type_id is same for the same item in fridge and shopping cart
 					$foodInFridge = mysql_fetch_array($foodInFridge);
-					$foodsOldVolume = calculateVolume($map["food_id"], $foodInFridge["quantity"], $foodInFridge["quantity_type_id"]);
-					$foodsNewVolume = calculateVolume($map["food_id"], $map["quantity"], $map["quantity_type_id"]);
-					$updateFood = sprintf("UPDATE user_foods SET quantity = %s, quantity_type_id = %s WHERE user_storage_id = %s AND food_id = %s", $map["quantity"], $map["quantity_type_id"], $user_storage["id"], $map["food_id"]);
+					//$foodsOldVolume = calculateVolume($map["food_id"], $foodInFridge["quantity"], $foodInFridge["quantity_type_id"]);
+					//$foodsNewVolume = calculateVolume($map["food_id"], $map["quantity"], $map["quantity_type_id"]);
+					$updateFood = sprintf("UPDATE user_foods SET quantity = %s, quantity_type_id = %s WHERE user_storage_id = %s AND food_id = %s", intval($foodInFridge["quantity"])+intval($map["quantity"]), $map["quantity_type_id"], $user_storage["id"], $map["food_id"]);
 					mysql_query($updateFood);
-					updateFridgeVolume($user_storage["id"], $foodsNewVolume - $foodsOldVolume);
 				}
+				updateFridgeVolume($user_storage["id"], calculateVolume($map["food_id"], $map["quantity"], $map["quantity_type_id"]));
 			}
 		}
 	}
