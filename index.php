@@ -79,7 +79,7 @@
 		echo '<div id="accordion">';
 		while ($row = mysql_fetch_assoc($catresult)){
 			echo "<h2>".$row["category"]."</h2>\n";
-			$itemsQuery = sprintf("SELECT foods.* from user_foods inner join foods ON foods.id = user_foods.food_id WHERE user_storage_id = %s AND foods.category_id = %s", $storageId['id'], $row['id']);
+			$itemsQuery = sprintf("SELECT foods.*, quantity, quantity_type from (user_foods inner join foods ON foods.id = user_foods.food_id) inner join quantity_types ON quantity_types.id = user_foods.quantity_type_id WHERE user_storage_id = %s AND foods.category_id = %s", $storageId['id'], $row['id']);
 			$itemsresult = mysql_query($itemsQuery);
 			while ($item = mysql_fetch_assoc($itemsresult)){
 				echo "<div>\n";
@@ -87,7 +87,8 @@
 				echo $link;
 				echo "<p>".$item['food'];
 				$image = sprintf("<img src= %s class = %s />", $item['image_url'],'thumb' );
-				echo $image."</a></p>\n";
+				echo $image."</a>\n";
+				echo "Quantity: ".$item['quantity']." ".$item['quantity_type']."</p>";
 				echo "</div>\n";
 			}
 		}

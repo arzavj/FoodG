@@ -9,8 +9,10 @@
 			$user_storage_query = sprintf("SELECT id from user_storages WHERE user_id = %s", $_COOKIE["user-id"]);
 			$user_storage = mysql_fetch_array(mysql_query($user_storage_query));
 			$foodName = getFoodName($_GET["food"]);
-			$currentQuantity = retrieveCurrQuantity($user_storage["id"], $_GET["food"]);
 			$alreadyInFridge = isInFridge($user_storage["id"], $_GET["food"]);
+			if($alreadyInFridge){
+				$currentQuantity = retrieveCurrQuantity($user_storage["id"], $_GET["food"]);
+			}
 			$fullFridge = checkIfFull($_COOKIE["user-id"]);
 			//returns name of the food
 			function getFoodName($food_id)
@@ -137,10 +139,10 @@
 			{
 				var quant_element = document.getElementById('quantField');
 				var quantToBeAdded = quant_element.value;
-				var addedflag = (<?php echo $alreadyInFridge; ?> < quantToBeAdded);
+				var addedflag = (<?php echo $alreadyInFridge; ?>);   //Interfered with adding new items: < parseInt(quantToBeAdded)) ;
 				var fullflag = <?php echo ($fullFridge ? "true" : "false"); ?>;
 
-				if (<?php echo (is_null($_COOKIE["shop-cart-mode"]) ? "false" : $_COOKIE["shop-cart-mode"]); ?> || (<?php echo $alreadyInFridge; ?> != -1)){
+				if (<?php echo (is_null($_COOKIE["shop-cart-mode"]) ? "false" : $_COOKIE["shop-cart-mode"]); ?> && (<?php echo $alreadyInFridge; ?> != -1)){
 					return true;
 				}
 
@@ -199,7 +201,8 @@
 				<?php 
 					else:
 				?>
-					<input type="submit" data-theme="b" name="btnS" value="Submit" />
+					<input type="hidden" name="btnS" value="Submit"/>
+					<input type="submit" data-theme="b" value="Add" />
 				<?php
 					endif;
 				?>
