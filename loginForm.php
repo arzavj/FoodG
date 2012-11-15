@@ -1,8 +1,8 @@
 <head>
-<?php
-	$loggingIn = 1;
-	include "head.php";
-?>
+	<?php
+		$loggingIn = 1;
+		include "head.php";
+	?>
 </head>
 <div data-role="page">
 	<div data-role="header">
