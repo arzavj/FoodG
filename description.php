@@ -249,7 +249,7 @@
 					<input type="date" name="expiry"></input>			
 				</div> -->
 				<?php 
-					if($update || intval($_GET["update"])==1)
+					if($update || intval($_GET["update"])==1 || $alreadyInFridge)
 					{
 				?>
 					<input type="hidden" name="btnS" id="btnClick"/>
