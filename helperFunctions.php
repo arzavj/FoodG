@@ -22,4 +22,16 @@
 		$updateQuery = sprintf("UPDATE user_storages SET curr_volume = %f WHERE id = %s", $newVolume, $user_storage_id);
 		mysql_query($updateQuery);
 	}
+	
+	function getQuantityName($quantity_type_id)
+	{
+		$query = sprintf("SELECT quantity_types.quantity_type from quantity_types WHERE id = %s", $quantity_type_id);
+		$result = mysql_query($query);
+		if(mysql_num_rows($result) > 0)
+		{
+			$quantity_type = mysql_fetch_assoc($result);
+			return $quantity_type["quantity_type"];
+		}
+		return "NULL_QUANTITY_NAME";
+	}
 ?>

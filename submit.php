@@ -28,11 +28,18 @@
 					if($map["food_id"]==$_POST["food_id"])
 					{
 						$alreadyInCart = true;
+						$index = $key;
+						//$oldQuantity = $map["quantity"];
 						break;
 					}
 				}
+				//$replacementFood = array($index => array("food_id"=>$_POST["food_id"], "quantity" => $_POST["quantity"]+$oldQuantity, "quantity_type_id" => $_POST["quantity_type_id"]));
+				//array_replace($cartArray, $replacementFood);
+				//$blah = $cartArray[$index];
 				if(!$alreadyInCart)
 					array_push($cartArray, $item);
+				else
+					$cartArray[$index]["quantity"] += $_POST["quantity"];
 			}	
 			setcookie("cart",serialize($cartArray), time() + (86400 * 1));
 
@@ -46,7 +53,7 @@
 				updateFridgeVolume($user_storage["id"], calculateVolume($_POST["food_id"], $_POST["quantity"], $_POST["quantity_type_id"])); //this line updates the curr_volume column in the database appropriately
 			} else {
 				$foodsNewVolume = calculateVolume($_POST["food_id"], $_POST["quantity"], $_POST["quantity_type_id"]);
-				$query = sprintf("UPDATE user_foods SET quantity = %s, quantity_type_id = %s WHERE user_storage_id = %s AND food_id = %s", $_POST["quantity"], $_POST["quantity_type_id"], $user_storage["id"], $_POST["food_id"]);
+				$query = sprintf("UPDATE user_foods SET quantity = quantity + %s, quantity_type_id = %s WHERE user_storage_id = %s AND food_id = %s", $_POST["quantity"], $_POST["quantity_type_id"], $user_storage["id"], $_POST["food_id"]);
 				mysql_query($query);
 			}
 		}
@@ -112,10 +119,11 @@
 				if($alreadyInCart)
 				{
 		?>
-					alert("You already have that item in your cart!");
+					//alert("You already have that item in your cart!");
 		<?php
 				}
 		?>
+				console.log(<?php $blah;?>);
 				window.location = "myCart.php";
 		<?php
 			}
