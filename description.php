@@ -139,11 +139,12 @@
 			{
 				var quant_element = document.getElementById('quantField');
 				var quantToBeAdded = quant_element.value;
-				var addedflag = (<?php echo $alreadyInFridge; ?>);   //Interfered with adding new items: < parseInt(quantToBeAdded)) ;
+				var addedflag = (<?php echo $alreadyInFridge; ?> < quantToBeAdded) ;
 				var fullflag = <?php echo ($fullFridge ? "true" : "false"); ?>;
 
-				if (<?php echo (is_null($_COOKIE["shop-cart-mode"]) ? "false" : $_COOKIE["shop-cart-mode"]); ?> && (<?php echo $alreadyInFridge; ?> != -1)){
-					return true;
+				//if in shopping cart mode then go to submit.php
+				if (<?php echo (is_null($_COOKIE["shop-cart-mode"]) ? "false" : $_COOKIE["shop-cart-mode"]); ?>){
+					return true; 
 				}
 
 				if(addedflag && $(btn).val() != "Remove All")
