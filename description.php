@@ -195,7 +195,7 @@
 				var addedflag = (<?php echo $alreadyInFridge; ?>);   //Interfered with adding new items: < parseInt(quantToBeAdded)) ;
 				var fullflag = <?php echo ($fullFridge ? "true" : "false"); ?>;
 
-				if(<?php echo $alreadyInCart;?>==true)
+				if(<?php echo $alreadyInCart;?>==true && btn==null) //if btn is not update and remove all but is "Add to Cart"
 				{
 					$("#popupCart").popup();
 					$("#popupCart").popup("open");
