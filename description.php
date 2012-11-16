@@ -195,7 +195,7 @@
 				var addedflag = (<?php echo $alreadyInFridge; ?> < quantToBeAdded) && <?php  echo $update; ?>;
 				var fullflag = <?php echo ($fullFridge ? "true" : "false"); ?>;
 
-				if(<?php echo $alreadyInCart;?>==true && btn==null && <?php echo (is_null($_COOKIE["shop-cart-mode"]) ? "false" : $_COOKIE["shop-cart-mode"]); ?>) //if btn is not update and remove all but is "Add to Cart"
+				if(<?php echo $alreadyInCart;?>==true && btn==null) //if btn is not update and remove all but is "Add to Cart"
 				{
 					$("#popupCart").popup();
 					$("#popupCart").popup("open");
