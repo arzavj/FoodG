@@ -6,7 +6,6 @@
 <body>
 	<div data-role="page" data-add-back-btn="true">
         <div data-role="header">
-        		<script src="//cdn.optimizely.com/js/141265170.js"></script>
                 <!-- <a data-rel="back" data-icon="back">Back</a> -->
                 		<?php
                 			$query1 = sprintf("SELECT category from categories WHERE id = %s LIMIT 1", $_GET["cat_id"]);
