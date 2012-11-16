@@ -8,7 +8,7 @@
 		
 <!-- Main view -->
 <div data-role="page" id="home" data-add-back-btn="true">
-
+	<script src="//cdn.optimizely.com/js/141265170.js"></script>
 	<div data-role="header">
 		<!-- <a href="#Home" data-icon="back">Back</a> -->
 		<h1>My Fridge</h1>
