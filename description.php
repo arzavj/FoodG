@@ -192,16 +192,19 @@
 			{
 				var quant_element = document.getElementById('quantField');
 				var quantToBeAdded = quant_element.value;
-				var addedflag = (<?php echo $alreadyInFridge; ?> < quantToBeAdded) && <?php  echo $update; ?>;
+				var addedflag = (<?php echo $alreadyInFridge; ?>);   //Interfered with adding new items: < parseInt(quantToBeAdded)) ;
 				var fullflag = <?php echo ($fullFridge ? "true" : "false"); ?>;
 
 				if(<?php echo $alreadyInCart;?>==true && btn==null) //if btn is not update and remove all but is "Add to Cart"
 				{
 					$("#popupCart").popup();
 					$("#popupCart").popup("open");
+					console.log("$alreadyInCart: <?php echo $alreadyInCart;?>");
 					return false;
 				}
-
+				if (<?php echo (is_null($_COOKIE["shop-cart-mode"]) ? "false" : $_COOKIE["shop-cart-mode"]); ?> && (<?php echo $alreadyInFridge; ?> != -1)){
+					return true;
+				}
 				if(addedflag && $(btn).val() != "Remove All")
 				{
 					$( "#popupDialog" ).popup();
