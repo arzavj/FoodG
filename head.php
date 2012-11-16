@@ -8,12 +8,14 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="viewport" content="width=device-width, user-scalable=no" />
+
 <title>FoodG</title>
 
 <?php
 	if($_COOKIE["user-id"] == "" && is_null($loggingIn))
 	{
 ?>
+		<script src="//cdn.optimizely.com/js/141265170.js"></script>
 		<script type="text/javascript">
 			window.location="login.php";
 		</script>
