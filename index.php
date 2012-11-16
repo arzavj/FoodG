@@ -3,6 +3,7 @@
 		<?php
 		include("head.php");
 		?>
+		<script src="//cdn.optimizely.com/js/141265170.js"></script>
 	</head>
 	<body>
 		
@@ -12,7 +13,6 @@
 		<!-- <a href="#Home" data-icon="back">Back</a> -->
 		<h1>My Fridge</h1>
 		<a href="logout.php" data-role="button" class="ui-btn-right">Logout</a>
-		<script src="//cdn.optimizely.com/js/141265170.js"></script>
 		<script>
 		$(document).ready(function(){
 			<?php
