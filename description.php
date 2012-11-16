@@ -107,7 +107,7 @@
 		?>
 
 		<div data-role="page" data-add-back-btn="true">
-			
+			<script src="//cdn.optimizely.com/js/141265170.js"></script>
 		<div data-role="header">
             <!-- <a data-rel="back" data-icon="back">Back</a> -->
             <?php
@@ -131,7 +131,6 @@
 	    </div><!-- /header -->
 
 	    <div data-role="content">
-	    	<script src="//cdn.optimizely.com/js/141265170.js"></script>
 	    <!-- Pop Up Goes Here -->
 		<!-- shopping cart popup -->
 		<div data-role="popup" id="popupCart" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all">
