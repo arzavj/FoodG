@@ -107,7 +107,7 @@
 		?>
 
 		<div data-role="page" data-add-back-btn="true">
-			<script src="//cdn.optimizely.com/js/141265170.js"></script>
+			
 		<div data-role="header">
             <!-- <a data-rel="back" data-icon="back">Back</a> -->
             <?php
@@ -123,6 +123,7 @@
 				{
             		$query = sprintf("SELECT foods.*, 0 AS quantity from foods WHERE id = %s", $_GET['food']);
             		$row = mysql_fetch_array(mysql_query($query));
+            		$row["quantity"] = 0;
             		$update = "0";
             	}
             ?>
@@ -131,6 +132,7 @@
 	    </div><!-- /header -->
 
 	    <div data-role="content">
+	    	<script src="//cdn.optimizely.com/js/141265170.js"></script>
 	    <!-- Pop Up Goes Here -->
 		<!-- shopping cart popup -->
 		<div data-role="popup" id="popupCart" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all">
@@ -200,7 +202,6 @@
 				{
 					$("#popupCart").popup();
 					$("#popupCart").popup("open");
-					console.log("$alreadyInCart: <?php echo $alreadyInCart;?>");
 					return false;
 				}
 				if (<?php echo (is_null($_COOKIE["shop-cart-mode"]) ? "false" : $_COOKIE["shop-cart-mode"]); ?> && (<?php echo $alreadyInFridge; ?>)){
@@ -234,7 +235,7 @@
 	 			<input type="hidden" name="food_id" value="<?php  echo $_GET['food']; ?>" />
 				<div data-role="fieldcontain">
 					<label for="quantity" class="ui-input-text" style="display :inline;">Quantity: </label>
-					<input type="number" id= "quantField" name="quantity" value= "<?php echo $row["quantity"]?>" style="display: inline; width: 50%;"/>
+					<input type="number" id= "quantField" name="quantity" value= "<?php echo ($update ? $row["quantity"] : 0); ?>" style="display: inline; width: 50%;"/>
 					<select data-inline="true" data-native-menu="false" name="quantity_type_id">
 						<?php
 							$result = mysql_query("SELECT * from quantity_types");
