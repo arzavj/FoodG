@@ -123,6 +123,7 @@
 				{
             		$query = sprintf("SELECT foods.*, 0 AS quantity from foods WHERE id = %s", $_GET['food']);
             		$row = mysql_fetch_array(mysql_query($query));
+            		$row["quantity"] = 0;
             		$update = "0";
             	}
             ?>
@@ -200,7 +201,6 @@
 				{
 					$("#popupCart").popup();
 					$("#popupCart").popup("open");
-					console.log("$alreadyInCart: <?php echo $alreadyInCart;?>");
 					return false;
 				}
 				if (<?php echo (is_null($_COOKIE["shop-cart-mode"]) ? "false" : $_COOKIE["shop-cart-mode"]); ?> && (<?php echo $alreadyInFridge; ?> != -1)){
@@ -234,7 +234,7 @@
 	 			<input type="hidden" name="food_id" value="<?php  echo $_GET['food']; ?>" />
 				<div data-role="fieldcontain">
 					<label for="quantity" class="ui-input-text" style="display :inline;">Quantity: </label>
-					<input type="number" id= "quantField" name="quantity" value= "<?php echo $row["quantity"]?>" style="display: inline; width: 50%;"/>
+					<input type="number" id= "quantField" name="quantity" value= "<?php echo ($update ? $row["quantity"] : 0); ?>" style="display: inline; width: 50%;"/>
 					<select data-inline="true" data-native-menu="false" name="quantity_type_id">
 						<?php
 							$result = mysql_query("SELECT * from quantity_types");
