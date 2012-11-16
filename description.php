@@ -107,7 +107,7 @@
 		?>
 
 		<div data-role="page" data-add-back-btn="true">
-			<script src="//cdn.optimizely.com/js/141265170.js"></script>
+			
 		<div data-role="header">
             <!-- <a data-rel="back" data-icon="back">Back</a> -->
             <?php
@@ -168,7 +168,7 @@
 				<a href= "#" data-role="button" data-inline="true" data-transition="flow" data-theme="b" onclick="manualSubmit2();">Don't Add </a> 
 			</div>
 		</div>
-
+		<script src="//cdn.optimizely.com/js/141265170.js"></script>
 		<script type="text/javascript">
 			var btn = null;
 			function capture(button){
