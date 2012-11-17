@@ -1,6 +1,5 @@
 <html>
 	<head>
-		<script src="//cdn.optimizely.com/js/141265170.js"></script>
 	        <?php
 	                include 'head.php';
 	        ?>
@@ -131,6 +130,7 @@
 	    </div><!-- /header -->
 
 	    <div data-role="content">
+	    	<script src="//cdn.optimizely.com/js/141265170.js"></script>
 	    <!-- Pop Up Goes Here -->
 		<!-- shopping cart popup -->
 		<div data-role="popup" id="popupCart" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all">
