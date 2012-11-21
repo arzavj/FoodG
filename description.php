@@ -130,7 +130,7 @@
 	    </div><!-- /header -->
 
 	    <div data-role="content">
-	    	<script src="//cdn.optimizely.com/js/141265170.js"></script>
+	    	<script src="//cdn.optimizely.com/js/141265170.js"></script> 
 	    <!-- Pop Up Goes Here -->
 		<!-- shopping cart popup -->
 		<div data-role="popup" id="popupCart" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all">
@@ -193,7 +193,15 @@
 			{
 				var quant_element = document.getElementById('quantField');
 				var quantToBeAdded = quant_element.value;
+
+				if (quantToBeAdded < 0){
+					alert("You cannot enter a negative number");
+					return false;
+				} 
+				
 				var addedflag = (<?php echo $alreadyInFridge; ?> < quantToBeAdded) && (<?php echo $update."||".$alreadyInFridge?>);   //Interfered with adding new items: < parseInt(quantToBeAdded)) ;
+				
+
 				var fullflag = <?php echo ($fullFridge ? "true" : "false"); ?>;
 
 				if(<?php echo $alreadyInCart;?>==true && btn==null) //if btn is not update and remove all but is "Add to Cart"
