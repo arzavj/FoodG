@@ -20,8 +20,7 @@
 					$uID = mysql_fetch_array(mysql_query("Select MAX(id) AS curr from users;"));
 					$result2 = mysql_query("SELECT id from storages");
 					while($row = mysql_fetch_array($result2)){
-						$volume = floatval($_POST['height']) * floatval($_POST['width']) * floatval($_POST['breadth']);
-						$insert = sprintf("INSERT INTO user_storages (user_id, storage_id, max_volume) VALUES (%s, %s, %s);", $uID["curr"], $row["id"], $volume);
+						$insert = sprintf("INSERT INTO user_storages (user_id, storage_id, max_volume) VALUES (%s, %s, %s);", $uID["curr"], $row["id"], $_POST['volume']);
 						mysql_query($insert);
 					}
 					
@@ -36,53 +35,6 @@
 	</head>  
 	<body> 
 		<div data-role="page">
-
-			<script>
-				$(document).ready(function(){
-					$("#reg").submit(checkDimensions);
-				});
-
-				function checkDimensions(){
-					var error = "";
-					if (!$("#width").val()){
-						error = error + "Please enter a width \n";
-					}
-				
-					if (!$("#height").val()){
-						error = error + "Please enter a height \n";
-					}
-
-					if (!$("#breadth").val()){
-						error = error + "Please enter a breadth \n";
-					}
-
-					if (error != ""){
-						alert(error);
-						return false;
-					}
-
-					return true;
-				}
-
-				function updateVolume(selectObj){
-					var idx = selectObj.selectedIndex; 
-					var which = selectObj.options[idx].value;
-
-					if(which == 1){
-						$("#width").val(0.57);
-						$("#height").val(0.57);
-						$("#breadth").val(0.57);
-					}else if (which == 2){
-						$("#width").val(1.03);
-						$("#height").val(1.03);
-						$("#breadth").val(1.03);
-					}else if (which == 3){
-						$("#width").val(4.5);
-						$("#height").val(4.5);
-						$("#breadth").val(4.5);
-					}
-				}
-			</script>
 
 			<div data-role="header">
 				<a data-rel="back" data-icon="back">Back</a>
@@ -111,22 +63,8 @@
 					<input type="password" name="password" id="pass" placeholder="Password">
 					<input type="password" name="passwordConfirm" id="passConfirm" placeholder="Password Confirmation">
 					<label for="Space Dimensions" style="font-weight:bold;">Fridge Dimensions (meters): </label>
-					<div id="known">
-						<center>
-							<input type="number" name="width" id ="width" placeholder="L:" style="margin-left:10%;width:20%;display:inline;" step="any" min="0"/>
-							<input type="number" name="height" id ="height" placeholder="W:" style="margin-left:10%;width:20%;display:inline;" step="any" min="0"/>
-							<input type="number" name="breadth" id ="breadth" placeholder="B:" style="margin-left:10%;width:20%;display:inline;" step="any" min="0"/>
-						</center>
-					</div>
-					<div id="unknown">
-						<select id="simple" onchange="updateVolume(this);">
-							<option disabled="disabled" selected="selected">Choose a size...</option>
-							<option value="1">Mini</option>
-							<option value="2">Mid-Size</option>
-							<option value="3">Large</option>
-						</select>
-					</div>
-        			<input type="submit" value="Register" onclick="unhide();">
+					<input type="range" name="volume" value="4.6" min="1.3"  max="33.3"/>
+        			<input type="submit" value="Register">
 				</form>	
 			</div><!-- /content -->
 		</div><!-- /page -->
