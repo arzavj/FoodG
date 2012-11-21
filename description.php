@@ -122,7 +122,7 @@
 				{
             		$query = sprintf("SELECT foods.*, 0 AS quantity from foods WHERE id = %s", $_GET['food']);
             		$row = mysql_fetch_array(mysql_query($query));
-            		$row["quantity"] = 0;
+            		$row["quantity"] = 1;
             		$update = "0";
             	}
             ?>
@@ -131,7 +131,7 @@
 	    </div><!-- /header -->
 
 	    <div data-role="content">
-	    	<script src="//cdn.optimizely.com/js/141265170.js"></script>
+	    	<script src="//cdn.optimizely.com/js/141265170.js"></script> 
 	    <!-- Pop Up Goes Here -->
 		<!-- shopping cart popup -->
 		<div data-role="popup" id="popupCart" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all">
@@ -194,6 +194,11 @@
 			{
 				var quant_element = document.getElementById('quantField');
 				var quantToBeAdded = quant_element.value;
+				if (quantToBeAdded < 0){
+					alert("You cannot enter a negative number");
+					return false;
+				} 
+
 				var addedflag = (<?php echo $alreadyInFridge; ?>);   //Interfered with adding new items: < parseInt(quantToBeAdded)) ;
 				var fullflag = <?php echo ($fullFridge ? "true" : "false"); ?>;
 
