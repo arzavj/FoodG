@@ -22,12 +22,6 @@
 					$('#shop-cart').val('on').trigger('keyup');
 				<?php
 				}	
-				else
-				{
-				?>
-					$("#my-cart-link").hide();
-				<?php
-				}
 			?>
 			//$( "#accordion" ).accordion();
 			$('#shop-cart').change(function() {

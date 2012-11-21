@@ -22,24 +22,44 @@
 			   				$_COOKIE[$key] = stripslashes($value);
 			  			}
 					}
-
-					$cartArray = $_COOKIE["cart"];
-					$cartArray = unserialize($cartArray);
-					if(!is_null($_COOKIE["cart"]) && $_COOKIE["shop-cart-mode"]=="true")
+					
+					function printEmptyCart()
 					{
-						foreach ($cartArray as $map)
+						echo "<p> Your cart is empty!</p>";
+						?>
+							<script>
+								$(function(){
+									$("input[name='btnS']").button();
+									$("input[name='btnS']").button('disable');
+									$("input[name='btnS']").button('refresh');
+								});
+							</script>
+						<?php
+					}
+					$cartArray = $_COOKIE["cart"];
+					if(is_null($cartArray))
+						printEmptyCart();
+					else
+					{
+						$cartArray = array_filter(unserialize($cartArray)); //filter out nulls
+						if(empty($cartArray))
+							printEmptyCart();
+						else
 						{
-							if(isset($map))
+							foreach ($cartArray as $map)
 							{
-								$item = mysql_fetch_assoc(mysql_query(sprintf("SELECT * from foods WHERE id = %s", $map["food_id"])));
-								echo "<div>\n";
-								$link = sprintf("<a href='description.php?food=%s&update=1'>", $item['id']);
-								echo $link;
-								echo "<p>".$item['food'];
-								$image = sprintf("<img src= %s class = %s />", $item['image_url'],'thumb' );
-								echo $image."</a> Quantity: ".$map["quantity"].getQuantityName($map["quantity_type_id"])."</p>\n";
-								echo "</div>\n";
-								//echo "<p>".print_r($map)."</p>";
+								if(isset($map))
+								{
+									$item = mysql_fetch_assoc(mysql_query(sprintf("SELECT * from foods WHERE id = %s", $map["food_id"])));
+									echo "<div>\n";
+									$link = sprintf("<a href='description.php?food=%s&update=1&shop=1'>", $item['id']);
+									echo $link;
+									echo "<p>".$item['food'];
+									$image = sprintf("<img src= %s class = %s />", $item['image_url'],'thumb' );
+									echo $image."</a> Quantity: ".$map["quantity"].getQuantityName($map["quantity_type_id"])."</p>\n";
+									echo "</div>\n";
+									//echo "<p>".print_r($map)."</p>";
+								}
 							}
 						}
 					}

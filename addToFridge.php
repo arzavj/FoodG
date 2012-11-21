@@ -13,8 +13,8 @@
 	}
 
 	$cartArray = $_COOKIE["cart"];
-	$cartArray = unserialize($cartArray);
-	if(!is_null($_COOKIE["cart"]) && $_COOKIE["shop-cart-mode"]=="true")
+	$cartArray = array_filter(unserialize($cartArray));
+	if(!empty($_COOKIE["cart"]))
 	{
 		foreach ($cartArray as $map)
 		{
