@@ -11,31 +11,32 @@
 <div data-role="page" id="home" data-add-back-btn="true">
 	<div data-role="header">
 		<!-- <a href="#Home" data-icon="back">Back</a> -->
+		<a href="myCart.php" class="ui-btn-left" id="my-cart-link" data-icon="custom" data-iconpos="right" data-role="button">My Cart</a>
 		<h1>My Fridge</h1>
 		<a href="logout.php" data-role="button" class="ui-btn-right">Logout</a>
 		<script>
 		$(document).ready(function(){
 			changeCategories();
-			<?php
-				if($_COOKIE["shop-cart-mode"]=="true")
-				{
-				?>
-					$('#shop-cart').val('on').trigger('keyup');
-				<?php
-				}	
-			?>
-			//$( "#accordion" ).accordion();
-			$('#shop-cart').change(function() {
-			    var myswitch = $(this);
-			    var show     = myswitch[0].selectedIndex == 1 ? true:false;
-			    $('#my-cart-link').toggle(show);
-				$.post("shop-cart-mode.php", {"shop-cart-mode":show}, function(data) {});
-			});
+			// <?php
+			// 	if($_COOKIE["shop-cart-mode"]=="true")
+			// 	{
+			// 	?>
+			// 		$('#shop-cart').val('on').trigger('keyup');
+			// 	<?php
+			// 	}	
+			// ?>
+			// //$( "#accordion" ).accordion();
+			// $('#shop-cart').change(function() {
+			//     var myswitch = $(this);
+			//     var show     = myswitch[0].selectedIndex == 1 ? true:false;
+			//     $('#my-cart-link').toggle(show);
+			// 	$.post("shop-cart-mode.php", {"shop-cart-mode":show}, function(data) {});
+			// });
 		});
 		
 		function changeCategories(){
 			$.post("ajaxCategory.php", {catID:$("#categories").val()}, function(data) {
-    			var sugList = $("#food-content");
+		    	var sugList = $("#food-content");
 				sugList.html(data);
 			});
 		}	
@@ -54,16 +55,16 @@
 		?>
 		
 		
-		<div data-role="fieldcontain">
+		<!-- <div data-role="fieldcontain">
 			<label for="shop-cart">Shopping Cart Mode:</label>
 			<select data-inline="true" name="shop-cart" id="shop-cart" data-role="slider">
 				<option value="off">Off</option>
 				<option value="on">On</option>
 			</select>
-		</div>
+		</div> -->
 
 		
-		<a href="myCart.php" id="my-cart-link" data-icon="arrow-r" data-iconpos="right" data-role="button">My Cart</a>
+		
 		
 		
 		<?php
