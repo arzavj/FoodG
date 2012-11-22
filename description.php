@@ -119,6 +119,7 @@
 				{
             		$query = sprintf("SELECT foods.*, 0 AS quantity from foods WHERE id = %s", $_GET['food']);
             		$row = mysql_fetch_array(mysql_query($query));
+            		$row["quantity"] = 1;
             		$update = "0";
             	}
             ?>
@@ -127,6 +128,7 @@
 	    </div><!-- /header -->
 
 	    <div data-role="content">
+	    	<script src="//cdn.optimizely.com/js/141265170.js"></script> 
 	    <!-- Pop Up Goes Here -->
 		<!-- shopping cart popup -->
 		<div data-role="popup" id="popupCart" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all">
@@ -164,7 +166,7 @@
 				<a href= "#" data-role="button" data-inline="true" data-transition="flow" data-theme="b" onclick="manualSubmit2();">Don't Add </a> 
 			</div>
 		</div>
-
+		
 		<script type="text/javascript">
 			var btn = null;
 			function capture(button){
@@ -189,6 +191,11 @@
 			{
 				var quant_element = document.getElementById('quantField');
 				var quantToBeAdded = quant_element.value;
+				if (quantToBeAdded < 0){
+					alert("You cannot enter a negative number");
+					return false;
+				} 
+
 				var addedflag = (<?php echo $alreadyInFridge; ?>);   //Interfered with adding new items: < parseInt(quantToBeAdded)) ;
 				var fullflag = <?php echo ($fullFridge ? "true" : "false"); ?>;
 
@@ -199,7 +206,6 @@
 				{
 					$("#popupCart").popup();
 					$("#popupCart").popup("open");
-					console.log("$alreadyInCart: <?php echo $alreadyInCart;?>");
 					return false;
 				}
 				else if((<?php echo $alreadyInCart;?>==false && $(btn).val()=="Add to Cart") || <?php echo intval($_GET["shop"]);?>==1) //removing from cart or adding to cart when not in cart
@@ -237,8 +243,12 @@
 	 			<input type="hidden" name="food_id" value="<?php  echo $_GET['food']; ?>" />
 				<div data-role="fieldcontain">
 					<label for="quantity" class="ui-input-text" style="display :inline;">Quantity: </label>
+<<<<<<< HEAD
 					<input type="number" id= "quantField" name="quantity" value= "<?php echo $row["quantity"]?>" style="display: inline; width: 50%;"/>
 					<input type="hidden" name="shop" value="0"/>
+=======
+					<input type="number" id= "quantField" name="quantity" value= "<?php echo ($update ? $row["quantity"] : 0); ?>" style="display: inline; width: 50%;"/>
+>>>>>>> 561b3842c4de8d901e2fe6055eaffcee70451e3e
 					<select data-inline="true" data-native-menu="false" name="quantity_type_id">
 						<?php
 							$result = mysql_query("SELECT * from quantity_types");
