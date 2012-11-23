@@ -243,12 +243,8 @@
 	 			<input type="hidden" name="food_id" value="<?php  echo $_GET['food']; ?>" />
 				<div data-role="fieldcontain">
 					<label for="quantity" class="ui-input-text" style="display :inline;">Quantity: </label>
-<<<<<<< HEAD
 					<input type="number" id= "quantField" name="quantity" value= "<?php echo $row["quantity"]?>" style="display: inline; width: 50%;"/>
 					<input type="hidden" name="shop" value="0"/>
-=======
-					<input type="number" id= "quantField" name="quantity" value= "<?php echo ($update ? $row["quantity"] : 0); ?>" style="display: inline; width: 50%;"/>
->>>>>>> 561b3842c4de8d901e2fe6055eaffcee70451e3e
 					<select data-inline="true" data-native-menu="false" name="quantity_type_id">
 						<?php
 							$result = mysql_query("SELECT * from quantity_types");
