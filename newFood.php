@@ -21,15 +21,20 @@
 
 	    <div data-role="content" style="text-align: center;">
 			<form action="newFood.php" id="newFood" method="post">
+				<label for="file">Food Picture:</label>
+				<input type="file" name="file" id="file" /> <br />
 				<input type="text" id= "quantField" name="food" style="display: inline; width: 50%;" placeholder="Food Name..."/>
-				<select name="catID">
-					<?php
-						$categories = mysql_query("SELECT * from categories");
-						while($row = mysql_fetch_array($categories)){
-					?>
-						<option value="<?= $row["id"]?>"><?= $row["category"]?></option>
-					<?php } ?>
-				</select>
+				<div data-role="fieldcontain">
+					 <label for="select-choice-1" class="select">Category: </label>
+					<select name="catID" data-mini="true">
+						<?php
+							$categories = mysql_query("SELECT * from categories");
+							while($row = mysql_fetch_array($categories)){
+						?>
+							<option value="<?= $row["id"]?>"><?= $row["category"]?></option>
+						<?php } ?>
+					</select>
+				</div>
 				<input type="submit" data-theme="b" name="btnS" value="Create Food" />
 			</form>
 			
