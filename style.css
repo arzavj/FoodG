@@ -1,78 +1,166 @@
+
 .thumb {
+	
 	width: 50px;
+	
 	height: 50px;
+
 }
+
 
 .category{
+	
 	width: 100px;
+	
 	height: 100px;
+
 }	
 
+
 .image_description{
+	
 	margin-left: auto;
+	
 	margin-right: auto;
+	
 	width: 10em;
+	
 	height: 10em;
+
 }
+
 
 #mainFridge{
+	
 	margin-left: auto;
+	
 	margin-right: auto;
+	
 	height: 75%;
+
 }
+
 
 img.displayView {
-		position: relative;
-		display: block;
-		left:-120;
-		width: 240px;
-		height: auto;
+		
+	position: relative;
+		
+	display: block;
+		
+	left:-160;
+		
+	width: 320px;
+		
+	height: auto;
+
 }
 
+
 img.source-image {
+	
 	height: 80%;
+	
 	margin-left: auto;
+
 	margin-right: auto;
+	
 	position: absolute;
+	
 	align: center;
+
 }
+
 
 .dashboard-icon
 {
+	
 	text-align: center;
+	
 	margin-left:auto;
+	
 	margin-right:auto;
+	
 	margin-bottom:10px;
+	
 	margin-top:10px;
+	
 	width:60%;
+	
 	padding: 10px;
+	
 	border: 1px solid black;
+	
 	border-radius:15px;
+	
 	background-color: #DADADA;
+
 }
+
 
 a
 {
+	
 	text-decoration: none;
+
 }
-.ui-grid-a .dashboard-icon .category-name
+
+
+
+meter{
+	width: 100%;
+}
+
+.ui-grid-a .dashboard-icon 
+
+
+.category-name
 {
+
 	color: black;
+
 }
+
 
 .dashboard-icon img
 {
+	
 	width:50%;
+	
 	height:7%;
+
 }
+
 
 #fullness-bar
 {
+	
 	font-weight: bold;
+
 }
 
-#my-cart-link .ui-icon
-{ 
-	background: url(./images/80-shopping-cart.png) 50% 50% no-repeat;
-	background-size: 16px 12px;
+
+
+
+
+.ui-grid-c img{
+	width: 100%;
+	height: auto;
+	margin: 10px;
 }
+
+.ui-grid-c div {
+	padding: 10px;
+}
+.imgCaption{
+	width:100%;
+	text-align:center;
+	fontsize:12px;
+	margin-top:-20px;
+}
+
+
+
+#bg { position: absolute; top: 120; left: 0;  }
+.bgwidth { width: 100%; }
+.bgheight { height: 100%; }
+
