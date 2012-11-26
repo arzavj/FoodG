@@ -6,10 +6,47 @@
 	</head>
 	<body>
 		<?php 
+			include "helperFunctions.php";
 			$user_storage_query = sprintf("SELECT id from user_storages WHERE user_id = %s", $_COOKIE["user-id"]);
 			$user_storage = mysql_fetch_array(mysql_query($user_storage_query));
 			$foodName = getFoodName($_GET["food"]);
 			$alreadyInFridge = isInFridge($user_storage["id"], $_GET["food"]);
+			//$mode = "Fridge";
+			$currentQuantityInCart = "";
+			$foodNameInCart = "";
+			$quantityType = "";
+			$alreadyInCart = isInCart($currentQuantityInCart, $foodNameInCart, $quantityType);
+			//$mode = "Cart";
+
+			function isInCart(&$currQ, &$foodN, &$qType)
+			{
+				if (get_magic_quotes_gpc() == true) {
+				 foreach($_COOKIE as $key => $value) {
+				   $_COOKIE[$key] = stripslashes($value);
+				  }
+				}
+				
+				// if($_COOKIE["shop-cart-mode"]!="true")
+				// 	return "false";
+				$cartArray = $_COOKIE["cart"];
+				if(!is_null($cartArray))
+					$cartArray = unserialize($cartArray);
+				else
+					return "false";
+				foreach($cartArray as $key=>$map) //if added item is already in shopping cart
+				{
+					if($map["food_id"]==$_GET["food"])
+					{
+						$currQ = $map["quantity"];
+						$foodN = getFoodName($map["food_id"]);
+						$qType = getQuantityName($map["quantity_type_id"]);
+						//echo "<p>".$currentQuantityInCart.$quantityType." of ".$foodNameInCart."</p>";
+						return "true";
+					}
+				}
+				return "false";
+			}
+			
 			if($alreadyInFridge){
 				$currentQuantity = retrieveCurrQuantity($user_storage["id"], $_GET["food"]);
 			}
@@ -82,6 +119,7 @@
 				{
             		$query = sprintf("SELECT foods.*, 0 AS quantity from foods WHERE id = %s", $_GET['food']);
             		$row = mysql_fetch_array(mysql_query($query));
+            		$row["quantity"] = 1;
             		$update = "0";
             	}
             ?>
@@ -90,7 +128,21 @@
 	    </div><!-- /header -->
 
 	    <div data-role="content">
+	    	<script src="//cdn.optimizely.com/js/141265170.js"></script> 
 	    <!-- Pop Up Goes Here -->
+		<!-- shopping cart popup -->
+		<div data-role="popup" id="popupCart" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all">
+			<div data-role="header" data-theme="a" class="ui-corner-top">
+				<h1>Shopping Cart</h1>
+			</div>
+			<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+				<h3 class="ui-title">You already have <?php echo $currentQuantityInCart.$quantityType." of ".$foodNameInCart;?>.</h3>
+				<p>Are you sure you want to add more?</p>
+				<a href="#" data-role="button" data-inline="true" data-theme="c" onclick="manualSubmit();">Add to Cart</a>    
+				<a href= "#" data-role="button" data-inline="true" data-transition="flow" data-theme="b" onclick="window.location = 'myCart.php';">Don't Add </a> 
+			</div>
+		</div>
+		
 		<div data-role="popup" id="popupDialog" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all">
 			<div data-role="header" data-theme="a" class="ui-corner-top">
 				<h1>Fridge Check</h1>
@@ -98,8 +150,8 @@
 			<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
 				<h3 class="ui-title">You already have <?php echo $currentQuantity." ".$foodName;?>.</h3>
 				<p>Are you sure you want to add more?</p>
-				<a href="#" data-role="button" data-inline="true" data-theme="c" onclick="manualSubmit();">Add to MyFood</a>    
-				<a href= "#" data-role="button" data-inline="true" data-transition="flow" data-theme="b" onclick="manualSubmit2();">Stop Adding </a> 
+				<a href="#" data-role="button" data-inline="true" data-theme="c" onclick="manualSubmit();">Add to Fridge</a>    
+				<a href= "#" data-role="button" data-inline="true" data-transition="flow" data-theme="b" onclick="manualSubmit2();">Don't Add </a> 
 			</div>
 		</div>
 
@@ -110,11 +162,11 @@
 			<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
 				<h3 class="ui-title">Your storage is almost full!</h3>
 				<p>Are you sure you want to add more?</p>
-				<a href="#" data-role="button" data-inline="true" data-theme="c" onclick="manualSubmit();">Add to MyFood</a>    
-				<a href= "#" data-role="button" data-inline="true" data-transition="flow" data-theme="b" onclick="manualSubmit2();">Stop Adding </a> 
+				<a href="#" data-role="button" data-inline="true" data-theme="c" onclick="manualSubmit();">Add to Fridge</a>    
+				<a href= "#" data-role="button" data-inline="true" data-transition="flow" data-theme="b" onclick="manualSubmit2();">Don't Add </a> 
 			</div>
 		</div>
-
+		
 		<script type="text/javascript">
 			var btn = null;
 			function capture(button){
@@ -139,13 +191,30 @@
 			{
 				var quant_element = document.getElementById('quantField');
 				var quantToBeAdded = quant_element.value;
+				if (quantToBeAdded < 0){
+					alert("You cannot enter a negative number");
+					return false;
+				} 
+
 				var addedflag = (<?php echo $alreadyInFridge; ?>);   //Interfered with adding new items: < parseInt(quantToBeAdded)) ;
 				var fullflag = <?php echo ($fullFridge ? "true" : "false"); ?>;
 
-				if (<?php echo (is_null($_COOKIE["shop-cart-mode"]) ? "false" : $_COOKIE["shop-cart-mode"]); ?> && (<?php echo $alreadyInFridge; ?> != -1)){
-					return true;
+				if(<?php echo intval($_GET["shop"]);?>==1) //if updating or removing from shopping cart
+					$("input[name='shop']").val("1");
+				
+				if((<?php echo $alreadyInCart;?>==true && $(btn).val()=="Add to Cart") || (<?php echo intval($_GET["shop"]);?>==1 && $(btn).val()=="Update")) //updating cart or adding to cart when alreadyInCart
+				{
+					$("#popupCart").popup();
+					$("#popupCart").popup("open");
+					return false;
 				}
-
+				else if((<?php echo $alreadyInCart;?>==false && $(btn).val()=="Add to Cart") || <?php echo intval($_GET["shop"]);?>==1) //removing from cart or adding to cart when not in cart
+					return true;
+				
+				
+				// if (<?php echo (is_null($_COOKIE["shop-cart-mode"]) ? "false" : $_COOKIE["shop-cart-mode"]); ?> && (<?php echo $alreadyInFridge; ?> != -1)){
+				// 	return true;
+				// }
 				if(addedflag && $(btn).val() != "Remove All")
 				{
 					$( "#popupDialog" ).popup();
@@ -175,6 +244,7 @@
 				<div data-role="fieldcontain">
 					<label for="quantity" class="ui-input-text" style="display :inline;">Quantity: </label>
 					<input type="number" id= "quantField" name="quantity" value= "<?php echo $row["quantity"]?>" style="display: inline; width: 50%;"/>
+					<input type="hidden" name="shop" value="0"/>
 					<select data-inline="true" data-native-menu="false" name="quantity_type_id">
 						<?php
 							$result = mysql_query("SELECT * from quantity_types");
@@ -192,19 +262,24 @@
 					<label for="expiry" class="ui-input-text">Expiry Date: </label>
 					<input type="date" name="expiry"></input>			
 				</div> -->
+				<input type="hidden" name="btnS" id="btnClick"/>
 				<?php 
-					if ($update || intval($_GET["update"])==1 || $alreadyInFridge) :
+					if($update || intval($_GET["update"])==1)
+					{
 				?>
-					<input type="hidden" name="btnS" id="btnClick"/>
 					<input type="submit" data-theme="b" name="btnS" value="Update" onclick="capture(this);"/>
 					<input type="submit" data-theme="b" name="btnS" value="Remove All" onclick="capture(this);"/>
 				<?php 
-					else:
+					}
+					else
+					{
 				?>
-					<input type="hidden" name="btnS" value="Submit"/>
-					<input type="submit" data-theme="b" value="Submit" />
+					<input type="submit" data-theme="b" name="btnS" value="Add to Fridge" onclick="capture(this);"/>
+					<input type="submit" data-theme="b" name="btnS" value="Add to Cart" onclick="capture(this);"/>
+					<!-- <input type="hidden" name="btnS" value="Submit"/>			
+					<input type="submit" data-theme="b" value="Add to <?php echo $mode; ?>" /> -->
 				<?php
-					endif;
+					}
 				?>
 			</form>
 			</center>

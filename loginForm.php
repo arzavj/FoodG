@@ -1,7 +1,9 @@
-<?php
-	$loggingIn = 1;
-	include "head.php";
-?>
+<head>
+	<?php
+		$loggingIn = 1;
+		include "head.php";
+	?>
+</head>
 <div data-role="page">
 	<div data-role="header">
 		<h1>Food Gatherer</h1>
