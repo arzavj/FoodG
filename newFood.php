@@ -21,7 +21,6 @@
 	    </div><!-- /header -->
 
 	    <div data-role="content" style="text-align: center;">
-	    	<?php echo $query ?>
 			<form action="newFood.php" id="newFood" method="POST">
 				<input type="text" id= "quantField" name="food" style="display: inline; width: 50%;" placeholder="Food Name..."/>
 				<div data-role="fieldcontain">
