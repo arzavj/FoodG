@@ -120,7 +120,7 @@
 
 
 		<select id="categories" onchange="changeCategories();">
-			<option value="0">All</option>
+			<option value="0">All Categories</option>
 			<?php while ($row = mysql_fetch_array($categories)){ ?>
 				<option value="<?= $row["id"]?>" ><?= $row["category"] ?> </option>
 			<?php } ?>
