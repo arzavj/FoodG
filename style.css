@@ -139,6 +139,11 @@ meter{
 }
 
 
+#my-cart-link .ui-icon
+{ 
+       background: url(./images/80-shopping-cart.png) 50% 50% no-repeat;
+       background-size: 16px 12px;
+}
 
 
 
@@ -154,7 +159,7 @@ meter{
 .imgCaption{
 	width:100%;
 	text-align:center;
-	fontsize:12px;
+	font-size:12px;
 	margin-top:-20px;
 }
 
