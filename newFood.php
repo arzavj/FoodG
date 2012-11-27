@@ -8,7 +8,8 @@
 		<?php 
 			include "helperFunctions.php";
 			if ($_POST["food"]){
-				$query = sprintf("INSERT INTO foods(category_id, name) VALUES (%s, '%s')", $_POST["catID"], $_POST["food"]);
+				$query = sprintf("INSERT INTO foods(category_id, food) VALUES (%s, '%s')", $_POST["catID"], $_POST["food"]);
+				echo $query;
 				mysql_query($query);
 			}
 		?>
@@ -20,12 +21,11 @@
 	    </div><!-- /header -->
 
 	    <div data-role="content" style="text-align: center;">
-			<form action="newFood.php" id="newFood" method="post">
-				<label for="file">Food Picture:</label>
-				<input type="file" name="file" id="file" /> <br />
+	    	<?php echo $query ?>
+			<form action="newFood.php" id="newFood" method="POST">
 				<input type="text" id= "quantField" name="food" style="display: inline; width: 50%;" placeholder="Food Name..."/>
 				<div data-role="fieldcontain">
-					 <label for="select-choice-1" class="select">Category: </label>
+					<label for="select-choice-1" class="select">Category: </label>
 					<select name="catID" data-mini="true">
 						<?php
 							$categories = mysql_query("SELECT * from categories");

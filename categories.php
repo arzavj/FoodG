@@ -60,6 +60,22 @@
 					$count = ($count + 1) % 2;  
 					}
 				?>
+
+				<?php 
+					if ($count == 0){
+						echo '<div class="ui-block-a">';
+					} else {
+						echo '<div class="ui-block-b">';
+					}
+				?>
+
+				<div class="dashboard-icon">
+					<a href="newFood.php">
+						<div><img src="images/other-icon.svg" /></div>
+						<div class="category-name">Other Food</div>
+					</a>
+				</div>
+			</div> <!-- end block -->
 			</div> <!-- /grid -->
 		</div> <!-- /categories -->
 	</div><!-- /content -->
