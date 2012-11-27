@@ -119,7 +119,6 @@
 				{
             		$query = sprintf("SELECT foods.*, 0 AS quantity from foods WHERE id = %s", $_GET['food']);
             		$row = mysql_fetch_array(mysql_query($query));
-            		$row["quantity"] = 1;
             		$update = "0";
             	}
             ?>
@@ -191,12 +190,15 @@
 			{
 				var quant_element = document.getElementById('quantField');
 				var quantToBeAdded = quant_element.value;
+
 				if (quantToBeAdded < 0){
 					alert("You cannot enter a negative number");
 					return false;
 				} 
+				
+				var addedflag = (<?php echo $alreadyInFridge; ?> < quantToBeAdded) && (<?php echo $update."||".$alreadyInFridge?>);   //Interfered with adding new items: < parseInt(quantToBeAdded)) ;
+				
 
-				var addedflag = (<?php echo $alreadyInFridge; ?>);   //Interfered with adding new items: < parseInt(quantToBeAdded)) ;
 				var fullflag = <?php echo ($fullFridge ? "true" : "false"); ?>;
 
 				if(<?php echo intval($_GET["shop"]);?>==1) //if updating or removing from shopping cart
@@ -264,7 +266,7 @@
 				</div> -->
 				<input type="hidden" name="btnS" id="btnClick"/>
 				<?php 
-					if($update || intval($_GET["update"])==1)
+					if($update || intval($_GET["update"])==1 || $alreadyInFridge)
 					{
 				?>
 					<input type="submit" data-theme="b" name="btnS" value="Update" onclick="capture(this);"/>
