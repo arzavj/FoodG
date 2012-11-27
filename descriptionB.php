@@ -11,16 +11,13 @@
 			$user_storage = mysql_fetch_array(mysql_query($user_storage_query));
 			$foodName = getFoodName($_GET["food"]);
 			$alreadyInFridge = isInFridge($user_storage["id"], $_GET["food"]);
-			$alreadyInCart = "false";
-			$mode = "Fridge";
+			//$mode = "Fridge";
 			$currentQuantityInCart = "";
 			$foodNameInCart = "";
 			$quantityType = "";
-			if($_COOKIE["shop-cart-mode"]=="true")
-			{
-				$alreadyInCart = isInCart($currentQuantityInCart, $foodNameInCart, $quantityType);
-				$mode = "Cart";
-			}
+			$alreadyInCart = isInCart($currentQuantityInCart, $foodNameInCart, $quantityType);
+			//$mode = "Cart";
+
 			function isInCart(&$currQ, &$foodN, &$qType)
 			{
 				if (get_magic_quotes_gpc() == true) {
@@ -29,8 +26,8 @@
 				  }
 				}
 				
-				if($_COOKIE["shop-cart-mode"]!="true")
-					return "false";
+				// if($_COOKIE["shop-cart-mode"]!="true")
+				// 	return "false";
 				$cartArray = $_COOKIE["cart"];
 				if(!is_null($cartArray))
 					$cartArray = unserialize($cartArray);
@@ -140,7 +137,7 @@
 			<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
 				<h3 class="ui-title">You already have <?php echo $currentQuantityInCart.$quantityType." of ".$foodNameInCart;?>.</h3>
 				<p>Are you sure you want to add more?</p>
-				<a href="#" data-role="button" data-inline="true" data-theme="c" onclick="document.getElementById('foodForm').submit();">Add to Cart</a>    
+				<a href="#" data-role="button" data-inline="true" data-theme="c" onclick="manualSubmit();">Add to Cart</a>    
 				<a href= "#" data-role="button" data-inline="true" data-transition="flow" data-theme="b" onclick="window.location = 'myCart.php';">Don't Add </a> 
 			</div>
 		</div>
@@ -204,15 +201,22 @@
 
 				var fullflag = <?php echo ($fullFridge ? "true" : "false"); ?>;
 
-				if(<?php echo $alreadyInCart;?>==true && btn==null) //if btn is not update and remove all but is "Add to Cart"
+				if(<?php echo intval($_GET["shop"]);?>==1) //if updating or removing from shopping cart
+					$("input[name='shop']").val("1");
+				
+				if((<?php echo $alreadyInCart;?>==true && $(btn).val()=="Add to Cart") || (<?php echo intval($_GET["shop"]);?>==1 && $(btn).val()=="Update")) //updating cart or adding to cart when alreadyInCart
 				{
 					$("#popupCart").popup();
 					$("#popupCart").popup("open");
 					return false;
 				}
-				if (<?php echo (is_null($_COOKIE["shop-cart-mode"]) ? "false" : $_COOKIE["shop-cart-mode"]); ?> && (<?php echo $alreadyInFridge; ?>)){
+				else if((<?php echo $alreadyInCart;?>==false && $(btn).val()=="Add to Cart") || <?php echo intval($_GET["shop"]);?>==1) //removing from cart or adding to cart when not in cart
 					return true;
-				}
+				
+				
+				// if (<?php echo (is_null($_COOKIE["shop-cart-mode"]) ? "false" : $_COOKIE["shop-cart-mode"]); ?> && (<?php echo $alreadyInFridge; ?> != -1)){
+				// 	return true;
+				// }
 				if(addedflag && $(btn).val() != "Remove All")
 				{
 					$( "#popupDialog" ).popup();
@@ -241,7 +245,8 @@
 	 			<input type="hidden" name="food_id" value="<?php  echo $_GET['food']; ?>" />
 				<div data-role="fieldcontain">
 					<label for="quantity" class="ui-input-text" style="display :inline;">Quantity: </label>
-					<input type="number" id= "quantField" name="quantity" value= "<?php echo $row["quantity"]; ?>" style="display: inline; width: 50%;"/>
+					<input type="number" id= "quantField" name="quantity" value= "<?php echo $row["quantity"]?>" style="display: inline; width: 50%;"/>
+					<input type="hidden" name="shop" value="0"/>
 					<select data-inline="true" data-native-menu="false" name="quantity_type_id">
 						<?php
 							$result = mysql_query("SELECT * from quantity_types");
@@ -259,11 +264,11 @@
 					<label for="expiry" class="ui-input-text">Expiry Date: </label>
 					<input type="date" name="expiry"></input>			
 				</div> -->
+				<input type="hidden" name="btnS" id="btnClick"/>
 				<?php 
 					if($update || intval($_GET["update"])==1 || $alreadyInFridge)
 					{
 				?>
-					<input type="hidden" name="btnS" id="btnClick"/>
 					<input type="submit" data-theme="b" name="btnS" value="Update" onclick="capture(this);"/>
 					<input type="submit" data-theme="b" name="btnS" value="Remove All" onclick="capture(this);"/>
 				<?php 
@@ -271,8 +276,10 @@
 					else
 					{
 				?>
-					<input type="hidden" name="btnS" value="Submit"/>			
-					<input type="submit" data-theme="b" value="Add to <?php echo $mode; ?>" />
+					<input type="submit" data-theme="b" name="btnS" value="Add to Fridge" onclick="capture(this);"/>
+					<input type="submit" data-theme="b" name="btnS" value="Add to Cart" onclick="capture(this);"/>
+					<!-- <input type="hidden" name="btnS" value="Submit"/>			
+					<input type="submit" data-theme="b" value="Add to <?php echo $mode; ?>" /> -->
 				<?php
 					}
 				?>
