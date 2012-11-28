@@ -18,26 +18,24 @@
         </div><!-- /header -->
 	<div data-role="content">
 		<ul data-role="listview">
-			<li>
-					<?php
-						$query = sprintf("SELECT * from foods WHERE category_id = %s LIMIT 20", $_GET["cat_id"]);
-						$result = mysql_query($query);
-						if (mysql_num_rows($result) > 0){
-							while($row = mysql_fetch_array($result)){
-						?>
-							<div data-role="navbar">
-								<ul>
-									<li><img src="<?php echo $row["image_url"] ?>" class="thumb"></li>
-									<li><a href="description.php?food=<?php echo $row["id"]?>" > <?php echo $row["food"] ?> </a></li>
-								</ul>
-							</div>
-						<?php
-							}
-						} else{
-							echo '<div data-role="navbar"><ul><li><center>Sorry,but there is nothing in this category at the moment.</center></li></ul></div>';
-						}
-						?>
-			</li>
+			<?php
+				$query = sprintf("SELECT * from foods WHERE category_id = %s LIMIT 20", $_GET["cat_id"]);
+				$result = mysql_query($query);
+				if (mysql_num_rows($result) > 0){
+					while($row = mysql_fetch_array($result)){
+				?>
+					<li>
+						<a href="description.php?food=<?php echo $row["id"]?>" >
+							<img src="<?php echo $row["image_url"] ?>" class="ui-li-thumb" />
+							<?php echo $row["food"] ?>
+						</a>
+					</li>
+				<?php
+					}
+				} else{
+					echo '<div data-role="navbar"><ul><li><center>Sorry,but there is nothing in this category at the moment.</center></li></ul></div>';
+				}
+				?>
 		</ul>
 	</div>
 	</div>
