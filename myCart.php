@@ -46,21 +46,24 @@
 							printEmptyCart();
 						else
 						{
+							echo "<ul data-role='listview'>";
 							foreach ($cartArray as $map)
 							{
 								if(isset($map))
 								{
 									$item = mysql_fetch_assoc(mysql_query(sprintf("SELECT * from foods WHERE id = %s", $map["food_id"])));
-									echo "<div>\n";
+									echo "<li>\n";
 									$link = sprintf("<a href='description.php?food=%s&update=1&shop=1'>", $item['id']);
-									echo $link;
-									echo "<p>".$item['food'];
-									$image = sprintf("<img src= %s class = %s />", $item['image_url'],'thumb' );
-									echo $image."</a> Quantity: ".$map["quantity"].getQuantityName($map["quantity_type_id"])."</p>\n";
-									echo "</div>\n";
+									$image = sprintf("<img src= %s />", $item['image_url']);
+									echo $link.$image."<h3>".$item['food']."</h3>";
+									//echo "<span class='ui-li-count'>".$map["quantity"].getQuantityName($map["quantity_type_id"])."</span>";
+									echo "<p>".$map["quantity"].getQuantityName($map["quantity_type_id"])."</p>";
+									echo "</a> ";
+									echo "</li>\n";
 									//echo "<p>".print_r($map)."</p>";
 								}
 							}
+							echo "</ul>";
 						}
 					}
 				?>

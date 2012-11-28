@@ -9,30 +9,30 @@
 <body>
 
 <div data-role="page" id="fridgeview" data-add-back-btn="true">
-	<script src="//cdn.optimizely.com/js/141265170.js"></script>
-	<script type="text/javascript">
-		$("#searchField").on("input", function(e) {
-    		if ($("#searchField").val().length == 0){
-    			$("#searchContent").hide();
-    			$("#categories").show();
-    		} else{
-    			$("#searchContent").show();
-    			$("#categories").hide();
-    			$.post("ajaxSearch.php", {search:$("#searchField").val(), all:true}, function(data) {
-    				var sugList = $("#suggestions");
-					sugList.html(data);
-					sugList.listview("refresh").trigger("create");
-				});
-    		}
-    	});
-
-	</script>
 	<div data-role="header">
 		<!-- <a data-rel="back" data-icon="back">Back</a> -->
 		<h1>Categories</h1>
 		<a href="logout.php" data-role="button" class="ui-btn-right">Logout</a>
 	</div><!-- /header -->
 	<div data-role="content">
+		<script type="text/javascript">
+			$(function() {
+			$("#searchField").on("input", function(e) {
+	    		if ($("#searchField").val().length == 0){
+	    			$("#searchContent").hide();
+	    			$("#categories").show();
+	    		} else{
+	    			$("#searchContent").show();
+	    			$("#categories").hide();
+	    			$.post("ajaxSearch.php", {search:$("#searchField").val(), all:true}, function(data) {
+	    				var sugList = $("#suggestions");
+						sugList.html(data);
+						sugList.listview("refresh").trigger("create");
+					});
+	    		}
+	    	});
+			});
+		</script>
 		<input type="text" id="searchField" placeholder="Search">
 		<div id="searchContent" style="display:none;">
 			<ul id="suggestions" data-role="listview" data-inset="true"></ul>
