@@ -105,7 +105,20 @@
 
 		<div data-role="page" data-add-back-btn="true">
 		<div data-role="header">
-            <!-- <a data-rel="back" data-icon="back">Back</a> -->
+			<?php
+				$backLink = "#";
+				if(intval($_GET["shop"])==1) //updating through shopping cart page
+					$backLink = "myCart.php";
+				else if(intval($_GET["update"])==1) //updating through fridge on home page
+					$backLink = "index.php"; 
+				else // adding new item through add item flow
+				{
+					$q = sprintf("SELECT foods.category_id from foods WHERE id = %s", $_GET['food']);
+            		$r = mysql_fetch_array(mysql_query($q));
+					$backLink = "list.php?cat_id=".$r["category_id"];
+				}
+			?>
+            <a href="<?php echo $backLink; ?>" data-rel="back" data-icon="arrow-l">Back</a>
             <?php
             	$query = sprintf("SELECT foods.*, user_foods.quantity from (user_storages inner join user_foods ON (user_storages.id = user_foods.user_storage_id)) inner join foods ON (user_foods.food_id = foods.id) WHERE user_storages.user_id = %s AND foods.id = %s LIMIT 1", $_COOKIE['user-id'], $_GET['food']);
             	$user_result = mysql_query($query);
