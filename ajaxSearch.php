@@ -4,9 +4,10 @@
 			$storequest = sprintf('SELECT * from foods WHERE food LIKE "%%%s%%"', $_POST["search"]);
 			$url = "description.php?food=%s";
 		} else{
-			$storequest= sprintf('SELECT foods.* FROM foods inner join (user_foods inner join user_storages 
-				ON user_foods.user_storage_id = user_storages.id) 
-				ON foods.id = user_foods.food_id 
+			$storequest= sprintf('SELECT foods.*, user_foods.quantity, quantity_types.quantity_type FROM foods inner join (
+				(user_foods inner join user_storages ON user_foods.user_storage_id = user_storages.id) 
+				inner join quantity_types ON user_foods.quantity_type_id = quantity_types.id)
+				ON foods.id = user_foods.food_id
 				WHERE user_storages.user_id = %s AND foods.food LIKE "%%%s%%"', $_COOKIE['user-id'], $_POST["search"]);
 			$url = "description.php?food=%s&update=1";
 		}
@@ -19,7 +20,13 @@
 				<a class="ui-link-inherit" href="<?php echo sprintf($url, $row["id"])?>">
 					<img src="<?php echo $row["image_url"] ?>" class="ui-li-thumb" />
 					<h3 class="ui-li-heading"><?php echo $row["food"] ?></h3>
-					<p class="ui-li-desc"><!-- TODO fill count--></p>
+					<?php
+						if($row["quantity"]){
+					?>
+						<p class="ui-li-desc"><?= $row["quantity"]." ".$row["quantity_type"] ?></p>
+					<?php	
+						}
+					?>
 				</a>
 			</div>
 			<span class="ui-icon ui-icon-arrow-r ui-icon-shadow"> </span>
