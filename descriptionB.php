@@ -103,9 +103,9 @@
 			}
 		?>
 
-		<div data-role="page" data-add-back-btn="true">
+		<div data-role="page">
 		<div data-role="header">
-            <!-- <a data-rel="back" data-icon="back">Back</a> -->
+            <a data-rel="back" data-icon="back">Back</a> 
             <?php
             	$query = sprintf("SELECT foods.*, user_foods.quantity from (user_storages inner join user_foods ON (user_storages.id = user_foods.user_storage_id)) inner join foods ON (user_foods.food_id = foods.id) WHERE user_storages.user_id = %s AND foods.id = %s LIMIT 1", $_COOKIE['user-id'], $_GET['food']);
             	$user_result = mysql_query($query);
