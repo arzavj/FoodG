@@ -10,9 +10,11 @@
 <div data-role="page" data-add-back-btn="true">
 	<script type="text/javascript">
 		fill();
-  		$("#searchField").on("input", function(e) {
-    		fill();
-    	});
+		$(function(){
+			$("#searchField").on("input", function(e) {
+    			fill();
+    		});
+		});
 
     	function fill(){
     		$.post("ajaxSearch.php", {search:$("#searchField").val()}, function(data) {
@@ -31,7 +33,7 @@
 	<div data-role="content">
 		
 		<p>
-        	<input type="text" id="searchField" placeholder="Search">
+        	<input type="text" id="searchField" placeholder="Search" />
         	<ul id="suggestions" data-role="listview" data-inset="true"></ul>
         </p>
 		

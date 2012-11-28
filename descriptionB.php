@@ -103,7 +103,7 @@
 			}
 		?>
 
-		<div data-role="page" data-add-back-btn="true">
+		<div data-role="page">
 		<div data-role="header">
 			<?php
 				$backLink = "#";
