@@ -9,7 +9,7 @@
 <body>
 
 <div data-role="page" id="fridgeview" data-add-back-btn="true">
-	<script src="//cdn.optimizely.com/js/141265170.js"></script>
+
 	<script type="text/javascript">
 		$("#searchField").on("input", function(e) {
     		if ($("#searchField").val().length == 0){
