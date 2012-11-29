@@ -3,7 +3,6 @@
 		<?php
 		include("head.php");
 		?>
-		<script src="//cdn.optimizely.com/js/141265170.js"></script>
 	</head>
 	<body>
 		
@@ -17,27 +16,6 @@
 		<script>
 		$(document).ready(function(){
 			changeCategories();
-		// 	<?php
-		// 		if($_COOKIE["shop-cart-mode"]=="true")
-		// 		{
-		// 		?>
-		// 			$('#shop-cart').val('on').trigger('keyup');
-		// 		<?php
-		// 		}	
-		// 		else
-		// 		{
-		// 		?>
-		// 			$("#my-cart-link").hide();
-		// 		<?php
-		// 		}
-		// 	?>
-		// 	//$( "#accordion" ).accordion();
-		// 	$('#shop-cart').change(function() {
-		// 	    var myswitch = $(this);
-		// 	    var show     = myswitch[0].selectedIndex == 1 ? true:false;
-		// 	    $('#my-cart-link').toggle(show);
-		// 		$.post("shop-cart-mode.php", {"shop-cart-mode":show}, function(data) {});
-		// 	});
 		});
 		
 		function changeCategories(){
@@ -51,7 +29,7 @@
 	</div><!-- /header -->
 
 	<div data-role="content">
-		
+		<script src="//cdn.optimizely.com/js/141265170.js"></script>
 		<?php
 		include "config.php";
 

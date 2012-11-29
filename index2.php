@@ -3,7 +3,6 @@
 		<?php
 		include("head.php");
 		?>
-		<script src="//cdn.optimizely.com/js/141265170.js"></script>
 	</head>
 	<body>
 		
@@ -51,7 +50,7 @@
 	</div><!-- /header -->
 
 	<div data-role="content">
-		
+		<script src="//cdn.optimizely.com/js/141265170.js"></script>
 		<?php
 		include "config.php";
 
