@@ -25,7 +25,7 @@
 					
 					function printEmptyCart()
 					{
-						echo "<p> Your cart is empty!</p>";
+						echo "<h3> Your cart is empty!</h3>";
 						?>
 							<script>
 								$(function(){

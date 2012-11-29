@@ -62,8 +62,8 @@
 					<input type="text" name="username" id="user" placeholder="Username" >
 					<input type="password" name="password" id="pass" placeholder="Password">
 					<input type="password" name="passwordConfirm" id="passConfirm" placeholder="Password Confirmation">
-					<label for="Space Dimensions" style="font-weight:bold;">Fridge Dimensions (meters): </label>
-					<input type="range" name="volume" value="4.6" min="1.3"  max="33.3"/>
+					<label for="Space Dimensions" style="font-weight:bold;">Fridge Dimensions (cubic feet): </label>
+					<input type="range" name="volume" value="4.6" min="1.3"  max="33.3" data-highlight="true"/>
         			<input type="submit" value="Register">
 				</form>	
 			</div><!-- /content -->

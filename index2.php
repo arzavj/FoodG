@@ -134,9 +134,10 @@
 		
 
 
-
-		<meter value="<?= $percentUsed?>" min= "0" max="100"></meter>
+		<h4> Space Used : <?php echo " ".round($percentUsed)."%"  ?></h4>
+		<meter value="<?= $percentUsed?>" min= "0" max="100" low="20" high="75"></meter>
 		
+
 		
 		
 		
