@@ -107,7 +107,7 @@
 		<div data-role="header">
             <a data-rel="back" data-icon="back">Back</a>
             <?php
-            	$query = sprintf("SELECT foods.*, user_foods.quantity from (user_storages inner join user_foods ON (user_storages.id = user_foods.user_storage_id)) inner join foods ON (user_foods.food_id = foods.id) WHERE user_storages.user_id = %s AND foods.id = %s LIMIT 1", $_COOKIE['user-id'], $_GET['food']);
+            	$query = sprintf("SELECT foods.*, user_foods.quantity, user_foods.quantity_type_id from (user_storages inner join user_foods ON (user_storages.id = user_foods.user_storage_id)) inner join foods ON (user_foods.food_id = foods.id) WHERE user_storages.user_id = %s AND foods.id = %s LIMIT 1", $_COOKIE['user-id'], $_GET['food']);
             	$user_result = mysql_query($query);
             	$row = NULL;
             	$update = $_GET['update'] ? "1" : "0";
@@ -248,11 +248,11 @@
 					<select data-inline="true" data-native-menu="false" name="quantity_type_id">
 						<?php
 							$result = mysql_query("SELECT * from quantity_types");
-							while($row = mysql_fetch_array($result))
+							while($row2 = mysql_fetch_array($result))
 							{
 	
 						?>
-								<option value="<?php echo $row["id"] ?>"><?php echo $row["quantity_type"]?></option>
+								<option value="<?php echo $row2["id"] ?>" <?= $row["quantity_type_id"] == $row2["id"] ? 'selected="selected"' : ""?> ><?php echo $row2["quantity_type"]?></option>
 						<?php
 							}
 						?>
