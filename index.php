@@ -11,7 +11,7 @@
 <div data-role="page" id="home" data-add-back-btn="true">
 	<div data-role="header">
 		<!-- <a href="#Home" data-icon="back">Back</a> -->
-		<a href="myCart.php" class="ui-btn-left" id="my-cart-link" data-icon="custom" data-iconpos="right" data-role="button">My Cart</a>
+		<a href="myCart.php" class="ui-btn-left" id="my-cart-link" data-icon="shopping-cart" data-iconpos="right" data-role="button">My Cart</a>
 		<h1>My Fridge</h1>
 		<a href="logout.php" data-role="button" class="ui-btn-right">Logout</a>
 		<script>
@@ -135,8 +135,8 @@
 		
 
 
-
-		<meter value="<?= $percentUsed?>" min= "0" max="100"></meter>
+		<h4> Space Used : <?php echo " ".round($percentUsed)." %"  ?></h4>
+		<meter value="<?= $percentUsed?>" min= "0" max="100" low="20" high="75"></meter>
 		
 		
 		

@@ -49,12 +49,12 @@
 							echo '<div class="ui-block-b">';
 						}		
 				?>
-					<div class="dashboard-icon">
-						<a href="list.php?cat_id=<?php echo $row["id"] ?>">
+					
+						<a href="list.php?cat_id=<?php echo $row["id"] ?>" class="button white">
 							<div><img src="<?php echo $row["image_url"]?>" /></div>
 							<div class="category-name"><?php echo $row["category"] ?></div>
 						</a>
-					</div>
+					
 				<?php
 					echo "</div>";
 					$count = ($count + 1) % 2;  
@@ -69,12 +69,12 @@
 					}
 				?>
 
-				<div class="dashboard-icon">
-					<a href="newFood.php">
+				
+					<a href="newFood.php" class="white button">
 						<div><img src="images/other-icon.svg" /></div>
 						<div class="category-name">Other Food</div>
 					</a>
-				</div>
+				
 			</div> <!-- end block -->
 			</div> <!-- /grid -->
 		</div> <!-- /categories -->

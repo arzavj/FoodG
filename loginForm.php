@@ -5,21 +5,34 @@
 	?>
 </head>
 <div data-role="page">
-	<div data-role="header">
-		<h1>Food Gatherer</h1>
-	</div><!-- /header -->
-
-	<div data-role="content">
+	
+<div data-role="header"> <h1>FoodG <h1> </div>
+	<div data-role="content" style="background-color: #bdd5e0;">
 		<?php
-			echo $error;
+			echo "<h3>".$error."</h3>";
 		?>
-		<form action="login.php" method="post">
-			<label for="username">Username:</label>
-			<input type="text" autocapitalize="off" name="username">
-			<label for="password">Password:</label>
-			<input type="password" name="password">
-			<input type="submit" value="Login">
-		</form>
-		<a href="register.php">Click here to register</a>
+		<div id="wrapper">
+			<form action="login.php" method="post" name="login-form" class="login-form">
+				<div class="header">
+					<h1>Login</h1>
+					<span> Login to start keeping track of your food and prevent waste! </span>
+				</div><!-- /header -->
+				<div class="content">
+					
+						
+						<input type="text" autocapitalize="off" name="username" class="input username" placeholder="Username">
+						<div class="user-icon"></div>
+						
+						<input type="password" name="password" class="input password" placeholder="Password">
+						<div class="pass-icon"></div>	
+						
+						<div class="footer">
+							<input type="submit" value="Login">
+					</form>
+						<a href="register.php" name="submit" value="Register" class = "register">Register</a>
+						</div>
+				</div>
+			</div>
+			<div class="gradient"></div>
 	</div><!-- /content -->
 </div><!-- /login page -->
