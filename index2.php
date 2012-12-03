@@ -65,7 +65,7 @@
 		<style type="text/css">
 			#popupPanel-popup {
 				right: 0 !important;
-				left: auto !important;
+				left: 0 !important;
 				}
 				#popupPanel {
 				width: 200px;
