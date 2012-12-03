@@ -17,8 +17,8 @@
 <link rel="stylesheet" href="themes/FoodG.css" />
 <link rel="stylesheet" type="text/css" href="style.css" />
 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile.structure-1.2.0.min.css" /> 
-
-
+<link rel="apple-touch-icon" href="images/app-icon.png"/>
+<link rel="apple-touch-startup-image" href="images/startup-image.png"/>
 <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
 <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
 <meta name="apple-mobile-web-app-capable" content="yes">
