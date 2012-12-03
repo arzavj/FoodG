@@ -93,6 +93,13 @@
 			<?php } ?>
 		</select>
 
+		<?php 
+			$checkNew = sprintf("SELECT *, foods.id AS fID from ((user_foods inner join foods ON foods.id = user_foods.food_id) 
+			inner join quantity_types ON quantity_types.id = user_foods.quantity_type_id) 
+			inner join user_storages ON user_storages.id = user_foods.user_storage_id 
+			WHERE user_storages.user_id = %s", $_COOKIE['user-id']);
+			if (mysql_num_rows(mysql_query($checkNew)) == 0):
+		?>
 		<script>
 			$(document).unbind('pageshow');
 			$(document).bind('pageshow', function(event){
@@ -152,6 +159,8 @@
 				</div>
 			<a href="#" class="close" data-rel="back" data-theme="a" data-role="button">Close me</a>
 		</div>	
+
+		<?php endif; ?>
 
 
 		<div id="food-content"></div>
