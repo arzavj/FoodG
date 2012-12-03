@@ -33,67 +33,7 @@
 	<div data-role="content" id="cont">
 		<script src="//cdn.optimizely.com/js/141265170.js"></script>
 
-		<?php
-		include "config.php";
-
-		$userName = sprintf("SELECT username, saved_points from users WHERE id = %s", $_COOKIE['user-id']);
-		$userName = mysql_fetch_array(mysql_query($userName));
-		//echo "Hello, <b>".$userName["username"]." (".$userName["saved_points"].")</b>. <br>";
-
-		//NOTE CHECK ON POINT SYSTEM!!!
-
-		?>
-
-		<script type="text/javascript">
-			$(window).load(function() {    
-
-				var theWindow        = $(window),
-				    $bg              = $("#bg"),
-				    aspectRatio      = $bg.width() / $bg.height();
-				    			    		
-				function resizeBg() {
-					
-					if ( (theWindow.width() / theWindow.height()) < aspectRatio ) {
-					    $bg
-					    	.removeClass()
-					    	.addClass('bgheight');
-					} else {
-					    $bg
-					    	.removeClass()
-					    	.addClass('bgwidth');
-					}
-								
-				}
-				                   			
-				theWindow.resize(function() {
-					resizeBg();
-				}).trigger("resize");
-
-			});
-		</script>
-
-
-		<?php
-		$storequest= sprintf('SELECT id,max_volume,curr_volume FROM user_storages WHERE user_id = %s', $_COOKIE['user-id']);
-		$storeLoc = mysql_query($storequest);
-		$storageId = mysql_fetch_array($storeLoc);
-		$percentUsed = ($storageId["curr_volume"]/$storageId["max_volume"])*100;
-
-		//echo '<a href="search.php" data-role="button" data-icon="search">Search Your Fridge</a>';
-		$categories = mysql_query("SELECT * from categories");
-		?>
-
-
-
-
-		<select id="categories" onchange="changeCategories();">
-			<option value="0">All Categories</option>
-			<?php while ($row = mysql_fetch_array($categories)){ ?>
-				<option value="<?= $row["id"]?>" ><?= $row["category"] ?> </option>
-			<?php } ?>
-		</select>
-
-		<?php 
+				<?php 
 			$checkNew = sprintf("SELECT *, foods.id AS fID from ((user_foods inner join foods ON foods.id = user_foods.food_id) 
 			inner join quantity_types ON quantity_types.id = user_foods.quantity_type_id) 
 			inner join user_storages ON user_storages.id = user_foods.user_storage_id 
@@ -161,6 +101,68 @@
 		</div>	
 
 		<?php endif; ?>
+
+		<?php
+		include "config.php";
+
+		$userName = sprintf("SELECT username, saved_points from users WHERE id = %s", $_COOKIE['user-id']);
+		$userName = mysql_fetch_array(mysql_query($userName));
+		//echo "Hello, <b>".$userName["username"]." (".$userName["saved_points"].")</b>. <br>";
+
+		//NOTE CHECK ON POINT SYSTEM!!!
+
+		?>
+
+		<script type="text/javascript">
+			$(window).load(function() {    
+
+				var theWindow        = $(window),
+				    $bg              = $("#bg"),
+				    aspectRatio      = $bg.width() / $bg.height();
+				    			    		
+				function resizeBg() {
+					
+					if ( (theWindow.width() / theWindow.height()) < aspectRatio ) {
+					    $bg
+					    	.removeClass()
+					    	.addClass('bgheight');
+					} else {
+					    $bg
+					    	.removeClass()
+					    	.addClass('bgwidth');
+					}
+								
+				}
+				                   			
+				theWindow.resize(function() {
+					resizeBg();
+				}).trigger("resize");
+
+			});
+		</script>
+
+
+		<?php
+		$storequest= sprintf('SELECT id,max_volume,curr_volume FROM user_storages WHERE user_id = %s', $_COOKIE['user-id']);
+		$storeLoc = mysql_query($storequest);
+		$storageId = mysql_fetch_array($storeLoc);
+		$percentUsed = ($storageId["curr_volume"]/$storageId["max_volume"])*100;
+
+		//echo '<a href="search.php" data-role="button" data-icon="search">Search Your Fridge</a>';
+		$categories = mysql_query("SELECT * from categories");
+		?>
+
+
+
+
+		<select id="categories" onchange="changeCategories();">
+			<option value="0">All Categories</option>
+			<?php while ($row = mysql_fetch_array($categories)){ ?>
+				<option value="<?= $row["id"]?>" ><?= $row["category"] ?> </option>
+			<?php } ?>
+		</select>
+
+
 
 
 		<div id="food-content"></div>
