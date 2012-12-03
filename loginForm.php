@@ -5,12 +5,12 @@
 	?>
 </head>
 <div data-role="page">
-	
-<div data-role="header"> <h1>FoodG <h1> </div>
 	<div data-role="content" style="background-color: #bdd5e0;">
 		<?php
 			echo "<h3>".$error."</h3>";
 		?>
+			<div><img src="images/logo-text.png" style="height: 5%; width: auto; margin-left:auto; margin-right:auto;"/></div> 
+
 		<div id="wrapper">
 			<form action="login.php" method="post" name="login-form" class="login-form">
 				<div class="header">

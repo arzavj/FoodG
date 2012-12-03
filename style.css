@@ -189,6 +189,11 @@ h4{
 	text-align: center;
 }
 
+logotext
+{
+	height: 5%; width: auto; margin-left:auto; margin-right:auto;
+}
+
 
 
 #bg { position: absolute; top: 120; left: 0;  }
