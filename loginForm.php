@@ -4,19 +4,21 @@
 		include "head.php";
 	?>
 </head>
-<div data-role="page">
-	<div data-role="content" style="background-color: #bdd5e0;">
+<body>
+<div data-role="page" id="loginpage">
+	<div data-role="content">
 		<?php
 			echo "<h3>".$error."</h3>";
 		?>
-			<div><img src="images/logo-text.png" style="height: 5%; width: auto; margin-left:auto; margin-right:auto;"/></div> 
+			<div><img src="images/logo-text.png" style="height: 15%; width: auto; display: block; margin-left:auto; margin-right:auto;"/></div> 
 
-		<div id="wrapper">
+		<div class="wrapper">
 			<form action="login.php" method="post" name="login-form" class="login-form">
 				<div class="header">
+					
 					<h1>Login</h1>
 					<span> Login to start keeping track of your food and prevent waste! </span>
-				</div><!-- /header -->
+				</div>  
 				<div class="content">
 					
 						
@@ -27,12 +29,13 @@
 						<div class="pass-icon"></div>	
 						
 						<div class="footer">
-							<input type="submit" value="Login">
+							<input type="submit" value="Login" />
 					</form>
-						<a href="register.php" name="submit" value="Register" class = "register">Register</a>
+						<a href="register.php" name="submit" value="Register" data-role="button">Register</a>
 						</div>
 				</div>
 			</div>
-			<div class="gradient"></div>
-	</div><!-- /content -->
+			
+		</div><!-- /content -->
 </div><!-- /login page -->
+</body>
