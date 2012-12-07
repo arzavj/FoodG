@@ -6,6 +6,9 @@
 		$quantityRow = mysql_fetch_array(mysql_query($query));
 		$query = sprintf("SELECT * from foods WHERE id = %s", $food_id);
 		$foodRow = mysql_fetch_array(mysql_query($query));
+		if ($foodRow["density"] == 0){
+			return 0;
+		}
 		if($quantityRow["kg_equivalent"]==0) //in the case of units where we need the weight of 1 unit from the foods table
 			return ($quantity*$foodRow["weight_per_unit"])/$foodRow["density"];
 		else

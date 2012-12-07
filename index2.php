@@ -16,27 +16,7 @@
 		<script>
 		$(document).ready(function(){
 			changeCategories();
-		// 	<?php
-		// 		if($_COOKIE["shop-cart-mode"]=="true")
-		// 		{
-		// 		?>
-		// 			$('#shop-cart').val('on').trigger('keyup');
-		// 		<?php
-		// 		}	
-		// 		else
-		// 		{
-		// 		?>
-		// 			$("#my-cart-link").hide();
-		// 		<?php
-		// 		}
-		// 	?>
-		// 	//$( "#accordion" ).accordion();
-		// 	$('#shop-cart').change(function() {
-		// 	    var myswitch = $(this);
-		// 	    var show     = myswitch[0].selectedIndex == 1 ? true:false;
-		// 	    $('#my-cart-link').toggle(show);
-		// 		$.post("shop-cart-mode.php", {"shop-cart-mode":show}, function(data) {});
-		// 	});
+
 		});
 		
 		function changeCategories(){
@@ -51,6 +31,74 @@
 
 	<div data-role="content">
 		<script src="//cdn.optimizely.com/js/141265170.js"></script>
+				<?php 
+			$checkNew = sprintf("SELECT *, foods.id AS fID from ((user_foods inner join foods ON foods.id = user_foods.food_id) 
+			inner join quantity_types ON quantity_types.id = user_foods.quantity_type_id) 
+			inner join user_storages ON user_storages.id = user_foods.user_storage_id 
+			WHERE user_storages.user_id = %s", $_COOKIE['user-id']);
+			if (mysql_num_rows(mysql_query($checkNew)) == 0):
+		?>
+		<script>
+			$(document).unbind('pageshow');
+			$(document).bind('pageshow', function(event){
+				$("#popupPanel").popup({history: false});
+
+				$("#popupPanel").on({
+					popupbeforeposition: function() {
+					var h = $( window ).height();
+					var w = $( window ).width();
+
+					$( "#popupPanel" ).css( "height", h );
+					$( "#popupPanel" ).css( "width", w );
+
+
+					$( "#myArrow" ).css( "top", h - 125);
+					$( "#myArrow" ).css( "left",  w/10 );
+				}
+				});
+
+				$("#popupPanel").popup( "open" );
+
+			});
+		</script>
+
+		<style type="text/css">
+			#popupPanel-popup {
+				right: 0 !important;
+				left: 0 !important;
+				}
+				#popupPanel {
+				width: 200px;
+				border: 1px solid #000;
+				border-right: none;
+				background: rgba(0,0,0,.5);
+				margin: -1px 0;
+				}
+				#popupPanel .ui-btn {
+				margin: 2em 15px;
+				}
+				#helper {
+				position:absolute;
+				color:#fff;
+				top:70px;
+				left:20px;
+				}
+				.close {
+				position:absolute;
+				left:200px;
+				top:300px !important;
+				}
+		</style>
+
+		<div data-role="popup" id="popupPanel" data-corners="false" data-theme="none">
+			<img src="images/arrow.png" style="-webkit-transform:rotate(180deg);position:absolute;top:10px;" id="myArrow"/>
+				<div id="helper">
+					<p>Start by adding an item</p>
+				</div>
+			<a href="#" class="close" data-rel="back" data-theme="a" data-role="button">Close me</a>
+		</div>	
+
+		<?php endif; ?>
 		<?php
 		include "config.php";
 
